@@ -8,6 +8,3 @@ be able to choose different years to see his view at different ages/years of his
 visual of a head (style points) and havbe him be able to speak (accessability for those who cant read well?) 
         with mute features and being able to rid of him (procedural gen for his speaking?)
 
-
-
-
