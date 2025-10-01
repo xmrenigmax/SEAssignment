@@ -1,0 +1,17 @@
+
+
+
+
+MARCUS AURELIUS BOT
+native tongue with translations below (ability to choose language ++ accessability)
+
+having different perspectives as different LLM options (emperor view, philosopher view, all-rounder) 
+OR
+be able to choose different years to see his view at different ages/years of his life (if possible to find big enoug differences)
+
+visual of a head (style points) and havbe him be able to speak (accessability for those who cant read well?) 
+        with mute features and being able to rid of him (procedural gen for his speaking?)
+
+
+
+
