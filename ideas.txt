@@ -1,8 +1,4 @@
-
-
-
-
-MARCUS AURELIUS BOT
+MARCUS AURELIUS BOT IDEAS?
 native tongue with translations below (ability to choose language ++ accessability)
 
 having different perspectives as different LLM options (emperor view, philosopher view, all-rounder) 
