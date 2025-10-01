@@ -73,3 +73,61 @@ The chatbot will simulate conversations with a **historical figure** of our choi
 
 ---
 
+
+## 📦 Project Setup
+
+### 🔹 Client (Frontend)
+
+#### Installed Packages
+- **react** & **react-dom** → Core React library & DOM rendering  
+- **vite** → Fast dev server & build tool  
+- **@vitejs/plugin-react** → React + Vite integration  
+- **eslint**, **eslint-plugin-react-hooks**, **eslint-plugin-react-refresh** → Code linting & standards  
+- **prettier** (optional) → Code formatting  
+- **@types/react**, **@types/react-dom** → Type definitions (future-proofing for TypeScript)  
+
+#### How to Run
+```bash
+cd Client
+npm install
+npm run dev
+
+``` 
+frontend available on http://localhost:5173/ for now
+
+#### Purpose of Frontend
+- **Seperation** → a clear seperation of data, api and website development
+- **UI** → responsive chatbot UI
+- **integration** → integrates backend API for the chatbot to respond visually
+- **interaction** → allows interaction of design (should be user friendly and accessible)
+
+
+### 🔹 Server (Backend)
+
+#### Installed Packages
+- **Express** → Rest API framework
+- **CORS** → enable connection between frontend and backend
+- **nodemon** → auto reload server when updated
+
+#### How to Run
+```bash
+cd Server
+npm install
+npm run dev
+
+``` 
+Backend runs on http://localhost:3000/ for now
+
+#### Purpose of Backend
+- **API** → provides API endpoints
+- **Communication** → seperates UI/UX with communication of API and JSON-basesd scripts
+- **Manages middleware** → handles CORS
+- **handles chatbot** → handles the chatbots communication flow and logic to seperate from web UI/UX
+
+### 🔹 Tests 
+
+#### Purpose
+- validates chatbot response logic
+- ensures react components render correctly
+- confirm backend API endpoint return expected results
+- can be used to implement alternative methods for quality testing

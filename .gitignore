@@ -1,3 +1,14 @@
+
+# Node packages
 node_modules/
-package-lock.json
-pacakge.json
+
+# Build Outputs
+dist/
+build/
+
+# ide logs
+.DS_Store
+*.swp
+*.log
+.vscode/
+.idea/
