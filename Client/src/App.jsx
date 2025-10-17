@@ -1,35 +1,59 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+
+// Imports
+import React from 'react'
+import { createBrowserRouter, RouterProvider, Routes, Route } from 'react-router-dom'
+
+// Components and pages
+import { Navbar } from './components/Navbar'
+import { Footer } from './components/Footer'
+// import { Home } from './pages/Home'
+// import { Chatbot } from './pages/Chatbot'
+// import { Dashboard } from './pages/Dashboard'
+// import { Settings } from './pages/Settings'
+// import { Logs } from './pages/Logs'
+
+
+// Your page components
+const Home = () => <div className="p-8 text-center">Home - Main Page (informatitive)</div>
+const Dashboard = () => <div className="p-8 text-center">Dashboard (unnecessary but could be fun)</div>
+const Chatbot = () => <div className="p-8 text-center">Chatbot (main chat bot)</div>
+const Settings = () => <div className="p-8 text-center">Settings (user settings, accessibility, ectras)</div>
+const Logs = () => <div className="p-8 text-center">Logs (see data logs and chat logs)</div>
+
+// Layout defining all pages
+const PageLayout = () => {
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+      <main className="flex-1">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/chatbot" element={<Chatbot />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/logs" element={<Logs />} />
+        </Routes>
+      </main>
+      <Footer />
+    </div>
+  )
+}
+
+// Create router with future flags
+const router = createBrowserRouter([
+  {
+    path: "/*",
+    element: <PageLayout />,
+  }
+], {
+  future: {
+    v7_startTransition: true, // navigation
+    v7_relativeSplatPath: true // linking
+  }
+});
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  return <RouterProvider router={router} />
 }
 
 export default App
