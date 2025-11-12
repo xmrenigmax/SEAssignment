@@ -13,8 +13,8 @@
 
 /* Dark Theme - Simple dark scheme */
 :root:not(.light) {
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
+  --bg-primary: #07072c;
+  --bg-secondary: #05051f;
   --text-primary: #f1f5f9;
   --accent: #818cf8; 
   --border: #334155;
