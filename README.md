@@ -110,12 +110,14 @@ frontend available on http://localhost:5173/ for now
 - **nodemon** → auto reload server when updated
 
 #### How to Run
+
 ```bash
 cd Server
 npm install
 npm run dev
 
 ``` 
+
 Backend runs on http://localhost:3000/ for now
 
 #### Purpose of Backend

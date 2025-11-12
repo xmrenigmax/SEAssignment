@@ -1,24 +1,23 @@
 {
-  "name": "server",
+  "name": "marcus-aurelius-chatbot-backend",
   "version": "1.0.0",
+  "description": "Backend for Marcus Aurelius historical figure chatbot with Hugging Face integration",
+  "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "lint": "eslint .",
-    "format": "prettier --write .",
-    "docs": "jsdoc -c jsdoc.json"
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "export-data": "node scripts/exportData.js",
+    "import-data": "node scripts/importData.js"
   },
   "dependencies": {
-    "ajv": "^8.17.1",
+    "express": "^4.18.2",
     "cors": "^2.8.5",
-    "dotenv": "^17.2.3",
-    "express": "^5.1.0"
+    "dotenv": "^16.3.1",
+    "node-fetch": "^3.3.2",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "eslint": "^9.36.0",
-    "jsdoc": "^4.0.4",
-    "nodemon": "^3.1.10",
-    "prettier": "^3.6.2"
+    "nodemon": "^3.0.1"
   }
 }

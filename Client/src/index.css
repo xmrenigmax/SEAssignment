@@ -4,19 +4,19 @@
 
 /* Light Theme - Simple blue/purple scheme */
 :root, .light {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f1f5f9;
+  --bg-primary: #f3f3f3;
+  --bg-secondary: #e2e2e2;
   --text-primary: #1e293b;
-  --accent: #6366f1;  
+  --accent: #2F67D0;  
   --border: #e2e8f0;
 }
 
 /* Dark Theme - Simple dark scheme */
 :root:not(.light) {
-  --bg-primary: #07072c;
-  --bg-secondary: #05051f;
+  --bg-primary: #05051F;
+  --bg-secondary: #030317;
   --text-primary: #f1f5f9;
-  --accent: #818cf8; 
+  --accent: #1C6987; 
   --border: #334155;
 }
 
