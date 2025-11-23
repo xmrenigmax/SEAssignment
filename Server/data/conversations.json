@@ -1,9 +1,298 @@
 {
   "1c0fc0d4-2f39-40da-afe5-3bd3c805557a": {
     "id": "1c0fc0d4-2f39-40da-afe5-3bd3c805557a",
-    "title": "Conversation with Marcus Aurelius",
-    "messages": [],
+    "title": "hi...",
+    "messages": [
+      {
+        "id": "dae2d495-66da-45a2-a1de-9e08602a6862",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-11-23T17:19:38.112Z"
+      },
+      {
+        "id": "a0dce6c0-a803-41f9-bd99-b6e765ac8737",
+        "text": "Greetings. I hope the day finds you possessing a mind free from confusion.",
+        "isUser": false,
+        "timestamp": "2025-11-23T17:19:38.113Z"
+      },
+      {
+        "id": "da9e880a-9c47-4f3d-b600-6a7f16576854",
+        "text": "why",
+        "isUser": true,
+        "timestamp": "2025-11-23T17:19:41.433Z"
+      },
+      {
+        "id": "abc2d0d5-5994-4c27-b2d0-6750e5ac8438",
+        "text": "You speak of things I have not encountered in Rome. Look inward, not outward.",
+        "isUser": false,
+        "timestamp": "2025-11-23T17:19:41.434Z"
+      }
+    ],
     "createdAt": "2025-11-12T16:46:16.258Z",
-    "updatedAt": "2025-11-12T16:46:16.258Z"
+    "updatedAt": "2025-11-23T17:19:41.434Z"
+  },
+  "823cf7ff-4f29-4f9d-9358-af6e5a839dfe": {
+    "id": "823cf7ff-4f29-4f9d-9358-af6e5a839dfe",
+    "title": "hello...",
+    "messages": [
+      {
+        "id": "b88dcec8-60b2-440c-9187-a71a620c963e",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-11-23T17:08:46.644Z"
+      },
+      {
+        "id": "92d9660f-644c-46e8-9794-94cc6730c0c5",
+        "text": "Greetings. I hope the day finds you possessing a mind free from confusion.",
+        "isUser": false,
+        "timestamp": "2025-11-23T17:08:46.644Z"
+      },
+      {
+        "id": "89e14bdc-d137-432d-a9cf-4ca17f55f077",
+        "text": "what are you doing today",
+        "isUser": true,
+        "timestamp": "2025-11-23T17:08:52.740Z"
+      },
+      {
+        "id": "9af723a3-4267-4c18-9e99-be544074dedd",
+        "text": "You speak of things I have not encountered in Rome. Look inward, not outward.",
+        "isUser": false,
+        "timestamp": "2025-11-23T17:08:52.740Z"
+      },
+      {
+        "id": "48b9bbf3-cd76-461a-8da5-c31a2568f7c6",
+        "text": "whats your name",
+        "isUser": true,
+        "timestamp": "2025-11-23T17:09:02.950Z"
+      },
+      {
+        "id": "3563c0ec-f34b-4ca4-89b7-0480fea9e764",
+        "text": "I do not fully grasp your meaning, but remember: The happiness of your life depends upon the quality of your thoughts.",
+        "isUser": false,
+        "timestamp": "2025-11-23T17:09:02.951Z"
+      },
+      {
+        "id": "a5340c9a-3ea2-4091-91f7-c54bf70467e1",
+        "text": "lol",
+        "isUser": true,
+        "timestamp": "2025-11-23T17:44:57.538Z"
+      },
+      {
+        "id": "ee43a979-6fe4-4d99-bb77-09bf681a7d5f",
+        "text": "I do not fully grasp your meaning, but remember: The happiness of your life depends upon the quality of your thoughts.",
+        "isUser": false,
+        "timestamp": "2025-11-23T17:44:57.727Z"
+      }
+    ],
+    "createdAt": "2025-11-23T17:08:46.635Z",
+    "updatedAt": "2025-11-23T17:44:57.727Z"
+  },
+  "2f995562-3f38-4bf4-927b-b326762c5b65": {
+    "id": "2f995562-3f38-4bf4-927b-b326762c5b65",
+    "title": "hello...",
+    "messages": [
+      {
+        "id": "db3a7cee-daf2-4f16-b385-385661f7b40d",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-11-23T17:13:31.876Z"
+      },
+      {
+        "id": "587367f1-99bf-466f-a9ab-070a8b54c39d",
+        "text": "Greetings. I hope the day finds you possessing a mind free from confusion.",
+        "isUser": false,
+        "timestamp": "2025-11-23T17:13:31.877Z"
+      },
+      {
+        "id": "75cc0004-d8c1-4b53-9049-846c84fdfca4",
+        "text": "whats new",
+        "isUser": true,
+        "timestamp": "2025-11-23T17:13:37.525Z"
+      },
+      {
+        "id": "9957ee4e-3410-413a-9a1f-66d18eea63b6",
+        "text": "You speak of things I have not encountered in Rome. Look inward, not outward.",
+        "isUser": false,
+        "timestamp": "2025-11-23T17:13:37.525Z"
+      }
+    ],
+    "createdAt": "2025-11-23T17:13:31.862Z",
+    "updatedAt": "2025-11-23T17:13:37.525Z"
+  },
+  "52df1be0-35fc-4629-a450-caaa1279e6c0": {
+    "id": "52df1be0-35fc-4629-a450-caaa1279e6c0",
+    "title": "hm...",
+    "messages": [
+      {
+        "id": "b63aec21-a0b2-4eed-9949-4a92d29f8d72",
+        "text": "hm",
+        "isUser": true,
+        "timestamp": "2025-11-23T17:13:44.770Z"
+      },
+      {
+        "id": "47df01fb-27cc-4060-a91f-a106c3d4dc6c",
+        "text": "Explain this further. Is it an obstacle? If so, the impediment to action advances action.",
+        "isUser": false,
+        "timestamp": "2025-11-23T17:13:44.770Z"
+      },
+      {
+        "id": "1a9aaad2-eb24-4e0f-a458-50a72a30727e",
+        "text": "what",
+        "isUser": true,
+        "timestamp": "2025-11-23T17:13:51.184Z"
+      },
+      {
+        "id": "482334d6-0aa1-4577-9008-382c09e025a8",
+        "text": "Explain this further. Is it an obstacle? If so, the impediment to action advances action.",
+        "isUser": false,
+        "timestamp": "2025-11-23T17:13:51.184Z"
+      },
+      {
+        "id": "6d70039e-2c34-4757-bd00-28d611d055f9",
+        "text": "no",
+        "isUser": true,
+        "timestamp": "2025-11-23T17:13:53.131Z"
+      },
+      {
+        "id": "79baaf1b-9ef5-4e5f-8cb2-43b46ffd08c1",
+        "text": "Explain this further. Is it an obstacle? If so, the impediment to action advances action.",
+        "isUser": false,
+        "timestamp": "2025-11-23T17:13:53.134Z"
+      },
+      {
+        "id": "db74103f-ce0e-4f47-ae65-a128a9b8a4ed",
+        "text": "why wouold i",
+        "isUser": true,
+        "timestamp": "2025-11-23T17:13:57.265Z"
+      },
+      {
+        "id": "d110d3c7-f766-4784-b80d-abb4677b81eb",
+        "text": "Explain this further. Is it an obstacle? If so, the impediment to action advances action.",
+        "isUser": false,
+        "timestamp": "2025-11-23T17:13:57.265Z"
+      },
+      {
+        "id": "75265614-13f9-4788-abe5-7c2a0d905418",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-11-23T17:14:00.394Z"
+      },
+      {
+        "id": "8dc949e5-b793-4c7a-a03a-bb32bf491b25",
+        "text": "Greetings. I hope the day finds you possessing a mind free from confusion.",
+        "isUser": false,
+        "timestamp": "2025-11-23T17:14:00.395Z"
+      }
+    ],
+    "createdAt": "2025-11-23T17:13:44.758Z",
+    "updatedAt": "2025-11-23T17:14:00.395Z"
+  },
+  "bae965c9-da73-4294-abc4-8909e32f808a": {
+    "id": "bae965c9-da73-4294-abc4-8909e32f808a",
+    "title": "lihg...",
+    "messages": [
+      {
+        "id": "27064623-d067-45ea-9882-54113f9e07e5",
+        "text": "lihg",
+        "isUser": true,
+        "timestamp": "2025-11-23T17:37:29.577Z"
+      },
+      {
+        "id": "482dc311-99d8-472f-bac8-fe331d8358d1",
+        "text": "I do not fully grasp your meaning, but remember: The happiness of your life depends upon the quality of your thoughts.",
+        "isUser": false,
+        "timestamp": "2025-11-23T17:37:29.701Z"
+      },
+      {
+        "id": "0bd585d6-e66c-4b8d-89ca-0f3d4eb466ee",
+        "text": "sad",
+        "isUser": true,
+        "timestamp": "2025-11-23T17:39:49.155Z"
+      },
+      {
+        "id": "2f3c12c9-05c9-4c31-8303-6453797c4990",
+        "text": "If you are distressed by anything external, the pain is not due to the thing itself, but to your estimate of it; and this you have the power to revoke at any moment.",
+        "isUser": false,
+        "timestamp": "2025-11-23T17:39:49.155Z"
+      },
+      {
+        "id": "ea8498e7-4bea-4fe0-8935-0a01a3335bb0",
+        "text": "wagwan general",
+        "isUser": true,
+        "timestamp": "2025-11-23T17:40:14.885Z"
+      },
+      {
+        "id": "61f07ae0-43f8-4327-9f0c-67f4b6e2de93",
+        "text": "You speak of things I have not encountered in Rome. Look inward, not outward.",
+        "isUser": false,
+        "timestamp": "2025-11-23T17:40:15.129Z"
+      },
+      {
+        "id": "6673a561-275e-499a-a510-49546c3591cc",
+        "text": "are you ok",
+        "isUser": true,
+        "timestamp": "2025-11-23T17:43:50.988Z"
+      },
+      {
+        "id": "a520051f-f023-47c2-9b5e-6b03125665bf",
+        "text": "Explain this further. Is it an obstacle? If so, the impediment to action advances action.",
+        "isUser": false,
+        "timestamp": "2025-11-23T17:43:51.244Z"
+      }
+    ],
+    "createdAt": "2025-11-23T17:37:29.569Z",
+    "updatedAt": "2025-11-23T17:43:51.245Z"
+  },
+  "e83f5d8e-55b8-46da-9128-3b9919ceec33": {
+    "id": "e83f5d8e-55b8-46da-9128-3b9919ceec33",
+    "title": "are you ok...",
+    "messages": [
+      {
+        "id": "f6204e52-65a7-4b58-9511-65befff108c7",
+        "text": "are you ok",
+        "isUser": true,
+        "timestamp": "2025-11-23T17:46:22.067Z"
+      },
+      {
+        "id": "83a400d4-f56c-4456-b5c7-4cd4ca62f830",
+        "text": "You speak of things I have not encountered in Rome. Look inward, not outward.",
+        "isUser": false,
+        "timestamp": "2025-11-23T17:46:22.311Z"
+      },
+      {
+        "id": "23921e26-946f-4e61-a2ef-1f7e9c8cd249",
+        "text": "are u alive",
+        "isUser": true,
+        "timestamp": "2025-11-23T17:48:22.785Z"
+      },
+      {
+        "id": "e1409194-b805-4280-9183-d1429ee0113a",
+        "text": "You speak of things I have not encountered in Rome. Look inward, not outward.",
+        "isUser": false,
+        "timestamp": "2025-11-23T17:48:23.039Z"
+      }
+    ],
+    "createdAt": "2025-11-23T17:46:22.052Z",
+    "updatedAt": "2025-11-23T17:48:23.039Z"
+  },
+  "c0581e10-4361-44f1-a671-3e6e0894a7f2": {
+    "id": "c0581e10-4361-44f1-a671-3e6e0894a7f2",
+    "title": "why is not work...",
+    "messages": [
+      {
+        "id": "56fe4fc4-b6f8-4d22-b794-c409312b965a",
+        "text": "why is not work",
+        "isUser": true,
+        "timestamp": "2025-11-23T17:50:20.160Z"
+      },
+      {
+        "id": "7332923c-774f-4ed4-8e34-1ec36a584732",
+        "text": "Explain this further. Is it an obstacle? If so, the impediment to action advances action.",
+        "isUser": false,
+        "timestamp": "2025-11-23T17:50:20.431Z"
+      }
+    ],
+    "createdAt": "2025-11-23T17:50:20.145Z",
+    "updatedAt": "2025-11-23T17:50:20.431Z"
   }
 }

@@ -1,14 +1,20 @@
 import { useState, useEffect } from 'react';
 
-// Custom hook for checking backend health
+/**
+ * Custom hook to monitor the connection status of the Express backend.
+ * * @returns {Object} healthStatus
+ * @returns {string} healthStatus.backendStatus - 'checking', 'connected', or 'disconnected'.
+ * @returns {boolean} healthStatus.isConnected - True if backend is reachable.
+ * @returns {Function} healthStatus.checkBackendHealth - Manual trigger function.
+ */
 export const useBackendHealth = () => {
   const [backendStatus, setBackendStatus] = useState('checking');
   const [healthData, setHealthData] = useState(null);
-
-  // API base URL
   const API_BASE_URL = 'http://localhost:5000/api';
 
-  // Check backend connection
+  /**
+   * Pings the health endpoint.
+   */
   const checkBackendHealth = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/health`);
@@ -21,19 +27,14 @@ export const useBackendHealth = () => {
         throw new Error(`HTTP error: ${response.status}`);
       }
     } catch (error) {
-      console.error('Backend health check failed:', error);
       setBackendStatus('disconnected');
       return { isConnected: false, error: error.message };
     }
   };
 
-  // Check health on mount and periodically
   useEffect(() => {
     checkBackendHealth();
-    
-    // Optional: Set up periodic health checks
-    const interval = setInterval(checkBackendHealth, 30000); // Check every 30 seconds
-    
+    const interval = setInterval(checkBackendHealth, 30000); // Poll every 30s
     return () => clearInterval(interval);
   }, []);
 

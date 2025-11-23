@@ -2,30 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Light Theme - Simple blue/purple scheme */
+/**
+ * Global Stylesheet
+ * Implements the "Modern Blue" theme preference.
+ * Includes accessibility overrides for high contrast and scrollbars.
+ */
+
 :root, .light {
+  /* Core Palette - Blue Theme */
   --bg-primary: #f3f3f3;
-  --bg-secondary: #e2e2e2;
+  --bg-secondary: #ffffff;
   --text-primary: #1e293b;
+  --text-secondary: #64748b;
   --accent: #2F67D0;  
+  --accent-hover: #1e40af;
   --border: #e2e8f0;
+  
+  /* Chat Specific Colors (Contrast compliant) */
+  --message-user: #2F67D0;
+  --message-bot: #f1f5f9;
 }
 
-/* Dark Theme - Simple dark scheme */
 :root:not(.light) {
-  --bg-primary: #05051F;
-  --bg-secondary: #030317;
-  --text-primary: #f1f5f9;
-  --accent: #1C6987; 
+  /* Dark Mode Palette */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --accent: #38bdf8; 
+  --accent-hover: #0ea5e9;
   --border: #334155;
+  
+  /* Chat Specific Colors */
+  --message-user: #0ea5e9;
+  --message-bot: #334155;
 }
 
-/* Smooth transitions */
 * {
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
-/* Base body */
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
@@ -33,59 +49,17 @@ body {
   font-family: system-ui, -apple-system, sans-serif;
 }
 
-/* Simple button */
-.button {
-  background-color: var(--accent);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.375rem;
-  transition: all 0.2s ease;
+/* Custom Scrollbar for Chat History (FR8) */
+::-webkit-scrollbar {
+  width: 6px;
 }
-.button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+::-webkit-scrollbar-track {
+  background: transparent;
 }
-
-/* Navigation links */
-.nav-link {
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  color: var(--text-primary);
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
 }
-.nav-link:hover {
-  background-color: var(--bg-secondary);
-  color: var(--accent);
-}
-.nav-link.active {
-  background-color: var(--accent);
-  color: white;
-}
-
-/* Simple card */
-.card {
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  padding: 1rem;
-  transition: all 0.2s ease;
-}
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-/* Theme toggle */
-.theme-toggle {
-  padding: 0.5rem;
-  border-radius: 0.375rem;
-  transition: all 0.2s ease;
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border);
-}
-.theme-toggle:hover {
-  background-color: var(--accent);
-  color: white;
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
 }

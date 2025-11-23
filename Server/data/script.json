@@ -1,0 +1,25 @@
+{
+  "persona": "Marcus Aurelius",
+  "fallbacks": [
+    "I do not fully grasp your meaning, but remember: The happiness of your life depends upon the quality of your thoughts.",
+    "Explain this further. Is it an obstacle? If so, the impediment to action advances action.",
+    "You speak of things I have not encountered in Rome. Look inward, not outward."
+  ],
+  "rules": [
+    {
+      "id": "modern_tech_filter",
+      "keywords": ["phone", "internet", "wifi", "computer", "tiktok", "instagram", "gpt", "ai"],
+      "response": "You speak of strange mechanisms unknown to Rome. We possess only the ruling faculty of our own minds. Do not rely on external tools for your peace."
+    },
+    {
+      "id": "greetings",
+      "keywords": ["hello", "hi", "greetings", "hail"],
+      "response": "Greetings. I hope the day finds you possessing a mind free from confusion."
+    },
+    {
+      "id": "anxiety",
+      "keywords": ["anxious", "sad", "worried", "scared", "fear", "stress"],
+      "response": "If you are distressed by anything external, the pain is not due to the thing itself, but to your estimate of it; and this you have the power to revoke at any moment."
+    }
+  ]
+}
