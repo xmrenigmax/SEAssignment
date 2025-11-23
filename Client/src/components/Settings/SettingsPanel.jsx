@@ -1,42 +1,84 @@
-// Imports
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { SettingsTabs } from './Tabs/SettingsTabs';
+import { AccessibilitySettings } from './Tabs/AccessibilitySettings';
+import { DataManagement } from './Tabs/DataManagement';
+import { LegalSettings } from './Tabs/LegalSettings';
+import { AboutSettings } from './Tabs/AboutSettings';
 
-// Tab imports
-import { SettingsTabs } from './Tabs/SettingsTabs'
-import { AccessibilitySettings } from './Tabs/AccessibilitySettings'
-import { DataManagement } from './Tabs/DataManagement'
-import { LegalSettings } from './Tabs/LegalSettings'
+/**
+ * Main Settings Modal Component.
+ * Renders as an overlay on top of the chat interface.
+ * Fulfills NFR1 (Usability) by maintaining context.
+ * * @component
+ * @param {Object} props
+ * @param {Function} props.onClose - Function to close the modal
+ */
+export const SettingsPanel = ({ onClose }) => {
+  const [activeTab, setActiveTab] = useState('accessibility');
 
-// Main Settings Panel Component
-export const SettingsPanel = () => {
-  // State for active tab
-  const [activeTab, setActiveTab] = useState('accessibility')
+  // Close modal on escape key (Accessibility requirement)
+  React.useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [onClose]);
 
-  // Render settings panel with tab navigation and content
   return (
-    <div className="flex-1 max-w-4xl mx-auto w-full p-6">
-      <h1 className="text-2xl font-bold mb-6">Settings</h1>
-      <div className="flex gap-6">
-        
-        {/* Left Navigation Tabs */}
-        <SettingsTabs 
-          activeTab={activeTab} 
-          setActiveTab={setActiveTab} 
-        />
-        
-        {/* Right Content Area */}
-        <div className="flex-1 bg-[var(--bg-secondary)] rounded-lg p-6">
-          
-          {/* Accessibility Tab Content */}
-          {activeTab === 'accessibility' && <AccessibilitySettings />}
-          
-          {/* Data Management Tab Content */}
-          {activeTab === 'data' && <DataManagement />}
-          
-          {/* Legal Tab Content */}
-          {activeTab === 'legal' && <LegalSettings />}
+    // Backdrop Overlay
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200"
+      onClick={onClose} // Click outside to close
+      role="dialog"
+      aria-modal="true"
+      aria-label="Settings"
+    >
+      {/* Modal Content */}
+      <div 
+        className="bg-[var(--bg-secondary)] w-full max-w-4xl max-h-[85vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row border border-[var(--border)] animate-in zoom-in-95 duration-200"
+        onClick={e => e.stopPropagation()} // Prevent close when clicking content
+      >
+        {/* Mobile Header (Close Button) */}
+        <div className="md:hidden p-4 border-b border-[var(--border)] flex justify-between items-center">
+          <h2 className="font-bold text-lg">Settings</h2>
+          <button onClick={onClose} className="p-2 hover:bg-[var(--bg-primary)] rounded-full">
+            ✕
+          </button>
         </div>
+
+        {/* Sidebar Tabs */}
+        <div className="w-full md:w-64 bg-[var(--bg-primary)] p-4 border-r border-[var(--border)] flex flex-col">
+          <h2 className="hidden md:block text-2xl font-bold mb-6 px-2">Settings</h2>
+          <SettingsTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+          
+          <div className="mt-auto hidden md:block pt-6 border-t border-[var(--border)]">
+             <button 
+               onClick={onClose}
+               className="w-full text-left px-4 py-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] rounded-lg transition-colors"
+             >
+               ← Back to Chat
+             </button>
+          </div>
+        </div>
+
+        {/* Main Content Area */}
+        <div className="flex-1 p-6 overflow-y-auto">
+          {activeTab === 'accessibility' && <AccessibilitySettings />}
+          {activeTab === 'data' && <DataManagement />}
+          {activeTab === 'legal' && <LegalSettings />}
+          {activeTab === 'about' && <AboutSettings />}
+        </div>
+
+        {/* Desktop Close Button (Floating) */}
+        <button 
+          onClick={onClose}
+          className="hidden md:flex absolute top-4 right-4 w-8 h-8 items-center justify-center rounded-full bg-[var(--bg-primary)] text-[var(--text-secondary)] hover:text-red-500 hover:bg-red-50 transition-all shadow-sm border border-[var(--border)]"
+          aria-label="Close settings"
+        >
+          ✕
+        </button>
       </div>
     </div>
-  )
-}
+  );
+};
