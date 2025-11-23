@@ -2,64 +2,72 @@ import React, { useState } from 'react';
 import { Sidebar } from '../components/UI/Sidebar';
 import { ChatPanel } from '../components/Chat/ChatPanel';
 import { SettingsPanel } from '../components/Settings/SettingsPanel';
+import { ChatProvider } from '../context/ChatContext';
 
-// Main landing page component - Marcus Aurelius Chat interface
+/**
+ * Landing Page Layout.
+ * Manages the "Gemini-style" responsive layout.
+ * * Logic:
+ * - Mobile: Sidebar is an overlay (controlled by isMobileOpen).
+ * - Desktop: Sidebar is a rail (controlled by isCollapsed).
+ */
 const Landing = () => {
-  // State management for active view, sidebar visibility, and sidebar width
   const [activeView, setActiveView] = useState('chat');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Sidebar open by default on desktop
-  const [sidebarWidth, setSidebarWidth] = useState(260); // Default sidebar width matching professional chat apps
+  
+  // State for Desktop "Rail" Mode
+  const [isCollapsed, setIsCollapsed] = useState(false); // Default: Open
+  // State for Mobile Overlay
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  
+  // Settings Modal
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
-  // Render the main application layout
+  const handleViewChange = (view) => {
+    setActiveView(view);
+    if (view === 'settings') setIsSettingsOpen(true);
+  };
+
   return (
-    <div className="min-h-screen flex bg-[var(--bg-primary)] text-[var(--text-primary)]">
-      {/* Sidebar - Conditionally rendered when open for clean DOM management */}
-      {isSidebarOpen && (
-        <Sidebar 
-          activeView={activeView}
-          setActiveView={setActiveView}
-          isOpen={isSidebarOpen}
-          toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
-          sidebarWidth={sidebarWidth}
-          setSidebarWidth={setSidebarWidth}
-        />
-      )}
+    <div className="min-h-screen flex bg-[var(--bg-primary)] text-[var(--text-primary)] overflow-hidden transition-colors duration-200">
       
-      {/* Main Content Area */}
-      <main className="flex-1 flex flex-col min-w-0">
-        {/* Mobile Navigation Header - Only visible on mobile devices */}
-        <div className="lg:hidden p-4 border-b border-[var(--border)] bg-[var(--bg-primary)]">
+      {/* Sidebar (Handles its own display modes) */}
+      <Sidebar 
+        activeView={activeView}
+        setActiveView={handleViewChange}
+        isCollapsed={isCollapsed}
+        toggleCollapse={() => setIsCollapsed(!isCollapsed)}
+        isMobileOpen={isMobileOpen}
+        toggleMobile={() => setIsMobileOpen(!isMobileOpen)}
+      />
+      
+      {/* Main Content - Adjusts margin based on Sidebar width */}
+      <main className={`
+        flex-1 flex flex-col min-w-0 h-screen transition-all duration-300 ease-in-out
+        ${isCollapsed ? 'md:ml-20' : 'md:ml-72'} 
+      `}>
+        
+        {/* Mobile Header (Only visible on small screens) */}
+        <div className="md:hidden p-4 border-b border-[var(--border)] bg-[var(--bg-primary)] flex items-center">
           <button 
-            onClick={() => setIsSidebarOpen(true)}
-            className="p-2 bg-[var(--bg-secondary)] rounded-lg border border-[var(--border)] hover:bg-[var(--bg-primary)] transition-colors"
-            aria-label="Open sidebar menu"
+            onClick={() => setIsMobileOpen(true)}
+            className="p-2 mr-3 bg-[var(--bg-secondary)] rounded-lg border border-[var(--border)]"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
+          <span className="font-serif font-bold text-lg">Marcus Aurelius</span>
         </div>
 
-        {/* Desktop Sidebar Toggle - Appears when sidebar is closed on desktop */}
-        {!isSidebarOpen && (
-          <div className="hidden lg:flex items-center p-4 border-b border-[var(--border)] bg-[var(--bg-primary)]">
-            <button 
-              onClick={() => setIsSidebarOpen(true)}
-              className="p-2 bg-[var(--bg-secondary)] rounded-lg border border-[var(--border)] hover:bg-[var(--accent)] hover:text-white transition-all duration-200"
-              aria-label="Open sidebar"
-            >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-            <h1 className="ml-3 text-lg font-semibold text-[var(--accent)]">Marcus Aurelius</h1>
-          </div>
+        {/* Chat Area */}
+        <div className="flex-1 flex flex-col h-full overflow-hidden">
+           <ChatPanel />
+        </div>
+
+        {/* Settings Modal */}
+        {isSettingsOpen && (
+          <SettingsPanel onClose={() => { setIsSettingsOpen(false); setActiveView('chat'); }} />
         )}
-
-        {/* Dynamic Content Area - Switches between Chat and Settings views */}
-        <div className="flex-1 flex flex-col">
-          {activeView === 'chat' ? <ChatPanel /> : <SettingsPanel />}
-        </div>
       </main>
     </div>
   );

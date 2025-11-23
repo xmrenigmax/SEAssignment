@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useChatContext } from '../../context/ChatContext'; // Using Context
+import { useChatContext } from '../../context/ChatContext'; 
 import { useBackendHealth } from '../../hooks/useBackendHealth';
 import { AttachmentButton } from './AttachmentButton';
 import { VoiceInputButton } from './VoiceInputButton';
 
-export const ChatPanel = () => {
+export const ChatPanel = () => { // No props needed
   const { 
     activeConversationId, 
     getActiveConversation, 
@@ -13,136 +13,110 @@ export const ChatPanel = () => {
     isLoading
   } = useChatContext();
   
-  const { backendStatus, isConnected, isChecking } = useBackendHealth();
+  const { isConnected, isChecking } = useBackendHealth();
   const [input, setInput] = useState('');
   const [attachedFile, setAttachedFile] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
   const [transcribedText, setTranscribedText] = useState('');
   const textareaRef = useRef(null);
+  const messagesEndRef = useRef(null);
 
   const activeConversation = getActiveConversation();
   const messages = activeConversation?.messages || [];
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, isRecording, isLoading]);
 
   const handleSend = async () => {
     const messageText = transcribedText || input.trim();
     if (messageText || attachedFile) {
       let conversationId = activeConversationId;
-      if (!conversationId) {
-        conversationId = await createNewConversation();
-      }
+      if (!conversationId) conversationId = await createNewConversation();
       
       const userMessage = { 
-        text: messageText,
-        isUser: true, 
-        timestamp: new Date().toISOString(),
-        attachment: attachedFile
+        text: messageText, isUser: true, timestamp: new Date().toISOString(), attachment: attachedFile
       };
-      
       await addMessageToConversation(conversationId, userMessage);
       
-      setInput('');
-      setAttachedFile(null);
-      setTranscribedText('');
-      setIsRecording(false);
+      setInput(''); setAttachedFile(null); setTranscribedText(''); setIsRecording(false);
       if (textareaRef.current) textareaRef.current.style.height = 'auto';
     }
   };
 
-  const handleFileAttach = (file) => setAttachedFile(file);
-  const handleFileRemove = () => setAttachedFile(null);
-  const handleRecordingStart = () => { setIsRecording(true); setTranscribedText(''); };
-  const handleRecordingStop = (text = '') => { setIsRecording(false); if (text) setTranscribedText(text); };
-  
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
-    }
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }
   };
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = Math.min(textareaRef.current.scrollHeight, 120) + 'px';
+      textareaRef.current.style.height = Math.min(textareaRef.current.scrollHeight, 150) + 'px';
     }
   };
 
   return (
-    <div className="flex-1 flex flex-col max-w-3xl mx-auto w-full h-full">
-      {!isChecking && !isConnected && (
-        <div className="bg-yellow-100 border border-yellow-400 text-yellow-800 px-4 py-2 text-sm">
-          <span>Using offline mode - conversations saved locally</span>
-        </div>
-      )}
-
-      {isLoading && (
-        <div className="absolute inset-0 bg-white/50 flex items-center justify-center z-50">
-          <div className="flex items-center gap-3 bg-white p-4 rounded-lg shadow-lg">
-            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[var(--accent)]"></div>
-            <span className="text-sm text-gray-600">Marcus is contemplating...</span>
-          </div>
-        </div>
-      )}
+    <div className="flex flex-col h-full w-full bg-[var(--bg-primary)] relative">
       
-      <div className="flex-1 p-4 space-y-6 overflow-y-auto">
+      {/* Minimal Header (No Sidebar Button) */}
+      <div className="flex-none h-16 border-b border-[var(--border)] bg-[var(--bg-secondary)]/80 backdrop-blur-md flex items-center px-6 justify-between z-10">
+        <div className="flex flex-col">
+          <h2 className="font-semibold text-[var(--text-primary)]">
+            {activeConversation?.title || 'New Conversation'}
+          </h2>
+          <span className="text-xs text-[var(--text-secondary)] flex items-center gap-1.5">
+            <span className={`w-1.5 h-1.5 rounded-full ${isConnected ? 'bg-green-500' : 'bg-red-500'}`}></span>
+            {isLoading ? 'Thinking...' : 'Marcus Aurelius'}
+          </span>
+        </div>
+      </div>
+
+      {/* Messages Area */}
+      <div className="flex-1 overflow-y-auto p-4 md:p-8 space-y-6 scroll-smooth">
         {messages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full text-center px-4">
-            <div className="w-16 h-16 bg-[var(--accent)] rounded-full flex items-center justify-center mb-4 text-white text-2xl">
-              M
+          <div className="h-full flex flex-col items-center justify-center text-center opacity-60">
+            <div className="w-20 h-20 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center mb-6 shadow-sm border border-[var(--border)]">
+              <span className="text-4xl font-serif">M</span>
             </div>
-            <h2 className="text-2xl font-bold mb-3">Welcome to Marcus Aurelius AI</h2>
-            <p className="text-[var(--text-secondary)] max-w-md mb-4">
-              Discuss Stoic philosophy, seek wisdom from Meditations, and explore timeless principles.
-            </p>
+            <h1 className="text-2xl font-serif font-bold text-[var(--text-primary)] mb-2">Marcus Aurelius</h1>
+            <p className="text-[var(--text-secondary)] max-w-sm">"The happiness of your life depends upon the quality of your thoughts."</p>
           </div>
         ) : (
-          messages.map((message, index) => (
-            <div key={message.id || index} className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[85%] p-4 rounded-2xl shadow-sm ${
-                message.isUser
-                  ? 'bg-[var(--message-user)] text-white rounded-br-none'
-                  : 'bg-[var(--message-bot)] text-[var(--text-primary)] rounded-bl-none'
-              }`}>
-                {message.attachment && (
-                  <div className="mb-3 p-2 bg-black/20 rounded-lg text-sm flex items-center gap-2">
-                    <span className="truncate">{message.attachment.name}</span>
-                  </div>
-                )}
-                <div className="whitespace-pre-wrap leading-relaxed">{message.text}</div>
+          messages.map((msg, idx) => (
+            <div key={msg.id || idx} className={`flex ${msg.isUser ? 'justify-end' : 'justify-start'}`}>
+              {!msg.isUser && <div className="w-8 h-8 mr-3 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center border border-[var(--border)] text-xs font-serif">M</div>}
+              <div className={`max-w-[85%] md:max-w-[75%] px-5 py-3.5 rounded-2xl text-sm md:text-base leading-relaxed shadow-sm ${msg.isUser ? 'bg-[var(--accent)] text-white rounded-br-sm' : 'bg-[var(--bg-secondary)] text-[var(--text-primary)] border border-[var(--border)] rounded-bl-sm'}`}>
+                {msg.attachment && <div className="mb-3 p-2 bg-black/10 rounded-lg flex gap-2 text-xs"><span className="truncate">{msg.attachment.name}</span></div>}
+                <div className="whitespace-pre-wrap">{msg.text}</div>
               </div>
             </div>
           ))
         )}
+        {isLoading && (
+          <div className="flex justify-start ml-11">
+            <div className="bg-[var(--bg-secondary)] px-4 py-3 rounded-2xl border border-[var(--border)] flex gap-1.5">
+              <div className="w-2 h-2 bg-[var(--text-secondary)] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+              <div className="w-2 h-2 bg-[var(--text-secondary)] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+              <div className="w-2 h-2 bg-[var(--text-secondary)] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+            </div>
+          </div>
+        )}
+        <div ref={messagesEndRef} />
       </div>
 
-      <div className="p-4 border-t border-[var(--border)] bg-[var(--bg-primary)]">
-        <div className="max-w-3xl mx-auto">
-          {attachedFile && (
-            <div className="mb-3 p-3 bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg flex justify-between">
-              <span className="text-sm truncate">{attachedFile.name}</span>
-              <button onClick={handleFileRemove} className="text-red-500">×</button>
-            </div>
-          )}
-
-          <div className="flex items-end gap-2 p-2 bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg focus-within:ring-2 focus-within:ring-[var(--accent)]">
-            <AttachmentButton onFileAttach={handleFileAttach} />
-            <textarea
-              ref={textareaRef}
-              value={transcribedText || input}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-              placeholder="Ask the Emperor..."
-              className="flex-1 p-2 bg-transparent border-none outline-none resize-none min-h-[40px] max-h-[120px]"
-              rows="1"
-            />
-            <VoiceInputButton isRecording={isRecording} onRecordingStart={handleRecordingStart} onRecordingStop={handleRecordingStop} />
-            <button onClick={handleSend} disabled={(!input.trim() && !transcribedText) || isLoading} className="p-2 bg-[var(--accent)] text-white rounded-lg hover:opacity-90 disabled:opacity-50">
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-              </svg>
-            </button>
+      {/* Input Area */}
+      <div className="flex-none p-4 bg-[var(--bg-primary)]">
+        <div className="max-w-3xl mx-auto bg-[var(--bg-secondary)] border border-[var(--border)] rounded-2xl shadow-sm p-2 flex items-end gap-2 focus-within:ring-2 focus-within:ring-[var(--accent)] transition-all">
+          <AttachmentButton onFileAttach={setAttachedFile} />
+          <div className="flex-1 min-w-0 py-1.5">
+            {attachedFile && <div className="flex items-center gap-2 mb-2 text-xs text-[var(--accent)] bg-[var(--bg-primary)] w-fit px-2 py-1 rounded"><span className="truncate max-w-[150px]">{attachedFile.name}</span><button onClick={() => setAttachedFile(null)} className="hover:text-red-500">×</button></div>}
+            <textarea ref={textareaRef} value={transcribedText || input} onChange={handleInputChange} onKeyDown={handleKeyDown} placeholder={isRecording ? "Listening..." : "Ask the Emperor..."} className="w-full bg-transparent border-none outline-none text-[var(--text-primary)] placeholder-[var(--text-secondary)] resize-none max-h-[150px]" rows={1} style={{ minHeight: '24px' }} />
           </div>
+          <VoiceInputButton isRecording={isRecording} onRecordingStart={() => { setIsRecording(true); setTranscribedText(''); }} onRecordingStop={(text) => { setIsRecording(false); if (text) setTranscribedText(text); }} disabled={isLoading} />
+          <button onClick={handleSend} disabled={(!input.trim() && !transcribedText && !attachedFile) || isLoading} className="p-2 rounded-xl bg-[var(--accent)] text-white hover:opacity-90 shadow-sm disabled:opacity-50">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M12 5l7 7-7 7" /></svg>
+          </button>
         </div>
       </div>
     </div>
