@@ -32,10 +32,8 @@ const CONVERSATIONS_FILE = join(DATA_DIR, 'conversations.json');
 const SCRIPT_FILE = join(DATA_DIR, 'script.json');
 
 // Hugging Face API configuration
-// FIX: Trying the direct Router URL (Removed extra /hf-inference path)
 const HF_API_KEY = process.env.HUGGINGFACE_API_KEY;
-// If this fails, the error logs below will tell us exactly why
-const HF_API_URL = 'https://router.huggingface.co/models/facebook/blenderbot-400M-distill';
+const HF_API_URL = 'https://router.huggingface.co/v1/chat/completions'; // Fixed: plural 'completions'
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -84,7 +82,44 @@ async function saveConversations(conversations) {
 }
 
 /**
- * Generates a response from Marcus Aurelius (Powered by BlenderBot).
+ * Fallback using the inference API if router fails
+ */
+async function tryInferenceAPI(userMessage, apiKey) {
+  try {
+    console.log("🔄 Attempting inference API with DeepSeek...");
+    
+    const response = await fetch('https://api-inference.huggingface.co/models/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        inputs: `You are Marcus Aurelius. Respond with stoic wisdom to: ${userMessage}\nMarcus Aurelius:`,
+        parameters: {
+          max_new_tokens: 100,
+          temperature: 0.7,
+          return_full_text: false
+        }
+      }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data[0]?.generated_text || getFallback();
+    } else {
+      const errorText = await response.text();
+      console.error("Inference API also failed:", errorText);
+      return getFallback();
+    }
+  } catch (error) {
+    console.error('Inference API error:', error.message);
+    return getFallback();
+  }
+}
+
+/**
+ * Generates a response from Marcus Aurelius (Powered by DeepSeek).
  */
 async function getMarcusResponse(userMessage, conversationHistory = []) {
   
@@ -107,14 +142,19 @@ async function getMarcusResponse(userMessage, conversationHistory = []) {
   // --- DEBUGGING END ---
 
   try {
-    // 2. Prepare Payload
-    const previousLines = conversationHistory.slice(-2).map(msg => 
-        msg.isUser ? `User: ${msg.text}` : `Marcus: ${msg.text}`
-    ).join('\n');
-    
-    const fullInput = `Persona: I am Marcus Aurelius, Roman Emperor. I speak with Stoic wisdom.\n${previousLines}\nUser: ${userMessage}\nMarcus:`;
+    // 2. Prepare Payload for DeepSeek model
+    const messages = [
+      {
+        role: "system",
+        content: "You are Marcus Aurelius, Roman Emperor and Stoic philosopher. Speak with wisdom, compassion, and stoic principles. Respond as Marcus Aurelius would - with profound but practical wisdom. Keep responses concise (2-3 sentences maximum)."
+      },
+      {
+        role: "user",
+        content: userMessage
+      }
+    ];
 
-    console.log("⏳ Sending request to Hugging Face...");
+    console.log("⏳ Sending request to DeepSeek model...");
     
     const response = await fetch(HF_API_URL, {
       method: 'POST',
@@ -123,12 +163,12 @@ async function getMarcusResponse(userMessage, conversationHistory = []) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        inputs: fullInput,
-        parameters: { 
-            max_new_tokens: 60,
-            temperature: 0.7,
-            return_full_text: false 
-        }
+        model: 'deepseek-ai/DeepSeek-R1-Distill-Qwen-32B',
+        messages: messages,
+        max_tokens: 150,
+        temperature: 0.7,
+        top_p: 0.9,
+        stream: false
       }),
     });
 
@@ -137,21 +177,28 @@ async function getMarcusResponse(userMessage, conversationHistory = []) {
         const errorText = await response.text();
         console.error("❌ --- API REQUEST FAILED ---");
         console.error(`Status: ${response.status} ${response.statusText}`);
-        console.error("Headers:", JSON.stringify([...response.headers.entries()]));
-        console.error("Body (The Clue):", errorText); // THIS IS WHAT WE NEED
+        console.error("Body:", errorText);
         console.error("-----------------------------");
         
         if (errorText.includes("loading")) {
-             return "My mind is gathering its thoughts... (Model is loading, please try again in 10 seconds).";
+             return "My mind is gathering its thoughts... (Model is loading, please try again in 30 seconds).";
         }
-        throw new Error(`HF Status: ${response.status}`);
+        
+        // Try alternative approach with inference API
+        console.log("🔄 Trying inference API endpoint...");
+        return await tryInferenceAPI(userMessage, HF_API_KEY);
     }
 
     const data = await response.json();
     console.log("✅ AI Response Received");
     
-    let aiText = data[0]?.generated_text || getFallback();
-    return aiText.replace(/User:|Marcus:/g, '').trim();
+    // Extract response from different possible formats
+    let aiText = data.choices?.[0]?.message?.content || 
+                 data[0]?.generated_text || 
+                 data.generated_text || 
+                 getFallback();
+    
+    return aiText.replace(/User:|Marcus:|As an AI assistant,?/g, '').trim();
 
   } catch (error) {
     console.error('⚠️ General AI Error:', error.message);
@@ -164,7 +211,11 @@ async function getMarcusResponse(userMessage, conversationHistory = []) {
 // ==========================================
 
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'Server is running', model: 'Facebook BlenderBot (Debug Mode)' });
+  res.json({ 
+    status: 'Server is running', 
+    model: 'DeepSeek-R1-Distill-Qwen-32B',
+    logic_engine: 'Active'
+  });
 });
 
 app.get('/api/conversations', async (req, res) => {
@@ -271,5 +322,5 @@ app.listen(PORT, async () => {
   await loadScript(SCRIPT_FILE); 
   console.log(`\n🏛️  Marcus Aurelius Server running on port ${PORT}`);
   console.log(`📜 Logic Engine: Loaded from ${SCRIPT_FILE}`);
-  console.log(`🤖 AI Model: Facebook BlenderBot (Diagnostic Mode)`);
+  console.log(`🤖 AI Model: DeepSeek-R1-Distill-Qwen-32B`);
 });
