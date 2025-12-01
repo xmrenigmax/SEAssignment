@@ -26,7 +26,7 @@ export const DataManagement = () => {
       localStorage.removeItem('active-conversation');
       // Force sync to clear UI
       syncConversations();
-      window.location.reload(); 
+      window.location.reload();
     }
   };
 
@@ -38,13 +38,12 @@ export const DataManagement = () => {
       </div>
 
       <div className="grid gap-4">
-        {/* Export Card */}
         <div className="p-6 bg-[var(--bg-primary)] rounded-xl border border-[var(--border)] flex items-center justify-between">
           <div>
             <h3 className="font-semibold text-lg">Export History (FR10)</h3>
             <p className="text-sm text-[var(--text-secondary)] mt-1">Download JSON backup.</p>
           </div>
-          <button 
+          <button
             onClick={handleExport}
             disabled={conversations.length === 0}
             className="px-4 py-2 bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors disabled:opacity-50"
@@ -52,14 +51,12 @@ export const DataManagement = () => {
             Download
           </button>
         </div>
-
-        {/* Delete Card */}
         <div className="p-6 bg-red-50/50 dark:bg-red-900/10 rounded-xl border border-red-100 dark:border-red-900/30 flex items-center justify-between">
           <div>
             <h3 className="font-semibold text-lg text-red-600 dark:text-red-400">Clear Data (FR9)</h3>
             <p className="text-sm text-red-600/70 dark:text-red-400/70 mt-1">Permanently delete all chats.</p>
           </div>
-          <button 
+          <button
             onClick={handleClearAll}
             className="px-4 py-2 bg-white dark:bg-red-950/30 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-50 transition-colors"
           >

@@ -9,7 +9,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ChatProvider } from './context/ChatContext'; // The Shared Brain
 import Landing from './pages/LandingPage';
 
-// Create router with future flags 
+// Create router with future flags
 const router = createBrowserRouter([
   {
     path: "/*",

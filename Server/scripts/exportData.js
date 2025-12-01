@@ -13,7 +13,7 @@ async function exportData() {
     const data = await fs.readFile(CONVERSATIONS_FILE, 'utf8');
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
     const exportFile = join(DATA_DIR, `export-${timestamp}.json`);
-    
+
     await fs.writeFile(exportFile, data);
     console.log(`Data exported to: ${exportFile}`);
   } catch (error) {

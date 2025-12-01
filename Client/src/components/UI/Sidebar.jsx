@@ -23,23 +23,23 @@ import { useChatContext } from '../../context/ChatContext';
  * @param {boolean} props.isMobileOpen - Mobile menu state.
  * @param {Function} props.toggleMobile - Toggles mobile menu.
  */
-export const Sidebar = ({ 
-  activeView, 
-  setActiveView, 
-  isCollapsed, 
-  toggleCollapse, 
-  isMobileOpen, 
-  toggleMobile 
+export const Sidebar = ({
+  activeView,
+  setActiveView,
+  isCollapsed,
+  toggleCollapse,
+  isMobileOpen,
+  toggleMobile
 }) => {
   // Global Chat State from Context
-  const { 
-    conversations, 
-    activeConversationId, 
-    setActiveConversationId, 
-    startNewChat, 
-    deleteConversation, 
+  const {
+    conversations,
+    activeConversationId,
+    setActiveConversationId,
+    startNewChat,
+    deleteConversation,
     syncConversations,
-    loadConversation 
+    loadConversation
   } = useChatContext();
 
   // Local state for filtering history
@@ -49,16 +49,16 @@ export const Sidebar = ({
    * Effect: Syncs conversation list with the backend on mount.
    * Prevents "404 Not Found" errors by ensuring local IDs match server IDs.
    */
-  useEffect(() => { 
-    syncConversations(); 
+  useEffect(() => {
+    syncConversations();
   }, [syncConversations]);
 
   /**
    * Effect: Loads full details (messages) when a conversation is selected.
    */
-  useEffect(() => { 
+  useEffect(() => {
     if (activeConversationId) {
-      loadConversation(activeConversationId); 
+      loadConversation(activeConversationId);
     }
   }, [activeConversationId, loadConversation]);
 
@@ -66,8 +66,8 @@ export const Sidebar = ({
    * Filters the conversation list based on the search input.
    * Checks against Conversation Title and Message Content.
    */
-  const filteredConversations = conversations.filter(conv => 
-    conv.title?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+  const filteredConversations = conversations.filter(conv =>
+    conv.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     (conv.messages?.[0]?.text || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -84,19 +84,16 @@ export const Sidebar = ({
 
   return (
     <>
-      {/* Mobile Overlay (Backdrop) - Only visible on small screens when open */}
       {isMobileOpen && (
-        <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300" 
+        <div
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300"
           onClick={toggleMobile}
           aria-hidden="true"
         />
       )}
-      
-      {/* Main Sidebar Container */}
-      <aside 
+      <aside
         className={`
-          fixed inset-y-0 left-0 z-50 bg-[var(--bg-secondary)] border-r border-[var(--border)] 
+          fixed inset-y-0 left-0 z-50 bg-[var(--bg-secondary)] border-r border-[var(--border)]
           flex flex-col transition-all duration-300 ease-in-out
           /* Mobile Logic */
           ${isMobileOpen ? 'translate-x-0 w-72' : '-translate-x-full md:translate-x-0'}
@@ -105,13 +102,8 @@ export const Sidebar = ({
         `}
         aria-label="Sidebar Navigation"
       >
-        {/* 1. Top Section: Header, Hamburger, New Chat */}
         <div className="p-4 flex flex-col gap-6 flex-shrink-0">
-          
-          {/* Header Row */}
           <div className={`flex items-center ${isCollapsed ? 'justify-center' : 'justify-between'}`}>
-            
-            {/* Brand Name (Hidden when collapsed) */}
             {!isCollapsed && (
               <div className="flex items-center gap-3 pl-1 animate-in fade-in duration-200">
                 <div className="w-8 h-8 bg-[var(--accent)] rounded-lg flex items-center justify-center text-white font-serif font-bold shadow-sm">
@@ -122,10 +114,8 @@ export const Sidebar = ({
                 </h1>
               </div>
             )}
-
-            {/* Hamburger Toggle / Close Button */}
             <div className="flex items-center">
-              <button 
+              <button
                 onClick={toggleCollapse}
                 className="p-2 rounded-full hover:bg-[var(--bg-primary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors hidden md:block"
                 title={isCollapsed ? "Expand menu" : "Collapse menu"}
@@ -138,14 +128,12 @@ export const Sidebar = ({
               <button onClick={toggleMobile} className="md:hidden p-2 text-[var(--text-secondary)]" aria-label="Close menu">✕</button>
             </div>
           </div>
-
-          {/* New Chat Button */}
           <button
             onClick={handleNewChat}
             className={`
               flex items-center gap-3 transition-all duration-200 group
-              ${isCollapsed 
-                ? 'w-10 h-10 justify-center rounded-full bg-[var(--bg-primary)] hover:text-[var(--accent)] mx-auto' 
+              ${isCollapsed
+                ? 'w-10 h-10 justify-center rounded-full bg-[var(--bg-primary)] hover:text-[var(--accent)] mx-auto'
                 : 'px-4 py-3 rounded-xl bg-[var(--bg-primary)] hover:shadow-md text-[var(--text-secondary)] hover:text-[var(--accent)]'
               }
             `}
@@ -158,25 +146,15 @@ export const Sidebar = ({
             {!isCollapsed && <span className="font-medium text-sm whitespace-nowrap">New Chat</span>}
           </button>
         </div>
-
-        {/* 2. Scrollable Content: Search & History */}
         <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar px-3 py-2">
-          
-          {/* Search Bar (Only visible when expanded) */}
           {!isCollapsed && (
             <div className="mb-4 animate-in fade-in duration-200">
               <SidebarSearch searchTerm={searchTerm} onSearchChange={setSearchTerm} />
             </div>
           )}
-
-          {/* Divider */}
           {!isCollapsed && <div className="border-t border-[var(--border)] mx-2 mb-4" role="presentation" />}
-
-          {/* History List (FR8) */}
           {!isCollapsed ? (
             <div className="space-y-1 animate-in fade-in slide-in-from-left-4 duration-300">
-              
-              {/* History Header with Count */}
               <div className="flex items-center justify-between px-3 mb-2">
                 <div className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-widest">
                   {searchTerm ? 'Results' : 'Recent'}
@@ -185,21 +163,17 @@ export const Sidebar = ({
                   {filteredConversations.length}
                 </span>
               </div>
-              
-              {/* Empty State */}
               {filteredConversations.length === 0 && (
                 <p className="px-3 text-xs text-[var(--text-secondary)] opacity-60">No history found.</p>
               )}
-
-              {/* List Items */}
               {filteredConversations.map(conv => (
                 <div
                   key={conv.id}
                   onClick={() => setActiveConversationId(conv.id)}
                   className={`
                     group relative flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-all duration-200 border border-transparent
-                    ${activeConversationId === conv.id 
-                      ? 'bg-[var(--accent)]/10 text-[var(--accent)] font-medium' 
+                    ${activeConversationId === conv.id
+                      ? 'bg-[var(--accent)]/10 text-[var(--accent)] font-medium'
                       : 'text-[var(--text-primary)] hover:bg-[var(--bg-primary)] hover:border-[var(--border)]'
                     }
                   `}
@@ -211,12 +185,10 @@ export const Sidebar = ({
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                   </svg>
                   <span className="truncate flex-1 text-sm">{conv.title || 'New Chat'}</span>
-                  
-                  {/* Delete Button (FR9) */}
                   <button
-                    onClick={(e) => { 
-                      e.stopPropagation(); 
-                      if(window.confirm('Delete this conversation?')) deleteConversation(conv.id); 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if(window.confirm('Delete this conversation?')) deleteConversation(conv.id);
                     }}
                     className="opacity-0 group-hover:opacity-100 p-1.5 text-[var(--text-secondary)] hover:text-red-500 rounded-md transition-all"
                     title="Delete Conversation"
@@ -230,7 +202,6 @@ export const Sidebar = ({
               ))}
             </div>
           ) : (
-            // Collapsed State: Visual Dots (User feedback that history exists)
             <div className="flex flex-col items-center gap-4 mt-2 opacity-30" title="History hidden">
               <div className="w-1.5 h-1.5 bg-[var(--text-secondary)] rounded-full" />
               <div className="w-1.5 h-1.5 bg-[var(--text-secondary)] rounded-full" />
@@ -238,16 +209,9 @@ export const Sidebar = ({
             </div>
           )}
         </div>
-
-        {/* 3. Footer Section: Settings & Theme */}
         <div className={`p-4 border-t border-[var(--border)] flex ${isCollapsed ? 'flex-col gap-4 items-center' : 'items-center justify-between'}`}>
-          {/* Theme Toggle (Pass collapsed state to hide text) */}
           <ThemeToggle isCollapsed={isCollapsed} />
-          
-          {/* Vertical divider only when expanded */}
           {!isCollapsed && <div className="h-6 w-px bg-[var(--border)] mx-1" role="presentation" />}
-          
-          {/* Settings Button (Pass collapsed state to hide text) */}
           <SettingsButton activeView={activeView} setActiveView={setActiveView} isCollapsed={isCollapsed} />
         </div>
       </aside>

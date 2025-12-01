@@ -13,7 +13,7 @@ export const AccessibilitySettings = () => {
   const [highContrast, setHighContrast] = useLocalStorage('high-contrast', false);
   const [dyslexicFont, setDyslexicFont] = useLocalStorage('dyslexic-font', false);
   const [reducedMotion, setReducedMotion] = useLocalStorage('reduced-motion', false);
-  
+
   // NFR8: Theme State (Defaults to true/Dark based on your previous config)
   const [isDark, setIsDark] = useLocalStorage('theme', true);
 
@@ -72,7 +72,7 @@ export const AccessibilitySettings = () => {
         <h2 className="text-2xl font-bold mb-2 text-[var(--text-primary)]">Accessibility & View</h2>
         <p className="text-[var(--text-secondary)]">Customize the interface for your reading comfort.</p>
       </div>
-      
+
       {/* NFR9: Font Size Slider */}
       <div className="p-6 bg-[var(--bg-primary)] rounded-xl border border-[var(--border)]">
         <div className="flex justify-between items-center mb-4">
@@ -81,7 +81,7 @@ export const AccessibilitySettings = () => {
             {fontSize}px
           </span>
         </div>
-        
+
         <div className="flex items-center gap-4">
           <span className="text-xs font-bold text-[var(--text-secondary)]">A</span>
           <input
@@ -102,34 +102,34 @@ export const AccessibilitySettings = () => {
 
       {/* Toggles Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        
+
         {/* NFR8: Dark Mode Toggle */}
-        <ToggleCard 
-          label="Dark Mode" 
+        <ToggleCard
+          label="Dark Mode"
           description="Switch between light and dark themes."
           active={isDark}
           onToggle={() => setIsDark(!isDark)}
         />
 
         {/* NFR7: High Contrast */}
-        <ToggleCard 
-          label="High Contrast" 
+        <ToggleCard
+          label="High Contrast"
           description="Increases visual distinction."
           active={highContrast}
           onToggle={() => setHighContrast(!highContrast)}
         />
 
         {/* New Feature: Dyslexia Support */}
-        <ToggleCard 
-          label="Dyslexia Friendly" 
+        <ToggleCard
+          label="Dyslexia Friendly"
           description="Uses accessible fonts and spacing."
           active={dyslexicFont}
           onToggle={() => setDyslexicFont(!dyslexicFont)}
         />
 
         {/* New Feature: Reduced Motion */}
-        <ToggleCard 
-          label="Reduced Motion" 
+        <ToggleCard
+          label="Reduced Motion"
           description="Disables animations and transitions."
           active={reducedMotion}
           onToggle={() => setReducedMotion(!reducedMotion)}
@@ -141,11 +141,11 @@ export const AccessibilitySettings = () => {
 
 // Helper component for cleaner code
 const ToggleCard = ({ label, description, active, onToggle }) => (
-  <button 
+  <button
     onClick={onToggle}
     className={`p-4 rounded-xl border text-left transition-all duration-200 flex justify-between items-center ${
-      active 
-        ? 'bg-[var(--bg-primary)] border-[var(--accent)] ring-1 ring-[var(--accent)]' 
+      active
+        ? 'bg-[var(--bg-primary)] border-[var(--accent)] ring-1 ring-[var(--accent)]'
         : 'bg-[var(--bg-primary)] border-[var(--border)] hover:border-[var(--text-secondary)]'
     }`}
     aria-pressed={active}
