@@ -1,18 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useChatContext } from '../../context/ChatContext'; 
+import { useChatContext } from '../../context/ChatContext';
 import { useBackendHealth } from '../../hooks/useBackendHealth';
 import { AttachmentButton } from './AttachmentButton';
 import { VoiceInputButton } from './VoiceInputButton';
 
-export const ChatPanel = () => { // No props needed
-  const { 
-    activeConversationId, 
-    getActiveConversation, 
+export const ChatPanel = () => {
+  const {
+    activeConversationId,
+    getActiveConversation,
     addMessageToConversation,
     createNewConversation,
     isLoading
   } = useChatContext();
-  
+
   const { isConnected, isChecking } = useBackendHealth();
   const [input, setInput] = useState('');
   const [attachedFile, setAttachedFile] = useState(null);
@@ -33,12 +33,11 @@ export const ChatPanel = () => { // No props needed
     if (messageText || attachedFile) {
       let conversationId = activeConversationId;
       if (!conversationId) conversationId = await createNewConversation();
-      
-      const userMessage = { 
+
+      const userMessage = {
         text: messageText, isUser: true, timestamp: new Date().toISOString(), attachment: attachedFile
       };
       await addMessageToConversation(conversationId, userMessage);
-      
       setInput(''); setAttachedFile(null); setTranscribedText(''); setIsRecording(false);
       if (textareaRef.current) textareaRef.current.style.height = 'auto';
     }
@@ -58,8 +57,6 @@ export const ChatPanel = () => { // No props needed
 
   return (
     <div className="flex flex-col h-full w-full bg-[var(--bg-primary)] relative">
-      
-      {/* Minimal Header (No Sidebar Button) */}
       <div className="flex-none h-16 border-b border-[var(--border)] bg-[var(--bg-secondary)]/80 backdrop-blur-md flex items-center px-6 justify-between z-10">
         <div className="flex flex-col">
           <h2 className="font-semibold text-[var(--text-primary)]">
@@ -71,8 +68,6 @@ export const ChatPanel = () => { // No props needed
           </span>
         </div>
       </div>
-
-      {/* Messages Area */}
       <div className="flex-1 overflow-y-auto p-4 md:p-8 space-y-6 scroll-smooth">
         {messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-center opacity-60">
@@ -104,8 +99,6 @@ export const ChatPanel = () => { // No props needed
         )}
         <div ref={messagesEndRef} />
       </div>
-
-      {/* Input Area */}
       <div className="flex-none p-4 bg-[var(--bg-primary)]">
         <div className="max-w-3xl mx-auto bg-[var(--bg-secondary)] border border-[var(--border)] rounded-2xl shadow-sm p-2 flex items-end gap-2 focus-within:ring-2 focus-within:ring-[var(--accent)] transition-all">
           <AttachmentButton onFileAttach={setAttachedFile} />

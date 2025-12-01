@@ -18,15 +18,15 @@ export const LegalSettings = () => {
           <span className="font-semibold">Software License</span>
           <span className="text-sm bg-[var(--bg-secondary)] px-2 py-1 rounded border border-[var(--border)]">MIT</span>
         </div>
-        
+
         <div className="flex justify-between items-center pb-4 border-b border-[var(--border)]">
           <span className="font-semibold">AI Model</span>
           <span className="text-sm text-[var(--accent)]">Microsoft Phi-3.5</span>
         </div>
 
         <div className="text-sm text-[var(--text-secondary)] leading-relaxed pt-2">
-          This application connects to the Hugging Face Inference API. 
-          Conversations are processed by third-party AI models. 
+          This application connects to the Hugging Face Inference API.
+          Conversations are processed by third-party AI models.
           Do not share sensitive personal information.
         </div>
       </div>

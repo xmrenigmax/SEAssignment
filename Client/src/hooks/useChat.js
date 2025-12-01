@@ -21,10 +21,10 @@ export const useChat = () => {
         headers: { 'Content-Type': 'application/json', ...options.headers },
         ...options,
       });
-      
+
       if (response.status === 404) throw new Error('NOT_FOUND');
       if (!response.ok) throw new Error(`API error: ${response.status}`);
-      
+
       return await response.json();
     } catch (error) {
       console.error(`API Call Failed [${endpoint}]:`, error);
@@ -40,14 +40,14 @@ export const useChat = () => {
     try {
       // 1. Get the real list from server
       const serverConversations = await apiCall('/conversations');
-      
+
       // 2. Update frontend list (Object.values handles if server sends a map)
-      const validList = Array.isArray(serverConversations) 
-        ? serverConversations 
+      const validList = Array.isArray(serverConversations)
+        ? serverConversations
         : Object.values(serverConversations);
-      
+
       setConversations(validList);
-      
+
       // 3. Verify active conversation still exists
       if (activeConversationId) {
         const exists = validList.find(c => c.id === activeConversationId);
@@ -88,16 +88,16 @@ export const useChat = () => {
         method: 'POST',
         body: JSON.stringify({ text: message.text })
       });
-      
+
       // 2. INSTANT UPDATE: Update the specific conversation in the list
       setConversations(prev => prev.map(conv => {
         if (conv.id === conversationId) {
           // Backend returns the FULL updated conversation object
-          return data.conversation; 
+          return data.conversation;
         }
         return conv;
       }));
-      
+
       setIsLoading(false);
       return data;
     } catch (error) {
@@ -120,7 +120,7 @@ export const useChat = () => {
       setConversations(prev => {
         const index = prev.findIndex(c => c.id === id);
         if (index === -1) return [data, ...prev]; // If missing, add it
-        
+
         // Update existing item
         const newList = [...prev];
         newList[index] = data;

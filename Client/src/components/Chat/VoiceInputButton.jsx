@@ -44,7 +44,7 @@ export const VoiceInputButton = ({ isRecording, onRecordingStart, onRecordingSto
     if (!isRecording) {
       // START RECORDING
       onRecordingStart();
-      
+
       if (recognitionRef.current) {
         // Use Real API
         try {
@@ -71,7 +71,7 @@ export const VoiceInputButton = ({ isRecording, onRecordingStart, onRecordingSto
       if (recognitionRef.current) {
         recognitionRef.current.stop();
         // We define a short delay to allow the final result to process
-        setTimeout(() => onRecordingStop(undefined), 500); 
+        setTimeout(() => onRecordingStop(undefined), 500);
       } else {
         onRecordingStop();
       }
@@ -87,22 +87,20 @@ export const VoiceInputButton = ({ isRecording, onRecordingStart, onRecordingSto
         disabled={disabled}
         className={`
           p-2 rounded-xl transition-all duration-300 relative
-          ${isRecording 
-            ? 'bg-red-500 text-white shadow-lg shadow-red-500/30' 
+          ${isRecording
+            ? 'bg-red-500 text-white shadow-lg shadow-red-500/30'
             : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--accent)]'
           }
           ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
         `}
         aria-label={isRecording ? "Stop recording" : "Start voice input"}
       >
-        {/* Ping Animation Ring */}
         {isRecording && (
           <span className="absolute -top-1 -right-1 flex h-3 w-3">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
           </span>
         )}
-
         {isRecording ? (
           <svg className="w-5 h-5 animate-pulse" fill="currentColor" viewBox="0 0 24 24">
             <rect x="7" y="7" width="10" height="10" rx="2" />
@@ -113,8 +111,6 @@ export const VoiceInputButton = ({ isRecording, onRecordingStart, onRecordingSto
           </svg>
         )}
       </button>
-
-      {/* Tooltip */}
       {isMenuOpen && !isRecording && (
         <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-[var(--text-primary)] text-[var(--bg-primary)] text-xs rounded whitespace-nowrap shadow-lg z-10">
           Voice Input

@@ -33,7 +33,7 @@ const SCRIPT_FILE = join(DATA_DIR, 'script.json');
 
 // Hugging Face API configuration
 const HF_API_KEY = process.env.HUGGINGFACE_API_KEY;
-const HF_API_URL = 'https://router.huggingface.co/v1/chat/completions'; // Fixed: plural 'completions'
+const HF_API_URL = 'https://router.huggingface.co/v1/chat/completions';
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -87,7 +87,7 @@ async function saveConversations(conversations) {
 async function tryInferenceAPI(userMessage, apiKey) {
   try {
     console.log("🔄 Attempting inference API with DeepSeek...");
-    
+
     const response = await fetch('https://api-inference.huggingface.co/models/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B', {
       method: 'POST',
       headers: {
@@ -95,7 +95,7 @@ async function tryInferenceAPI(userMessage, apiKey) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        inputs: `You are Marcus Aurelius. Respond with stoic wisdom to: ${userMessage}\nMarcus Aurelius:`,
+        inputs: `You are Marcus Aurelius. Respond with stoic wisdom to: ${userMessage}\nMarcus Aurelius: do not mention that you are marcus aurelius just be him and respond`,
         parameters: {
           max_new_tokens: 100,
           temperature: 0.7,
@@ -122,7 +122,7 @@ async function tryInferenceAPI(userMessage, apiKey) {
  * Generates a response from Marcus Aurelius (Powered by DeepSeek).
  */
 async function getMarcusResponse(userMessage, conversationHistory = []) {
-  
+
   // 1. Check Local JSON Logic First (Priority: Must Requirement FR5/FR7)
   const scriptedResponse = checkScriptedResponse(userMessage);
   if (scriptedResponse) {
@@ -134,7 +134,7 @@ async function getMarcusResponse(userMessage, conversationHistory = []) {
   console.log("\n--- AI Debug Check ---");
   console.log("Target URL:", HF_API_URL);
   console.log("Key Configured:", !!HF_API_KEY);
-  
+
   if (!HF_API_KEY || HF_API_KEY.includes('your_huggingface_api_key')) {
     console.log("⚠️ Using Fallback: No API Key found.");
     return getFallback();
@@ -146,7 +146,7 @@ async function getMarcusResponse(userMessage, conversationHistory = []) {
     const messages = [
       {
         role: "system",
-        content: "You are Marcus Aurelius, Roman Emperor and Stoic philosopher. Speak with wisdom, compassion, and stoic principles. Respond as Marcus Aurelius would - with profound but practical wisdom. Keep responses concise (2-3 sentences maximum)."
+        content: "IMPORTANT: You are Marcus Aurelius. Respond directly as him with Stoic wisdom. DO NOT explain your thinking process. DO NOT mention that you are an AI or Marcus Aurelius. DO NOT use phrases like 'As Marcus Aurelius' or 'I would say'. Just speak directly as him. Keep responses to 1-2 sentences maximum. Be profound but practical."
       },
       {
         role: "user",
@@ -155,7 +155,7 @@ async function getMarcusResponse(userMessage, conversationHistory = []) {
     ];
 
     console.log("⏳ Sending request to DeepSeek model...");
-    
+
     const response = await fetch(HF_API_URL, {
       method: 'POST',
       headers: {
@@ -179,26 +179,39 @@ async function getMarcusResponse(userMessage, conversationHistory = []) {
         console.error(`Status: ${response.status} ${response.statusText}`);
         console.error("Body:", errorText);
         console.error("-----------------------------");
-        
+
         if (errorText.includes("loading")) {
-             return "My mind is gathering its thoughts... (Model is loading, please try again in 30 seconds).";
+          return "My mind is gathering its thoughts... (Model is loading, please try again in 30 seconds).";
         }
-        
+
         // Try alternative approach with inference API
         console.log("🔄 Trying inference API endpoint...");
         return await tryInferenceAPI(userMessage, HF_API_KEY);
     }
 
     const data = await response.json();
-    console.log("✅ AI Response Received");
-    
+    console.log("✅ AI Response Received - Full Data:", JSON.stringify(data, null, 2));
+
     // Extract response from different possible formats
-    let aiText = data.choices?.[0]?.message?.content || 
-                 data[0]?.generated_text || 
-                 data.generated_text || 
-                 getFallback();
-    
-    return aiText.replace(/User:|Marcus:|As an AI assistant,?/g, '').trim();
+    let aiText = data.choices?.[0]?.message?.content ||
+      data[0]?.generated_text ||
+      data.generated_text ||
+      getFallback();
+      console.log("📝 Raw AI Text:", aiText);
+
+    // Clean up the response - remove thinking processes and explanations
+    const cleanedText = aiText
+      .replace(/<think>.*?<\/think>/g, '') // Remove <think> tags
+      .replace(/\(.*?\)/g, '') // Remove parentheses content
+      .replace(/As (Marcus Aurelius|an AI).*?,/g, '') // Remove AI explanations
+      .replace(/User:|Marcus:|As an AI assistant,?/g, '')
+      .replace(/I think.*?\./g, '') // Remove "I think" explanations
+      .replace(/\b(Firstly|Secondly|Finally).*?\./g, '') // Remove numbered explanations
+      .trim();
+
+    console.log("✨ Cleaned Response:", cleanedText);
+
+    return cleanedText || getFallback();
 
   } catch (error) {
     console.error('⚠️ General AI Error:', error.message);
@@ -211,8 +224,8 @@ async function getMarcusResponse(userMessage, conversationHistory = []) {
 // ==========================================
 
 app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: 'Server is running', 
+  res.json({
+    status: 'Server is running',
     model: 'DeepSeek-R1-Distill-Qwen-32B',
     logic_engine: 'Active'
   });
@@ -276,14 +289,14 @@ app.post('/api/conversations/:conversationId/messages', async (req, res) => {
   try {
     const { conversationId } = req.params;
     const { text } = req.body;
-    
+
     if (!text) return res.status(400).json({ error: 'Message required' });
-    
+
     const conversations = await loadConversations();
     const conversation = conversations[conversationId];
-    
+
     if (!conversation) return res.status(404).json({ error: 'Conversation not found' });
-    
+
     const userMessage = {
       id: uuidv4(),
       text: text,
@@ -291,9 +304,9 @@ app.post('/api/conversations/:conversationId/messages', async (req, res) => {
       timestamp: new Date().toISOString()
     };
     conversation.messages.push(userMessage);
-    
+
     const marcusResponse = await getMarcusResponse(text, conversation.messages);
-    
+
     const marcusMessage = {
       id: uuidv4(),
       text: marcusResponse,
@@ -306,10 +319,10 @@ app.post('/api/conversations/:conversationId/messages', async (req, res) => {
     if (conversation.messages.length <= 2) {
       conversation.title = text.slice(0, 30) + "...";
     }
-    
+
     await saveConversations(conversations);
     res.json({ userMessage, marcusMessage, conversation });
-    
+
   } catch (error) {
     console.error('Error processing message:', error);
     res.status(500).json({ error: 'Failed to process message' });
@@ -319,7 +332,7 @@ app.post('/api/conversations/:conversationId/messages', async (req, res) => {
 // Start server
 app.listen(PORT, async () => {
   await ensureDataDir();
-  await loadScript(SCRIPT_FILE); 
+  await loadScript(SCRIPT_FILE);
   console.log(`\n🏛️  Marcus Aurelius Server running on port ${PORT}`);
   console.log(`📜 Logic Engine: Loaded from ${SCRIPT_FILE}`);
   console.log(`🤖 AI Model: DeepSeek-R1-Distill-Qwen-32B`);

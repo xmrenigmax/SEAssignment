@@ -26,52 +26,42 @@ export const SettingsPanel = ({ onClose }) => {
   }, [onClose]);
 
   return (
-    // Backdrop Overlay
-    <div 
+    <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200"
-      onClick={onClose} // Click outside to close
+      onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-label="Settings"
     >
-      {/* Modal Content */}
-      <div 
+      <div
         className="bg-[var(--bg-secondary)] w-full max-w-4xl max-h-[85vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row border border-[var(--border)] animate-in zoom-in-95 duration-200"
-        onClick={e => e.stopPropagation()} // Prevent close when clicking content
+        onClick={e => e.stopPropagation()}
       >
-        {/* Mobile Header (Close Button) */}
         <div className="md:hidden p-4 border-b border-[var(--border)] flex justify-between items-center">
           <h2 className="font-bold text-lg">Settings</h2>
           <button onClick={onClose} className="p-2 hover:bg-[var(--bg-primary)] rounded-full">
             ✕
           </button>
         </div>
-
-        {/* Sidebar Tabs */}
         <div className="w-full md:w-64 bg-[var(--bg-primary)] p-4 border-r border-[var(--border)] flex flex-col">
           <h2 className="hidden md:block text-2xl font-bold mb-6 px-2">Settings</h2>
           <SettingsTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-          
           <div className="mt-auto hidden md:block pt-6 border-t border-[var(--border)]">
-             <button 
-               onClick={onClose}
-               className="w-full text-left px-4 py-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] rounded-lg transition-colors"
-             >
-               ← Back to Chat
-             </button>
+            <button
+              onClick={onClose}
+              className="w-full text-left px-4 py-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] rounded-lg transition-colors"
+            >
+              ← Back to Chat
+            </button>
           </div>
         </div>
-
-        {/* Main Content Area */}
         <div className="flex-1 p-6 overflow-y-auto">
           {activeTab === 'accessibility' && <AccessibilitySettings />}
           {activeTab === 'data' && <DataManagement />}
           {activeTab === 'legal' && <LegalSettings />}
           {activeTab === 'about' && <AboutSettings />}
         </div>
-
-        {/* Desktop Close Button (Floating) */}
-        <button 
+        <button
           onClick={onClose}
           className="hidden md:flex absolute top-4 right-4 w-8 h-8 items-center justify-center rounded-full bg-[var(--bg-primary)] text-[var(--text-secondary)] hover:text-red-500 hover:bg-red-50 transition-all shadow-sm border border-[var(--border)]"
           aria-label="Close settings"

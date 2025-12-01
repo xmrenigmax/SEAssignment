@@ -34,7 +34,7 @@ export const useBackendHealth = () => {
 
   useEffect(() => {
     checkBackendHealth();
-    const interval = setInterval(checkBackendHealth, 30000); // Poll every 30s
+    const interval = setInterval(checkBackendHealth, 30000);
     return () => clearInterval(interval);
   }, []);
 
