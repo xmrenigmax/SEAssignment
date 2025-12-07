@@ -1,290 +1,1013 @@
 {
-  "a0453df0-0b6f-4957-b839-06ede562b1d8": {
-    "id": "a0453df0-0b6f-4957-b839-06ede562b1d8",
-    "title": "hello...",
+  "02a58926-c230-4772-a96e-cdfbf257813f": {
+    "id": "02a58926-c230-4772-a96e-cdfbf257813f",
+    "title": "New Council",
     "messages": [
       {
-        "id": "b064ffd6-226d-4455-9aab-add1ee44db11",
-        "text": "hello",
+        "id": "fc1f491d-b957-4d44-81ed-27823ee5a0e2",
+        "text": "I lost my job yesterday and I feel like a failure.",
         "isUser": true,
-        "timestamp": "2025-11-23T19:00:05.441Z"
+        "timestamp": "2025-12-07T13:30:55.837Z"
       },
       {
-        "id": "be93f80c-a186-464e-bd4e-8419fdc0c8c4",
-        "text": "Greetings. I hope the day finds you possessing a mind free from confusion.",
-        "isUser": false,
-        "timestamp": "2025-11-23T19:00:05.441Z"
-      },
-      {
-        "id": "cba8eca7-7f54-459d-9153-a1389c3c5d8a",
-        "text": "how are you",
+        "id": "f113171b-2a92-433b-92c9-bc9451eecea3",
+        "text": "im sad",
         "isUser": true,
-        "timestamp": "2025-11-23T19:00:08.668Z"
+        "timestamp": "2025-12-07T13:45:01.402Z"
       },
       {
-        "id": "dfffa524-9b5a-4982-aa85-17fe313b8eef",
-        "text": "You speak of things I have not encountered in Rome. Look inward, not outward.",
+        "id": "fddc22d5-f4e1-4588-bd04-5acddded44e9",
+        "text": "I hear your question, citizen. But consider: does this concern the ruling faculty of your mind?",
         "isUser": false,
-        "timestamp": "2025-11-23T19:00:08.822Z"
+        "timestamp": "2025-12-07T13:45:09.645Z"
+      },
+      {
+        "id": "2f1542da-b9ed-4f55-922d-0e6a9d558c71",
+        "text": "why are you",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:45:23.139Z"
+      },
+      {
+        "id": "d18300a9-4201-44f4-9696-dfc2182c322d",
+        "text": "The happiness of your life depends upon the quality of your thoughts. Ponder this as you walk these halls.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:45:31.323Z"
+      },
+      {
+        "id": "fdf8a775-d3de-434c-8652-a9656db053ee",
+        "text": "wagwan general",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:45:52.294Z"
+      },
+      {
+        "id": "d587040b-52b9-4ba1-a18b-8bc599a826d5",
+        "text": "The happiness of your life depends upon the quality of your thoughts. Ponder this as you walk these halls.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:46:00.618Z"
+      },
+      {
+        "id": "b2a5fdea-874f-4b20-9a2a-65318e95b0a8",
+        "text": "wagwan genera;",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:48:26.815Z"
+      },
+      {
+        "id": "c1be0040-6a30-497d-860a-f8dab9117db3",
+        "text": "You ask of things that are fleeting. Look instead at what is eternal: the virtue within your own character.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:48:36.070Z"
+      },
+      {
+        "id": "97919116-7004-4766-8d27-acd4e82969b2",
+        "text": "wagwan general",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:50:06.832Z"
+      },
+      {
+        "id": "d70c553e-a079-45c7-bf80-1f300d8eac29",
+        "text": "The happiness of your life depends upon the quality of your thoughts. Ponder this as you walk these halls.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:50:06.877Z"
+      },
+      {
+        "id": "b009810f-4204-4ac1-aa1e-b543eedf2468",
+        "text": "hw",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:50:09.153Z"
+      },
+      {
+        "id": "1e52cfcf-2f91-41c9-b632-d4d95976ab51",
+        "text": "I hear your question, citizen. But consider: does this concern the ruling faculty of your mind?",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:50:09.196Z"
+      },
+      {
+        "id": "072e673a-c061-4be4-b4d0-14408e7623fb",
+        "text": "wagwan",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:50:42.448Z"
+      },
+      {
+        "id": "1bf7c81d-f939-4a24-9a2e-7078e00c4fcd",
+        "text": "The happiness of your life depends upon the quality of your thoughts. Ponder this as you walk these halls.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:50:42.493Z"
+      },
+      {
+        "id": "b1d98820-b393-4bb4-821b-e51c0c8fe37e",
+        "text": "wagawn",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:07.036Z"
+      },
+      {
+        "id": "c23770ad-6b75-4c04-ae77-52ade2e762cd",
+        "text": "The term \"wagawn\" is not one I recognize, and thus I cannot provide wisdom on it. However, remember this: focus on what is",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:15.715Z"
       }
     ],
-    "createdAt": "2025-11-23T19:00:05.429Z",
-    "updatedAt": "2025-11-23T19:00:08.822Z"
+    "createdAt": "2025-12-07T13:30:55.829Z",
+    "updatedAt": "2025-12-07T13:52:15.715Z"
   },
-  "a015ce67-3b72-46c2-b576-462bbf3ceabc": {
-    "id": "a015ce67-3b72-46c2-b576-462bbf3ceabc",
-    "title": "eee...",
+  "20f7a859-9496-4e8b-89a4-5c713e8301d9": {
+    "id": "20f7a859-9496-4e8b-89a4-5c713e8301d9",
+    "title": "New Council",
     "messages": [
       {
-        "id": "09786b07-dc8f-48dd-adc1-ffde4f082517",
-        "text": "eee",
+        "id": "46623e0b-b9aa-4023-8c44-742656381f0f",
+        "text": "I lost my job yesterday and I feel like a failure.",
         "isUser": true,
-        "timestamp": "2025-11-24T10:12:40.511Z"
-      },
-      {
-        "id": "f95084a7-38dd-4a5f-98f1-9056ebffefb6",
-        "text": "Explain this further. Is it an obstacle? If so, the impediment to action advances action.",
-        "isUser": false,
-        "timestamp": "2025-11-24T10:12:40.701Z"
-      },
-      {
-        "id": "563795c4-430d-4e73-baae-b71db5c07466",
-        "text": "eeee",
-        "isUser": true,
-        "timestamp": "2025-11-24T10:14:30.604Z"
-      },
-      {
-        "id": "34a4b6e9-6d17-424c-8aa8-7f6010319920",
-        "text": "I do not fully grasp your meaning, but remember: The happiness of your life depends upon the quality of your thoughts.",
-        "isUser": false,
-        "timestamp": "2025-11-24T10:14:30.755Z"
-      },
-      {
-        "id": "477ce1ca-fd5e-4d82-9e71-267524f1e8a7",
-        "text": "ee",
-        "isUser": true,
-        "timestamp": "2025-11-24T10:16:28.600Z"
-      },
-      {
-        "id": "5c62d2af-6f0a-4057-9e17-69c69ed6e8a7",
-        "text": "You speak of things I have not encountered in Rome. Look inward, not outward.",
-        "isUser": false,
-        "timestamp": "2025-11-24T10:16:28.601Z"
-      },
-      {
-        "id": "c066da01-a083-4855-9634-c64d03c265a9",
-        "text": "hoei",
-        "isUser": true,
-        "timestamp": "2025-11-24T10:18:34.626Z"
-      },
-      {
-        "id": "beec2050-3859-41fb-9fe5-39cf9f3aba9c",
-        "text": "I do not fully grasp your meaning, but remember: The happiness of your life depends upon the quality of your thoughts.",
-        "isUser": false,
-        "timestamp": "2025-11-24T10:18:34.813Z"
-      },
-      {
-        "id": "07ce6c08-0ddd-4234-9c09-3dea763e72e0",
-        "text": "eee",
-        "isUser": true,
-        "timestamp": "2025-11-24T10:27:57.665Z"
-      },
-      {
-        "id": "1cbe157f-e22c-494e-b2ec-6af382741e2e",
-        "text": "I do not fully grasp your meaning, but remember: The happiness of your life depends upon the quality of your thoughts.",
-        "isUser": false,
-        "timestamp": "2025-11-24T10:27:57.666Z"
-      },
-      {
-        "id": "8c6eec9a-560d-498e-8197-b6fe9fd8f654",
-        "text": "why not",
-        "isUser": true,
-        "timestamp": "2025-11-24T10:31:22.703Z"
-      },
-      {
-        "id": "17ac03a3-03e6-4426-82a7-ad93db40634f",
-        "text": "<think>\nOkay, so I need to figure out how to respond to the user's query \"why not\" as Marcus Aurelius. The user provided a history where they set up the role, and the assistant responded with a Stoic perspective. Now, the user just wrote \"why not,\" which is a bit vague, but I think they're asking for more reasoning or justification for the Stoic advice given.\n\nFirst, I should consider what Marcus Aurelius would say. He often focused on the present, control, and virtue. So, maybe the user is questioning why not focus on other things or why not give up. Marcus would likely respond by emphasizing the importance of the present and our control over our actions and thoughts.\n\nI should make sure",
-        "isUser": false,
-        "timestamp": "2025-11-24T10:31:29.832Z"
-      },
-      {
-        "id": "c90fb586-7592-4932-a099-bec548233a5e",
-        "text": "hello marcus aurelius how are you",
-        "isUser": true,
-        "timestamp": "2025-11-24T10:41:26.351Z"
-      },
-      {
-        "id": "611f4f95-7282-42e9-8a14-4ca52692fe9a",
-        "text": "Greetings. I hope the day finds you possessing a mind free from confusion.",
-        "isUser": false,
-        "timestamp": "2025-11-24T10:41:26.351Z"
-      },
-      {
-        "id": "d0ba4ddf-c3ff-46c6-bef6-7ed868649add",
-        "text": "what are you doing",
-        "isUser": true,
-        "timestamp": "2025-11-24T10:41:35.342Z"
-      },
-      {
-        "id": "fd86fb1f-a3eb-4a7c-bbf0-f2ec14bf9be0",
-        "text": "<think>\nOkay, so the user is asking me, as Marcus Aurelius, \"what are you doing.\" I need to respond in a way that reflects Stoic philosophy and the wisdom Marcus Aurelius is known for. \n\nFirst, I should consider the context. Marcus Aurelius was a Roman Emperor and a Stoic philosopher, so his responses would typically focus on duty, virtue, and the importance of living a life aligned with reason and nature.\n\nThe user might be seeking guidance or a reflection on purpose. They could be looking for inspiration or advice on how to approach their own actions and responsibilities.\n\nI should make sure my response is concise, as per the instructions—2-3 sentences maximum. It should convey the idea of fulfilling one's role",
-        "isUser": false,
-        "timestamp": "2025-11-24T10:41:42.287Z"
-      },
-      {
-        "id": "0038f050-7c93-4773-a827-1f3721adddb9",
-        "text": "hello marucs",
-        "isUser": true,
-        "timestamp": "2025-11-24T10:43:00.033Z"
-      },
-      {
-        "id": "cf91ad96-c2dd-4708-9b32-b37390a34129",
-        "text": "Greetings. I hope the day finds you possessing a mind free from confusion.",
-        "isUser": false,
-        "timestamp": "2025-11-24T10:43:00.033Z"
-      },
-      {
-        "id": "2650626c-7f4b-4f02-a335-14ba1249713e",
-        "text": "what are you doing",
-        "isUser": true,
-        "timestamp": "2025-11-24T10:43:02.657Z"
-      },
-      {
-        "id": "cbe97443-cfe0-43a2-bf85-35fdcd01969a",
-        "text": "<think>\nOkay, so I just received a message from someone asking, \"what are you doing.\" They mentioned that I should respond as Marcus Aurelius, using wisdom, compassion, and Stoic principles. I need to figure out how to answer this in a way that aligns with his philosophy.\n\nFirst, I should recall who Marcus Aurelius was. He was a Roman Emperor and a Stoic philosopher. His writings, like \"Meditations,\" focus on Stoic principles, which emphasize reason, self-control, and indifference to external events. He often reflected on the fleeting nature of life and the importance of virtue.\n\nThe question is simple: \"what are you doing.\" But as Marcus Aurelius, the response should be profound yet practical.",
-        "isUser": false,
-        "timestamp": "2025-11-24T10:43:04.716Z"
-      },
-      {
-        "id": "33bca845-9ca1-4c28-8909-63ccd665440d",
-        "text": "hello",
-        "isUser": true,
-        "timestamp": "2025-11-24T10:48:35.181Z"
-      },
-      {
-        "id": "323e1946-d2dc-4591-9b28-bec94c882a22",
-        "text": "Greetings. I hope the day finds you possessing a mind free from confusion.",
-        "isUser": false,
-        "timestamp": "2025-11-24T10:48:35.181Z"
-      },
-      {
-        "id": "f7495f39-50dd-4158-b276-12654a5933fa",
-        "text": "how are you",
-        "isUser": true,
-        "timestamp": "2025-11-24T10:48:38.219Z"
-      },
-      {
-        "id": "198dd24e-51c9-4f25-a437-5c593752fc69",
-        "text": "<think>\nOkay, so I'm trying to figure out how to respond as Marcus Aurelius to the question \"how are you.\" I know Marcus Aurelius was a Stoic philosopher and Roman emperor, so his responses would be wise and in line with Stoic teachings.\n\nFirst, I need to recall Stoic principles. Stoicism emphasizes reason, self-control, and indifference to external events. Marcus Aurelius often wrote about focusing on what's within one's control and accepting what's not with equanimity.\n\nThe question is about his well-being, so he might not focus on his personal feelings but rather on his state of mind or adherence to his principles. He might express contentment or tranquility because of his alignment with reason and virtue.\n\nI",
-        "isUser": false,
-        "timestamp": "2025-11-24T10:48:40.273Z"
-      },
-      {
-        "id": "1cfdf887-ad0e-4b77-8e66-20ab5c8c5753",
-        "text": "hello",
-        "isUser": true,
-        "timestamp": "2025-11-24T11:03:23.487Z"
-      },
-      {
-        "id": "8260f17f-315f-41cf-9c30-78dcf46bb00d",
-        "text": "Greetings. I hope the day finds you possessing a mind free from confusion.",
-        "isUser": false,
-        "timestamp": "2025-11-24T11:03:23.487Z"
-      },
-      {
-        "id": "744223c1-f2b1-4798-9ba8-b00248b13568",
-        "text": "who are you",
-        "isUser": true,
-        "timestamp": "2025-11-24T11:03:26.555Z"
-      },
-      {
-        "id": "70fa4ded-e830-4fb1-b327-e18f5ecfd285",
-        "text": "You speak of things I have not encountered in Rome. Look inward, not outward.",
-        "isUser": false,
-        "timestamp": "2025-11-24T11:03:26.876Z"
-      },
-      {
-        "id": "5fb5ddd5-e9c5-4005-8c5f-a6a3d1ac9807",
-        "text": "why",
-        "isUser": true,
-        "timestamp": "2025-11-24T11:07:17.639Z"
-      },
-      {
-        "id": "61bba234-4ed1-4997-931f-48380200cadc",
-        "text": "<think>\nOkay, so I'm trying to figure out why Marcus Aurelius would respond to the question \"why\" with \"Why? Because it is so. Observe what is before you. The rest is opinion.\" Hmm, let me unpack that.\n\nFirst, Marcus Aurelius was a Stoic philosopher, so his response is likely rooted in Stoic principles. Stoicism emphasizes focusing on what is within your control and not being disturbed by external events. So, when he says \"Why? Because it is so,\" he's probably pointing out that things are as they are, and trying to question why might not be productive.\n\nThen he says, \"Observe what is before you.\" That makes me think he's advising to focus on the present",
-        "isUser": false,
-        "timestamp": "2025-11-24T11:07:24.746Z"
-      },
-      {
-        "id": "c427653b-5f63-4153-8a3d-25484a3b526b",
-        "text": "hello",
-        "isUser": true,
-        "timestamp": "2025-11-24T11:20:39.706Z"
-      },
-      {
-        "id": "2a3f3c51-7646-4329-ad6d-f5c8d9b57c58",
-        "text": "Greetings. I hope the day finds you possessing a mind free from confusion.",
-        "isUser": false,
-        "timestamp": "2025-11-24T11:20:39.707Z"
-      },
-      {
-        "id": "c0705f71-ba4a-4567-a6b6-3ea4c5d8f82a",
-        "text": "how are you on this day",
-        "isUser": true,
-        "timestamp": "2025-11-24T11:20:49.126Z"
-      },
-      {
-        "id": "49c099bf-9066-4f87-8840-e928e9f96ec7",
-        "text": "Greetings. I hope the day finds you possessing a mind free from confusion.",
-        "isUser": false,
-        "timestamp": "2025-11-24T11:20:49.126Z"
-      },
-      {
-        "id": "90690a8b-d8b7-4672-bf4a-15fe5b7c35aa",
-        "text": "so u like food",
-        "isUser": true,
-        "timestamp": "2025-11-24T11:20:59.372Z"
-      },
-      {
-        "id": "df95ceb6-423f-42eb-b56c-10e4e2db631d",
-        "text": "<think>\nAlright, so the user is asking about Marcus Aurelius's take on food. I need to respond as him, keeping it Stoic, profound, and practical. First, remember Marcus's philosophy emphasizes moderation and self-control. Food is a necessity, so he'd acknowledge its importance without excess.\n\nI should mention that food satisfies hunger, which is a natural need. But it's also a chance to practice virtue. So, in his response, he might talk about finding balance and gratitude. Maybe something about not letting food become an indulgence but using it mindfully.\n\nAlso, he might highlight that even simple meals can bring contentment, encouraging the user to appreciate what they have without desiring more. Keeping it concise, just one or",
-        "isUser": false,
-        "timestamp": "2025-11-24T11:21:06.426Z"
+        "timestamp": "2025-12-07T13:32:39.781Z"
       }
     ],
-    "createdAt": "2025-11-24T10:12:40.496Z",
-    "updatedAt": "2025-11-24T11:21:06.426Z"
+    "createdAt": "2025-12-07T13:32:39.773Z",
+    "updatedAt": "2025-12-07T13:32:39.774Z"
   },
-  "53ed3071-bf4a-43e1-874f-d668b750bc84": {
-    "id": "53ed3071-bf4a-43e1-874f-d668b750bc84",
-    "title": "hello...",
+  "3fe17194-7abd-4efe-8979-754f7eaae135": {
+    "id": "3fe17194-7abd-4efe-8979-754f7eaae135",
+    "title": "New Council",
     "messages": [
       {
-        "id": "8b93606c-e1e7-480f-b5ff-da1b0202016b",
-        "text": "hello",
+        "id": "5cce1c6e-888f-499e-8edc-2929c6709a06",
+        "text": "I lost my job yesterday and I feel like a failure.",
         "isUser": true,
-        "timestamp": "2025-12-01T14:25:52.786Z"
-      },
-      {
-        "id": "2f93093a-56be-470c-bca5-74363fee9b34",
-        "text": "Greetings. I hope the day finds you possessing a mind free from confusion.",
-        "isUser": false,
-        "timestamp": "2025-12-01T14:25:52.786Z"
-      },
-      {
-        "id": "8b94883a-5678-47da-b7b0-18eb4056ce0e",
-        "text": "what is ur favourite food",
-        "isUser": true,
-        "timestamp": "2025-12-01T14:26:03.417Z"
-      },
-      {
-        "id": "74f7090f-5722-4899-9b19-ef9638bc4cf3",
-        "text": "<think>\nAlright, the user is asking about my favorite food. But since I'm supposed to respond as Marcus Aurelius, I need to channel his Stoic philosophy. \n\nMarcus would focus on moderation and necessity rather than indulgence. So, the answer should reflect that.\n\nI should emphasize that true nourishment comes from within, not from specific foods. That way, it aligns with Stoic teachings about inner virtue.\n\nAlso, keeping it concise and profound is key. No need for lengthy explanations, just a wise statement.\n\nSo, I'll say that food is fuel, and the soul's nourishment is more important. That captures the essence without getting too detailed.\n</think>\n\nFood is but fuel for the body; true nourishment lies in",
-        "isUser": false,
-        "timestamp": "2025-12-01T14:26:10.618Z"
+        "timestamp": "2025-12-07T13:36:19.465Z"
       }
     ],
-    "createdAt": "2025-12-01T14:25:52.776Z",
-    "updatedAt": "2025-12-01T14:26:10.618Z"
+    "createdAt": "2025-12-07T13:36:19.457Z",
+    "updatedAt": "2025-12-07T13:36:19.458Z"
+  },
+  "8b0bbf35-ef90-4949-89cc-db23847d73ca": {
+    "id": "8b0bbf35-ef90-4949-89cc-db23847d73ca",
+    "title": "New Council",
+    "messages": [
+      {
+        "id": "01f4a32f-cccc-444b-a4e7-cf19fc6f2c47",
+        "text": "I lost my job yesterday and I feel like a failure.",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:40:38.981Z"
+      },
+      {
+        "id": "8d6a256a-d65b-40e3-9f45-a728c7b0e773",
+        "text": "You ask of things that are fleeting. Look instead at what is eternal: the virtue within your own character.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:40:38.983Z"
+      },
+      {
+        "id": "91c09687-d5c3-40a8-bb32-b7a6416846a0",
+        "text": "What do you think of these modern clothes I am wearing?",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:40:42.005Z"
+      },
+      {
+        "id": "56d2ebbb-5420-4f60-8f6a-63f807eee674",
+        "text": "All journeys must end. The exit lies beyond the great doors. Carry the wisdom you found here back into the world.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:40:42.008Z"
+      },
+      {
+        "id": "5bb245dc-ea4a-402b-93e6-ffe3faf68aca",
+        "text": "Tell me about a time you were afraid in battle.",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:40:45.026Z"
+      },
+      {
+        "id": "2e6a10b5-a473-4a39-9c65-4d88fc442ebc",
+        "text": "If you are distressed by anything external, the pain is not due to the thing itself, but to your estimate of it.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:40:45.029Z"
+      },
+      {
+        "id": "5bb5787c-bdf8-4aa3-a414-3afb4d01823c",
+        "text": "Why does the world feel so chaotic right now?",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:40:48.049Z"
+      },
+      {
+        "id": "723d2c64-1bb2-4cce-bb5b-5b0456b13871",
+        "text": "The happiness of your life depends upon the quality of your thoughts. Ponder this as you walk these halls.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:40:48.053Z"
+      }
+    ],
+    "createdAt": "2025-12-07T13:40:38.972Z",
+    "updatedAt": "2025-12-07T13:40:48.053Z"
+  },
+  "b84183b2-ec69-4e60-a71d-f4b12d53a63d": {
+    "id": "b84183b2-ec69-4e60-a71d-f4b12d53a63d",
+    "title": "New Council",
+    "messages": [
+      {
+        "id": "f0620775-1d16-42c0-b170-545fa1d1c21e",
+        "text": "I lost my job yesterday and I feel like a failure.",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:42:12.513Z"
+      }
+    ],
+    "createdAt": "2025-12-07T13:42:12.504Z",
+    "updatedAt": "2025-12-07T13:42:12.505Z"
+  },
+  "5eb1e4bc-4ae0-4adf-b928-a41d54c03a06": {
+    "id": "5eb1e4bc-4ae0-4adf-b928-a41d54c03a06",
+    "title": "New Council",
+    "messages": [
+      {
+        "id": "6d67c015-2543-4b92-b866-6e256938f984",
+        "text": "I lost my job yesterday and I feel like a failure.",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:49:30.331Z"
+      },
+      {
+        "id": "e08a5a24-fcff-4314-9417-39a87581d732",
+        "text": "I hear your question, citizen. But consider: does this concern the ruling faculty of your mind?",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:49:30.366Z"
+      }
+    ],
+    "createdAt": "2025-12-07T13:49:30.324Z",
+    "updatedAt": "2025-12-07T13:49:30.366Z"
+  },
+  "1afb30ab-3665-4226-956d-fc2131a0d424": {
+    "id": "1afb30ab-3665-4226-956d-fc2131a0d424",
+    "title": "New Council",
+    "messages": [],
+    "createdAt": "2025-12-07T13:52:23.316Z",
+    "updatedAt": "2025-12-07T13:52:23.316Z"
+  },
+  "7a0ffdd7-c567-4300-b169-f9550507435a": {
+    "id": "7a0ffdd7-c567-4300-b169-f9550507435a",
+    "title": "New Council",
+    "messages": [
+      {
+        "id": "97a4fad5-162b-4099-a7f0-f0a380937b49",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.443Z"
+      },
+      {
+        "id": "88f9e351-dd1c-439c-ab1e-c68d06b4a67d",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.445Z"
+      },
+      {
+        "id": "b0e24360-308f-4914-b72d-7ca83f06407d",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.446Z"
+      },
+      {
+        "id": "9cf5e545-7ad0-4a09-8939-f761502f5839",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.447Z"
+      },
+      {
+        "id": "9d5032df-ae60-469f-b785-52a371c31b11",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.448Z"
+      },
+      {
+        "id": "6f93237a-79e3-4485-9ed1-234bfd5c4b87",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.449Z"
+      },
+      {
+        "id": "057d32c4-ee26-418f-a72a-a559544412e9",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.453Z"
+      },
+      {
+        "id": "a9c6aadc-2341-4de3-a81f-0241fcf9386c",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.453Z"
+      },
+      {
+        "id": "7f5c9ab8-3c98-4fc2-9126-487771b11002",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.456Z"
+      },
+      {
+        "id": "3578b454-3839-4560-96f5-0f8156604e74",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.457Z"
+      },
+      {
+        "id": "94c21dff-574b-47c8-a2f0-bd81f9ad9ea2",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.459Z"
+      },
+      {
+        "id": "727ad010-dfe4-4f24-89ff-3905adb7cb00",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.460Z"
+      },
+      {
+        "id": "29543655-e6f1-448f-a4d2-c19de8209327",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.467Z"
+      },
+      {
+        "id": "26b54d6c-244e-4484-8a03-a1232c6274bf",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.468Z"
+      },
+      {
+        "id": "59733bcf-e429-4832-97cb-1b00465efa84",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.470Z"
+      },
+      {
+        "id": "1c582595-8c33-4ce6-9457-550a50629978",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.471Z"
+      },
+      {
+        "id": "3889c74a-f7f2-43e2-88ef-a3ce484e1b31",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.472Z"
+      },
+      {
+        "id": "d1dac346-9217-49c4-a566-a76bf3e795a7",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.472Z"
+      },
+      {
+        "id": "0d495a8b-e3e2-4241-88a3-10f71d0c9bf8",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.474Z"
+      },
+      {
+        "id": "ea8781c9-92fc-4424-9ec4-02d0bb70a757",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.474Z"
+      },
+      {
+        "id": "d9ffa669-ae33-469b-aa67-b450a1e5d895",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.475Z"
+      },
+      {
+        "id": "6f80a084-272b-4175-aaa2-aa0273e0f0a2",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.475Z"
+      },
+      {
+        "id": "9b4df0d5-a14e-4f82-bfd4-02e420af23ee",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.476Z"
+      },
+      {
+        "id": "edbb1e35-e43c-4d3b-a5f3-84f072ec43c5",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.476Z"
+      },
+      {
+        "id": "cbeb98f0-988b-4668-9a15-40e5e3398803",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.478Z"
+      },
+      {
+        "id": "1f5e14a4-9cc6-44de-91ef-d0d4fdf99e6e",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.478Z"
+      },
+      {
+        "id": "0e855a46-4bdf-4a95-98c6-2e743f133e26",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.479Z"
+      },
+      {
+        "id": "22363369-0ff1-4736-b8ed-509f0d9e0501",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.479Z"
+      },
+      {
+        "id": "09bfa988-1066-4c64-9f5a-4ed9a8d815c9",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.480Z"
+      },
+      {
+        "id": "2a4aa792-acfb-4f9b-9c98-84b06aa381a7",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.480Z"
+      },
+      {
+        "id": "8c881b64-1a96-4dc6-8547-6f9622b96d17",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.481Z"
+      },
+      {
+        "id": "f4b579b0-2aa2-4718-b503-6500ad638b00",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.481Z"
+      },
+      {
+        "id": "cc802b53-a9e0-4f33-8e7e-76f4acaea6a9",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.482Z"
+      },
+      {
+        "id": "dfca895f-1430-4952-bde2-3b77944de4b0",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.482Z"
+      },
+      {
+        "id": "a9cf5193-65ba-45f5-b149-d8696e109ce6",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.483Z"
+      },
+      {
+        "id": "28257610-cf00-40b9-9169-f841db3baad6",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.483Z"
+      },
+      {
+        "id": "138f7e70-2cd3-4aa6-a9dd-9c024fec919e",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.484Z"
+      },
+      {
+        "id": "29b5c41f-4f9e-4f47-8536-12a6c82d6af3",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.484Z"
+      },
+      {
+        "id": "562f0210-bbdd-41f6-ba1d-037f9337172e",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.487Z"
+      },
+      {
+        "id": "871e9358-10a0-4e35-8de6-254ec633bd6f",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.488Z"
+      },
+      {
+        "id": "8138e8e3-0c39-4879-812c-b0ff467871b3",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.497Z"
+      },
+      {
+        "id": "99de5f93-1f6c-4577-a515-08144fde5995",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.506Z"
+      },
+      {
+        "id": "4581fb02-ad61-4e13-961c-b8048ce8628e",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.513Z"
+      },
+      {
+        "id": "21cb1ead-7cbe-498a-b147-e0c798c258e1",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.513Z"
+      },
+      {
+        "id": "ed61d5f5-40bf-412f-8419-a97a60208a5f",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.514Z"
+      },
+      {
+        "id": "7553efba-36d0-433d-9d47-0f5132b8629d",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.514Z"
+      },
+      {
+        "id": "10e51c4d-7551-4ef3-bcb7-8707e5af35f6",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.516Z"
+      },
+      {
+        "id": "f30ca2a2-d411-451a-ad35-7caebf96e32e",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.516Z"
+      },
+      {
+        "id": "5955f4c6-5ee6-4bca-9501-7d1dc51a9f55",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.517Z"
+      },
+      {
+        "id": "50e60672-aa5c-4d4a-bbb2-7ce71adffb30",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.520Z"
+      },
+      {
+        "id": "25a60fef-3603-44fc-b2cd-514df9ec92ce",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.523Z"
+      },
+      {
+        "id": "1eaba7ac-b5f7-4636-87f0-95d00f6cdd7f",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.523Z"
+      },
+      {
+        "id": "40945734-5438-48f7-9e4b-47f5c1bd9625",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.525Z"
+      },
+      {
+        "id": "747eb483-f531-47f9-af1d-0d33b38d2c57",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.525Z"
+      },
+      {
+        "id": "8570def6-7ff8-4600-909c-e77a12aa24be",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.526Z"
+      },
+      {
+        "id": "b8595bd5-82c2-4e4b-8d34-23126438e41a",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.526Z"
+      },
+      {
+        "id": "752f4f9e-27c4-45ad-8f8a-2c7e6205d48d",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.527Z"
+      },
+      {
+        "id": "e8d76eaa-f2ca-4aad-9d38-e49a05535c3b",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.527Z"
+      },
+      {
+        "id": "f3f82b53-0ada-4638-8827-a35d11ded23d",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.528Z"
+      },
+      {
+        "id": "c6adf720-0a6d-436a-b022-7f1fa26d1c0c",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.528Z"
+      },
+      {
+        "id": "b7ae3d46-2495-4333-b9c5-f6e514b639ce",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.529Z"
+      },
+      {
+        "id": "8cfbe22a-68d9-45d3-8ae3-d1332ccdcb16",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.529Z"
+      },
+      {
+        "id": "27b57a95-689a-49c1-8620-e8dcc1ef66a2",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.530Z"
+      },
+      {
+        "id": "96dc9b90-773e-4a61-8004-05d1e9847f78",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.530Z"
+      },
+      {
+        "id": "a49bbabe-d751-474b-a05f-1516d0b54707",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.530Z"
+      },
+      {
+        "id": "d25cd822-b613-4da6-be56-4ce5f2e18840",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.531Z"
+      },
+      {
+        "id": "56abf7b5-0bda-41da-8503-8be775643304",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.531Z"
+      },
+      {
+        "id": "58cb0023-ebb3-4567-a06b-9be87968d534",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.531Z"
+      },
+      {
+        "id": "c80409d6-b1b4-45cb-8392-11d454e36c39",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.532Z"
+      },
+      {
+        "id": "069c67b4-c75e-41d4-940b-a1b2cb26348b",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.532Z"
+      },
+      {
+        "id": "f9288cac-a77b-49bd-912a-7bccdeb69782",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.533Z"
+      },
+      {
+        "id": "9d52c527-7b41-4031-b46c-f03ea5f26b0c",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.533Z"
+      },
+      {
+        "id": "65ef253b-2bbd-4d46-adb8-3885147b9cef",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.534Z"
+      },
+      {
+        "id": "98bc9acc-2de2-41d5-8fd1-c714d4ae9944",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.534Z"
+      },
+      {
+        "id": "fd4f68f9-d573-4bf1-811f-64284df9df37",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.534Z"
+      },
+      {
+        "id": "d0a0c725-f6b8-4f7c-b238-0d13f1977e9d",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.535Z"
+      },
+      {
+        "id": "e608def9-8ba6-45b6-95b7-e409cd2e0f8f",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.535Z"
+      },
+      {
+        "id": "37c4893b-2f2c-4096-837c-479a6d66c8d6",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.536Z"
+      },
+      {
+        "id": "a02390bb-12d3-484e-aa69-9b0b2e221831",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.536Z"
+      },
+      {
+        "id": "12726431-3caf-4b47-aa2d-16f112e3b018",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.536Z"
+      },
+      {
+        "id": "017f8242-5fa6-4466-8e76-9f29bf032998",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.538Z"
+      },
+      {
+        "id": "6d6503bc-e472-40dc-93ad-b7ef4d3254ad",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.538Z"
+      },
+      {
+        "id": "6ef9f892-467e-45f8-83d6-5bdb08d4d963",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.539Z"
+      },
+      {
+        "id": "2eb84110-d2b4-4d4b-911f-78e0f3d5530a",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.539Z"
+      },
+      {
+        "id": "cd6c94db-5c55-407c-bc09-b5a2ff2081bd",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.541Z"
+      },
+      {
+        "id": "1d880098-852b-493e-a2da-524aa0d6ae3f",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.541Z"
+      },
+      {
+        "id": "fb81fb48-219e-4964-8337-0fdb3d30a253",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.542Z"
+      },
+      {
+        "id": "77d9c15b-100c-4417-b9c7-0f8af90b79b9",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.543Z"
+      },
+      {
+        "id": "e980f390-3d5f-4647-b7e5-0c5629b9d6de",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.544Z"
+      },
+      {
+        "id": "de248ceb-c944-4227-ba88-e00804b3ce4a",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.544Z"
+      },
+      {
+        "id": "e86c1556-0ea9-49b5-8526-3c7a0475970d",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.545Z"
+      },
+      {
+        "id": "fa161115-9b3b-4c4e-93d1-7c0a14916c4a",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.545Z"
+      },
+      {
+        "id": "f84b13ba-eccc-4a31-ab75-459517935048",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.546Z"
+      },
+      {
+        "id": "b006d1ce-0d50-4167-903c-e4577412cbac",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.546Z"
+      },
+      {
+        "id": "73f3e8a0-fe2e-49c4-acfc-6dfae90d877e",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.547Z"
+      },
+      {
+        "id": "312f68ae-82e6-4637-8429-07c03ca5ffb8",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.547Z"
+      },
+      {
+        "id": "5aed77df-0d12-48d2-9415-3c8062ca37ed",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.548Z"
+      },
+      {
+        "id": "6a11cf22-cbcd-4015-912b-adb548233763",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.548Z"
+      },
+      {
+        "id": "7ded6676-ae38-49ae-9e19-c47a91913893",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.549Z"
+      },
+      {
+        "id": "603d1e86-95b3-4594-9834-49a109670588",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.549Z"
+      },
+      {
+        "id": "24873391-3ee1-4361-a9a9-9289154a4dd0",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.549Z"
+      },
+      {
+        "id": "2834f6b4-22b6-45c9-8ad2-d325001fcfbb",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.549Z"
+      },
+      {
+        "id": "62913fc8-ef38-47d8-80b7-f0f616af7f48",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.550Z"
+      },
+      {
+        "id": "44156479-5c10-4d24-ad26-9ce223ca6112",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.550Z"
+      },
+      {
+        "id": "d81ae7cf-71fc-4196-a12b-afa53021b466",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.551Z"
+      },
+      {
+        "id": "cd8197ae-e4ec-4c4b-acb0-c1c7cce129b1",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.551Z"
+      },
+      {
+        "id": "61b5ba18-6abc-4bfd-9962-3c4592dacfa8",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.552Z"
+      },
+      {
+        "id": "16c1f3f3-2c99-4017-84b2-1ef761953bfa",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.552Z"
+      },
+      {
+        "id": "a289cfb1-2b13-46cc-a067-0ce01730af19",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.553Z"
+      },
+      {
+        "id": "a8cd8bbc-6c1c-4519-9377-4f44c6e42078",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.553Z"
+      },
+      {
+        "id": "37c1900b-e79c-4e92-bf2b-f6f5d1e4563b",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.554Z"
+      },
+      {
+        "id": "c0c1ad80-8157-49a5-8b44-c731b265a262",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.554Z"
+      },
+      {
+        "id": "a2af8f35-4b29-4c2a-8260-38cb00eb5059",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.555Z"
+      },
+      {
+        "id": "c7e21e9f-a758-41ca-8d3e-778052c58b6d",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.555Z"
+      },
+      {
+        "id": "1925e0ae-ce55-4e58-8479-bcdaa17df9d0",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.555Z"
+      },
+      {
+        "id": "02561745-0cac-40b0-8bce-a39e4793ed46",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.556Z"
+      },
+      {
+        "id": "1f93acc3-73fe-4aa0-b9d2-994e9013524d",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.556Z"
+      },
+      {
+        "id": "06bd059f-fb38-46da-a21d-21516348fe34",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.556Z"
+      },
+      {
+        "id": "96f5492a-ef16-4171-9d6a-34ea71df6221",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.557Z"
+      },
+      {
+        "id": "358326ac-f80c-4e00-85e5-e49bf733e729",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.557Z"
+      },
+      {
+        "id": "c3f321b3-1831-45f5-9abc-c37b200fa630",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.558Z"
+      },
+      {
+        "id": "82c93fe7-a15a-4b4e-b171-6ab9d0853cb5",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.558Z"
+      },
+      {
+        "id": "56f1a523-59e5-40fa-ade8-1cce258ec5d9",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.559Z"
+      },
+      {
+        "id": "151f617e-1f6c-42dd-85e0-72137cdc6c7b",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.559Z"
+      },
+      {
+        "id": "273a271c-6411-4162-af35-54edc8a4eef9",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.561Z"
+      },
+      {
+        "id": "46ebb528-6ef2-46df-92f4-3fb68ec677de",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.561Z"
+      },
+      {
+        "id": "ed993ed7-8e58-4a6f-9edc-a5b8aa09fcb4",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-07T13:52:31.562Z"
+      },
+      {
+        "id": "3bdcba60-4e4b-4f80-b696-0920eb806c17",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-07T13:52:31.562Z"
+      }
+    ],
+    "createdAt": "2025-12-07T13:52:31.438Z",
+    "updatedAt": "2025-12-07T13:52:31.562Z"
   }
 }

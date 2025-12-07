@@ -1,7 +1,0 @@
-scripted response 
-greetings text and probability
-weather text and probability 
-
-should have key responses based on whatever marcus aurelius does
-
-a long decision tree based on results

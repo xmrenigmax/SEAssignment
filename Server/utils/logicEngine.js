@@ -1,70 +1,96 @@
-import fs from 'fs/promises';
-import { join } from 'path';
-
 /**
- * @typedef {Object} LogicRule
- * @property {string} id - Unique identifier for the rule
- * @property {string[]} keywords - Array of keywords to match
- * @property {string} response - The static response text
+ * @file logicEngine.js
+ * @description Core logic for loading and matching script rules.
+ * Features NLP (Stemming & Fuzzy Matching) and robust probability weighting.
+ * @author Group 1
  */
 
+import fs from 'fs/promises';
+import natural from 'natural';
+
+// Initialize NLP tools
+const tokenizer = new natural.WordTokenizer();
+const stemmer = natural.PorterStemmer;
+
 /**
- * @typedef {Object} ScriptData
- * @property {string} persona - The name of the persona
- * @property {string[]} fallbacks - Array of fallback messages
- * @property {LogicRule[]} rules - Array of logic rules
+ * @typedef {Object} ResponseOption
+ * @property {number} probability - The likelihood of this response (0.0 - 1.0).
+ * @property {string} response - The text content.
  */
 
 let scriptData = null;
 
-/**
- * Loads the JSON script from the filesystem.
- * @param {string} filePath - Path to the script.json file.
- * @returns {Promise<void>}
- */
 export async function loadScript(filePath) {
   try {
     const data = await fs.readFile(filePath, 'utf8');
     scriptData = JSON.parse(data);
-    console.log('✅ JSON Logic Engine Loaded');
+    console.log('JSON Logic Engine Loaded (with NLP)');
   } catch (error) {
-    console.error('❌ Error loading JSON script:', error);
-    // Initialize with safe defaults if file fails
-    scriptData = { rules: [], fallbacks: ["Logic not loaded."] };
+    console.error('Error loading JSON script:', error);
+    scriptData = { rules: [], general_responses: [] };
   }
 }
 
 /**
- * Checks if the user input matches any defined keyword rules in the JSON.
- * This satisfies FR5 (JSON Scripting) and FR7 (Modern Tech Filtering).
- * * @param {string} input - The user's raw message.
- * @returns {string|null} - Returns the scripted response or null if no match found.
+ * robustRandomSelect
+ * Normalizes probabilities to ensure they sum to 1, then picks based on weight.
+ * Fixes the "always getting the same answer" bug.
+ */
+function robustRandomSelect(pool) {
+  if (!pool || pool.length === 0) return null;
+
+  // 1. Calculate total weight (in case json doesn't sum to 1.0)
+  const totalWeight = pool.reduce((sum, item) => sum + (item.probability || 0), 0);
+
+  // 2. Generate random point within that weight
+  let randomPoint = Math.random() * totalWeight;
+
+  // 3. Iterate and subtract until we hit the bracket
+  for (const option of pool) {
+    const weight = option.probability || 0;
+    if (randomPoint < weight) {
+      return option.response;
+    }
+    randomPoint -= weight;
+  }
+
+  // Fallback (mathematical edge case)
+  return pool[0].response;
+}
+
+/**
+ * Checks if input matches rules using NLP (Stemming + Fuzzy Match).
+ * @param {string} input - User message
  */
 export function checkScriptedResponse(input) {
-  if (!scriptData) return null;
-
-  const normalizedInput = input.toLowerCase();
-
-  // Iterate through rules to find a keyword match
+  if (!scriptData || !scriptData.rules) return null;
+  // Tokenize and Stem the user input
+  const inputTokens = tokenizer.tokenize(input.toLowerCase());
+  const inputStems = inputTokens.map(t => stemmer.stem(t));
   for (const rule of scriptData.rules) {
-    const hasMatch = rule.keywords.some(keyword => 
-      normalizedInput.includes(keyword.toLowerCase())
-    );
-
-    if (hasMatch) {
-      return rule.response;
+    const matchFound = rule.keywords.some(keyword => {
+      const keywordLower = keyword.toLowerCase();
+      // Direct Stem Match
+      const keywordStem = stemmer.stem(keywordLower);
+      if (inputStems.includes(keywordStem)) return true;
+      // Fuzzy Match
+      return inputTokens.some(token => {
+        const similarity = natural.JaroWinklerDistance(token, keywordLower);
+        return similarity > 0.85;
+      });
+    });
+    if (matchFound) {
+      console.log(`[Logic Engine] NLP Match found for rule: ${rule.id}`);
+      return robustRandomSelect(rule.response_pool);
     }
   }
 
   return null;
 }
 
-/**
- * Returns a random fallback message from the JSON script.
- * @returns {string} A random fallback string.
- */
 export function getFallback() {
-    if (!scriptData || !scriptData.fallbacks) return "Reflect within.";
-    const index = Math.floor(Math.random() * scriptData.fallbacks.length);
-    return scriptData.fallbacks[index];
+  if (!scriptData || !scriptData.general_responses) {
+    return "The mind must remain firm.";
+  }
+  return robustRandomSelect(scriptData.general_responses);
 }
