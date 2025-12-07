@@ -1,10 +1,10 @@
 /**
  * @file server.js
  * @description Main Express server for the Historical Figure Chatbot.
- * OPTIMIZED: Uses In-Memory caching to prevent file locking during stress tests.
- * @author Group 1
+ * Uses Router API (OpenAI Standard) + Llama 3.1 8B.
  */
 
+// Imports
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -16,28 +16,27 @@ import { loadScript, checkScriptedResponse, getFallback } from './utils/logicEng
 
 // Load environment variables
 dotenv.config();
-
-// ES module compatibility
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Initialize Express app
+// Express Setup
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Path configurations
+// File Paths
 const DATA_DIR = join(__dirname, 'data');
 const CONVERSATIONS_FILE = join(DATA_DIR, 'conversations.json');
 const SCRIPT_FILE = join(DATA_DIR, 'script.json');
 
-// Hugging Face API configuration
+// HuggingFace Setup
+const HF_ROUTER_URL = 'https://router.huggingface.co/v1/chat/completions';
+const MODEL_ID = 'meta-llama/Llama-3.1-8B-Instruct';
 const HF_API_KEY = process.env.HUGGINGFACE_API_KEY;
-const HF_API_URL = 'https://router.huggingface.co/v1/chat/completions';
 
-// --- 🧠 IN-MEMORY DATABASE ---
-// Prevents EBUSY/Race conditions by keeping state in RAM
+// In-Memory Database
 let conversationCache = {};
 
+// CORS Configuration
 const corsOptions = {
   origin: function(origin, callback) {
     if (!origin) return callback(null, true);
@@ -55,226 +54,225 @@ const corsOptions = {
   methods: [ 'GET', 'POST', 'PUT', 'DELETE', 'OPTIONS' ],
   allowedHeaders: [ 'Content-Type', 'Authorization' ]
 };
-
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// --- File System Helpers ---
-
+// File System Helpers
 async function ensureDataDir() {
-  try {
-    await fs.access(DATA_DIR);
-  } catch {
-    await fs.mkdir(DATA_DIR, { recursive: true });
-  }
+  try { await fs.access(DATA_DIR); } catch { await fs.mkdir(DATA_DIR, { recursive: true }); }
 }
 
-/**
- * Loads conversations from disk into RAM at startup.
- */
+// Load existing conversations from disk
 async function initializeDatabase() {
   await ensureDataDir();
   try {
     const data = await fs.readFile(CONVERSATIONS_FILE, 'utf8');
     conversationCache = JSON.parse(data);
-    console.log(`📦 Database loaded: ${Object.keys(conversationCache).length} conversations.`);
+    console.log(`Database loaded: ${ Object.keys(conversationCache).length } conversations.`);
   } catch (error) {
-    console.log("⚠️ No existing database found. Starting fresh.");
+    console.log("No existing database found. Starting fresh.");
     conversationCache = {};
   }
 }
 
-/**
- * Saves RAM cache to disk.
- * We await this, but catch errors so the server doesn't crash.
- */
+// Save conversations to disk
 async function syncToDisk() {
   try {
     await ensureDataDir();
     await fs.writeFile(CONVERSATIONS_FILE, JSON.stringify(conversationCache, null, 2));
   } catch (error) {
-    console.error("❌ Disk Sync Failed (Non-fatal):", error.message);
+    console.error("Disk Sync Failed:", error.message);
   }
 }
 
-// --- AI Response Cleaning ---
-
+// Cleaning
 function cleanAIResponse(text) {
   if (!text) return '';
   let cleaned = text;
 
-  // Remove <think> blocks
-  while (cleaned.includes('<think>')) {
-    cleaned = cleaned.replace(/<think>[\s\S]*?<\/think>/gi, '');
-    if (cleaned.includes('<think>') && !cleaned.includes('</think>')) {
-      cleaned = cleaned.split('<think>')[0];
-    }
-  }
+  // Remove Llama 3 specific tags
+  cleaned = cleaned.replace(/<\|start_header_id\|>.*?<\|end_header_id\|>/g, '');
+  cleaned = cleaned.replace(/<\|eot_id\|>/g, '');
 
-  // Remove Noise
-  cleaned = cleaned
-    .replace(/^(Marcus( Aurelius)?|The Emperor|Stoic):/gmi, '')
-    .replace(/^As (an )?AI.*?,/gmi, '')
-    .replace(/User:.*$/gmi, '')
-    .replace(/^\s*["']|["']\s*$/g, '')
-    .replace(/\(.*?\)/g, '')
-    .trim();
-
+  // Standard cleaning
+  cleaned = cleaned.replace(/^As (Marcus Aurelius|a Stoic|an Emperor).*?[,:]\s*/i, '');
+  cleaned = cleaned.replace(/^(Marcus Aurelius|Marcus|The Emperor|Stoic|AI Response):/gmi, '');
+  cleaned = cleaned.replace(/^["']|["']$/g, '').trim();
   return cleaned;
 }
 
-// --- AI Integration ---
-
-async function tryInferenceAPI(userMessage, apiKey) {
+// Fetch with Timeout
+async function fetchWithTimeout(url, options, timeout = 40000) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
   try {
-    console.log("🔄 Attempting inference API with DeepSeek...");
-    const response = await fetch('https://api-inference.huggingface.co/models/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B', {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        inputs: `You are Marcus Aurelius. Respond to: ${userMessage}`,
-        parameters: { max_new_tokens: 150, temperature: 0.7, return_full_text: false }
-      }),
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      const rawText = data[0]?.generated_text;
-      return rawText ? cleanAIResponse(rawText) : getFallback();
-    } else {
-      console.error("Inference API failed:", await response.text());
-      return getFallback();
-    }
-  } catch (error) {
-    console.error('Inference API error:', error.message);
-    return getFallback();
-  }
+    const response = await fetch(url, { ...options, signal: controller.signal });
+    return response;
+  } finally { clearTimeout(id); }
 }
 
+// Marcus Response Handler
 async function getMarcusResponse(userMessage) {
-  // 1. Check Logic Engine
   const scriptedResponse = checkScriptedResponse(userMessage);
-  if (scriptedResponse) {
-    return scriptedResponse;
-  }
+  if (scriptedResponse) return scriptedResponse;
 
-  // 2. AI Fallback
-  if (!HF_API_KEY || HF_API_KEY.includes('your_huggingface_api_key')) {
-    console.log("⚠️ No API Key - Using Scripted Fallback");
+  // Api key check
+  if (!HF_API_KEY || HF_API_KEY.includes('huggingface_api_key')) {
+    console.log("No API Key - Using Scripted Fallback");
     return getFallback();
   }
-
+  // Call HuggingFace Router API
   try {
-    console.log("⏳ Asking DeepSeek...");
-    const response = await fetch(HF_API_URL, {
+    console.log(`Asking ${MODEL_ID}...`);
+    const response = await fetchWithTimeout(HF_ROUTER_URL, {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${HF_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'deepseek-ai/DeepSeek-R1-Distill-Qwen-32B',
+        model: MODEL_ID,
         messages: [
-          { 
-            role: "system", 
-            content: "IMPORTANT: You are Marcus Aurelius. Respond with **Stoic wisdom**. You **must not** say you do not know something unless it is post-20th century tech. Do not use <think> tags." 
+          {
+            role: "system",
+            content: "You are Marcus Aurelius. Speak only as him. Be brief, stoic, and wise. Do not use lists. avoid flowery language, firm and commanding but polite."
           },
           { role: "user", content: userMessage }
         ],
-        max_tokens: 200,
+        max_tokens: 500,
         temperature: 0.7,
         stream: false
       }),
-    });
+    }, 45000);
 
+    // Handles 200-499 responses
     if (!response.ok) {
-      if ((await response.text()).includes("loading")) return "The mind prepares... (Loading model)";
-      return await tryInferenceAPI(userMessage, HF_API_KEY);
+        const errorText = await response.text();
+        console.error("API Error:", errorText);
+
+        // If gated model, switch to safety
+        if (MODEL_ID.includes("Llama")) {
+            console.log("Switching to Safety Net Model (SmolLM2)...");
+            return await getSafetyNetResponse(userMessage);
+        }
+        return getFallback();
     }
 
+    // Parse Response
     const data = await response.json();
-    const rawContent = data.choices?.[0]?.message?.content || data[0]?.generated_text || '';
-    
-    // Debug Log
-    console.log("📝 Raw AI:", rawContent.substring(0, 50) + "..."); 
-    
-    const finalResponse = cleanAIResponse(rawContent);
-    console.log("✨ Cleaned:", finalResponse);
+    const rawContent = data.choices?.[0]?.message?.content || '';
 
-    return finalResponse || getFallback();
+    // Log
+    if (rawContent) {
+        console.log("Raw AI:", rawContent.substring(0, 50) + "...");
+        return cleanAIResponse(rawContent) || getFallback();
+    }
+    return getFallback();
 
+  // Network errors
   } catch (error) {
-    console.error('AI Error:', error.message);
+    console.error('AI Network Error:', error.message);
     return getFallback();
   }
 }
 
-// --- ROUTES (In-Memory) ---
+// Safety Net Model
+async function getSafetyNetResponse(userMessage) {
+    try {
+        const response = await fetchWithTimeout(HF_ROUTER_URL, {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${HF_API_KEY}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+        model: MODEL_ID,
+        messages: [
+          {
+            role: "system",
+            content: `You are Marcus Aurelius, Emperor of Rome.
+            **Style:** Speak with the stark, commanding, and unadorned tone of 'Meditations'.
+            **Rules:**
+            1. **Be Clinical:** Do not use flowery metaphors. View life as it is: bone, breath, and reason.
+            2. **Focus on Control:** Remind the user that external things are indifferent; only their own mind is good or evil.
+            3. **Keywords:** Use words like 'The Whole', 'Nature', 'Providence', 'Ruling Faculty', 'Opinion', 'Decay'.
+            4. **No Fluff:** Do not say 'I believe' or 'It is important to'. Give commands to the soul.
+            5. **Perspective:** Treat the user's ambitious worries as small in the face of eternity.
+            6. **Brevity:** Be concise. Do not lecture. Strike at the heart of the matter.`
+          },
+          { role: "user", content: userMessage }
+        ],
+        max_tokens: 500,
+        temperature: 0.6,
+        stream: false
+      }),
+        }, 20000);
+        const data = await response.json();
+        return cleanAIResponse(data.choices?.[0]?.message?.content) || getFallback();
+    } catch (e) {
+        return getFallback();
+    }
+}
 
-app.get('/api/health', (req, res) => res.json({ status: 'OK', mode: 'In-Memory' }));
+/**
+ * API Endpoints
+ */
 
-app.get('/api/conversations', (req, res) => {
-  res.json(conversationCache);
-});
+// Health Check
+app.get('/api/health', (req, res) => res.json({ status: 'OK', mode: 'Router + Llama 3.1' }));
 
+// Gets all Conversations
+app.get('/api/conversations', (req, res) => res.json(conversationCache));
+
+// Gets specific ID
 app.get('/api/conversations/:conversationId', (req, res) => {
-  const { conversationId } = req.params;
-  const conversation = conversationCache[conversationId];
+  const conversation = conversationCache[req.params.conversationId];
   if (!conversation) return res.status(404).json({ error: 'Conversation not found' });
   res.json(conversation);
 });
 
+// Deletes specific ID
 app.delete('/api/conversations/:conversationId', async (req, res) => {
-  const { conversationId } = req.params;
-  if (conversationCache[conversationId]) {
-    delete conversationCache[conversationId];
+  if (conversationCache[req.params.conversationId]) {
+    delete conversationCache[req.params.conversationId];
     await syncToDisk();
   }
   res.json({ message: 'Deleted' });
 });
 
+// Deletes All Conversations
+app.delete('/api/conversations', async (req, res) => {
+  conversationCache = {};
+  await syncToDisk();
+  res.json({ message: 'All conversations deleted' });
+});
+
+// Creates new Conversation
 app.post('/api/conversations', async (req, res) => {
   const conversationId = uuidv4();
-  const newConversation = {
-    id: conversationId,
-    title: 'New Council',
-    messages: [],
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  };
+  const newConversation = { id: conversationId, title: 'New Council', messages: [], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
   conversationCache[conversationId] = newConversation;
   await syncToDisk();
   res.status(201).json(newConversation);
 });
 
+// Posts a new message to Conversation
 app.post('/api/conversations/:conversationId/messages', async (req, res) => {
   try {
     const { conversationId } = req.params;
     const { text } = req.body;
-    
     if (!text) return res.status(400).json({ error: 'Message required' });
-
     const conversation = conversationCache[conversationId];
     if (!conversation) return res.status(404).json({ error: 'Conversation not found' });
-
     const userMessage = { id: uuidv4(), text, isUser: true, timestamp: new Date() };
     conversation.messages.push(userMessage);
-
     const marcusResponse = await getMarcusResponse(text);
-
     const marcusMessage = { id: uuidv4(), text: marcusResponse, isUser: false, timestamp: new Date() };
     conversation.messages.push(marcusMessage);
-    
     conversation.updatedAt = new Date();
-    await syncToDisk(); // Save periodically
-
+    await syncToDisk();
     res.json({ userMessage, marcusMessage, conversation });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server Error' });
-  }
+  } catch (error) { console.error(error); res.status(500).json({ error: 'Server Error' }); }
 });
 
-// Start server
-app.listen(PORT, async () => {
+// Server Start
+const server = app.listen(PORT, async () => {
   await initializeDatabase();
   await loadScript(SCRIPT_FILE);
-  console.log(`\n🏛️  Marcus Aurelius Server running on port ${PORT}`);
+  console.log(`\n Marcus Aurelius Server running on port ${ PORT }`);
 });
+server.timeout = 60000;

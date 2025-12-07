@@ -80,10 +80,8 @@ async function runNLPTest() {
       console.log(`${  COLORS.red  } Server not running! Start server.js first.${  COLORS.reset  }`);
       process.exit(1);
     });
-
     await runProbabilityTest();
     await runNLPTest();
-
   } catch (err) {
     console.error(err);
   }
