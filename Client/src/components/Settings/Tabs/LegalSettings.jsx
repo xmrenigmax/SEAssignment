@@ -21,7 +21,7 @@ export const LegalSettings = () => {
 
         <div className="flex justify-between items-center pb-4 border-b border-[var(--border)]">
           <span className="font-semibold">AI Model</span>
-          <span className="text-sm text-[var(--accent)]">Microsoft Phi-3.5</span>
+          <span className="text-sm text-[var(--accent)]">Gemini-Gemma</span>
         </div>
 
         <div className="text-sm text-[var(--text-secondary)] leading-relaxed pt-2">

@@ -14,7 +14,7 @@ import fs from 'fs/promises';
 import { v4 as uuidv4 } from 'uuid';
 import { loadScript, checkScriptedResponse, getFallback } from './utils/logicEngine.js';
 
-// Load environment variables
+// CONFIGURATION
 dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -33,10 +33,13 @@ const HF_ROUTER_URL = 'https://router.huggingface.co/v1/chat/completions';
 const MODEL_ID = 'meta-llama/Llama-3.1-8B-Instruct';
 const HF_API_KEY = process.env.HUGGINGFACE_API_KEY;
 
-// In-Memory Database
+// In-memory cache for conversations
 let conversationCache = {};
 
-// CORS Configuration
+/**
+ * CORS Configuration.
+ * explicitly allows requests from localhost:3000 and localhost:5173.
+ */
 const corsOptions = {
   origin: function(origin, callback) {
     if (!origin) return callback(null, true);
@@ -57,12 +60,18 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// File System Helpers
+/**
+ * Ensures the data directory exists.
+ * Creates it recursively if missing.
+ */
 async function ensureDataDir() {
   try { await fs.access(DATA_DIR); } catch { await fs.mkdir(DATA_DIR, { recursive: true }); }
 }
 
-// Load existing conversations from disk
+/**
+ * Initializes the database on server start.
+ * Loads existing conversations from JSON into memory.
+ */
 async function initializeDatabase() {
   await ensureDataDir();
   try {
@@ -75,7 +84,10 @@ async function initializeDatabase() {
   }
 }
 
-// Save conversations to disk
+/**
+ * Persists the current in-memory cache to the JSON file.
+ * Called after every write operation (Create/Update/Delete).
+ */
 async function syncToDisk() {
   try {
     await ensureDataDir();
@@ -85,23 +97,31 @@ async function syncToDisk() {
   }
 }
 
-// Cleaning
+/**
+ * Cleans the raw output from the LLM.
+ * Removes system tokens, headers, and prefixes like "Marcus Aurelius:".
+ * @param { string } text - The raw text from the AI.
+ * @returns { string } The cleaned, user-facing text.
+ */
 function cleanAIResponse(text) {
   if (!text) return '';
   let cleaned = text;
-
-  // Remove Llama 3 specific tags
   cleaned = cleaned.replace(/<\|start_header_id\|>.*?<\|end_header_id\|>/g, '');
   cleaned = cleaned.replace(/<\|eot_id\|>/g, '');
-
-  // Standard cleaning
   cleaned = cleaned.replace(/^As (Marcus Aurelius|a Stoic|an Emperor).*?[,:]\s*/i, '');
   cleaned = cleaned.replace(/^(Marcus Aurelius|Marcus|The Emperor|Stoic|AI Response):/gmi, '');
   cleaned = cleaned.replace(/^["']|["']$/g, '').trim();
   return cleaned;
 }
 
-// Fetch with Timeout
+/**
+ * Wrapper for fetch with a timeout.
+ * Prevents the server from hanging indefinitely on AI requests.
+ * @param { string } url - The URL to fetch.
+ * @param { Object } options - Fetch options.
+ * @param { number } timeout - Timeout in ms (default 40s).
+ * @returns { Promise<Response> } The fetch response.
+ */
 async function fetchWithTimeout(url, options, timeout = 40000) {
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), timeout);
@@ -111,7 +131,16 @@ async function fetchWithTimeout(url, options, timeout = 40000) {
   } finally { clearTimeout(id); }
 }
 
-// Marcus Response Handler
+/**
+ * Main AI Orchestrator.
+ * 1. Checks for hardcoded script matches.
+ * 2. Tries Llama 3.1 via Hugging Face.
+ * 3. Falls back to SmolLM2 (Safety Net) on error.
+ * 4. Falls back to generic quotes if all else fails.
+ * @param { string } userMessage - The user's input text.
+ * @returns { Promise<string> } The final response text.
+ */
+
 async function getMarcusResponse(userMessage) {
   const scriptedResponse = checkScriptedResponse(userMessage);
   if (scriptedResponse) return scriptedResponse;
@@ -173,7 +202,12 @@ async function getMarcusResponse(userMessage) {
   }
 }
 
-// Safety Net Model
+/**
+ * Safety Net AI Handler.
+ * Uses a smaller, more reliable model (SmolLM2) if the primary Llama model fails/timeouts.
+ * @param {string} userMessage
+ * @returns {Promise<string>}
+ */
 async function getSafetyNetResponse(userMessage) {
     try {
         const response = await fetchWithTimeout(HF_ROUTER_URL, {
@@ -209,23 +243,31 @@ async function getSafetyNetResponse(userMessage) {
 }
 
 /**
- * API Endpoints
+ * Health Check.
+ * GET /api/health
  */
-
-// Health Check
 app.get('/api/health', (req, res) => res.json({ status: 'OK', mode: 'Router + Llama 3.1' }));
 
-// Gets all Conversations
+/**
+ * Get all conversations.
+ * GET /api/conversations
+ */
 app.get('/api/conversations', (req, res) => res.json(conversationCache));
 
-// Gets specific ID
+/**
+ * Get specific conversation by ID.
+ * GET /api/conversations/:conversationId
+ */
 app.get('/api/conversations/:conversationId', (req, res) => {
   const conversation = conversationCache[req.params.conversationId];
   if (!conversation) return res.status(404).json({ error: 'Conversation not found' });
   res.json(conversation);
 });
 
-// Deletes specific ID
+/**
+ * Delete a specific conversation.
+ * DELETE /api/conversations/:conversationId
+ */
 app.delete('/api/conversations/:conversationId', async (req, res) => {
   if (conversationCache[req.params.conversationId]) {
     delete conversationCache[req.params.conversationId];
@@ -234,45 +276,75 @@ app.delete('/api/conversations/:conversationId', async (req, res) => {
   res.json({ message: 'Deleted' });
 });
 
-// Deletes All Conversations
+/**
+ * DELETE ALL Conversations.
+ * DELETE /api/conversations
+ * * Destructive Action: Wipes the entire database.
+ */
 app.delete('/api/conversations', async (req, res) => {
   conversationCache = {};
   await syncToDisk();
+  console.log("All conversations wiped via API");
   res.json({ message: 'All conversations deleted' });
 });
 
-// Creates new Conversation
+/**
+ * Create a new conversation.
+ * POST /api/conversations
+ */
 app.post('/api/conversations', async (req, res) => {
   const conversationId = uuidv4();
-  const newConversation = { id: conversationId, title: 'New Council', messages: [], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
+  const newConversation = {
+    id: conversationId,
+    title: 'New Council',
+    messages: [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  };
   conversationCache[conversationId] = newConversation;
   await syncToDisk();
   res.status(201).json(newConversation);
 });
 
-// Posts a new message to Conversation
+/**
+ * Send a message (Chat Loop).
+ * POST /api/conversations/:conversationId/messages
+ */
 app.post('/api/conversations/:conversationId/messages', async (req, res) => {
   try {
     const { conversationId } = req.params;
     const { text } = req.body;
     if (!text) return res.status(400).json({ error: 'Message required' });
+
     const conversation = conversationCache[conversationId];
     if (!conversation) return res.status(404).json({ error: 'Conversation not found' });
+
+    // Add User Message
     const userMessage = { id: uuidv4(), text, isUser: true, timestamp: new Date() };
     conversation.messages.push(userMessage);
+
+    // Get AI Response
     const marcusResponse = await getMarcusResponse(text);
     const marcusMessage = { id: uuidv4(), text: marcusResponse, isUser: false, timestamp: new Date() };
     conversation.messages.push(marcusMessage);
+
+    // Update & Sync
     conversation.updatedAt = new Date();
     await syncToDisk();
+
     res.json({ userMessage, marcusMessage, conversation });
-  } catch (error) { console.error(error); res.status(500).json({ error: 'Server Error' }); }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server Error' });
+  }
 });
 
-// Server Start
+// SERVER START
 const server = app.listen(PORT, async () => {
   await initializeDatabase();
   await loadScript(SCRIPT_FILE);
   console.log(`\n Marcus Aurelius Server running on port ${ PORT }`);
 });
+
+// Set global timeout
 server.timeout = 60000;
