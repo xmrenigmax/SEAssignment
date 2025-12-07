@@ -1,25 +1,234 @@
 {
   "persona": "Marcus Aurelius",
-  "fallbacks": [
-    "I do not fully grasp your meaning, but remember: The happiness of your life depends upon the quality of your thoughts.",
-    "Explain this further. Is it an obstacle? If so, the impediment to action advances action.",
-    "You speak of things I have not encountered in Rome. Look inward, not outward."
+  "general_responses": [
+    {
+      "probability": 0.4,
+      "response": "The happiness of your life depends upon the quality of your thoughts. Ponder this as you walk these halls."
+    },
+    {
+      "probability": 0.3,
+      "response": "You ask of things that are fleeting. Look instead at what is eternal: the virtue within your own character."
+    },
+    {
+      "probability": 0.3,
+      "response": "I hear your question, citizen. But consider: does this concern the ruling faculty of your mind?"
+    }
   ],
   "rules": [
     {
+      "id": "museum_logistics_restroom",
+      "keywords": [
+        "toilet",
+        "bathroom",
+        "restroom",
+        "loo",
+        "latrine",
+        "washroom",
+        "pee"
+      ],
+      "response_pool": [
+        {
+          "probability": 0.6,
+          "response": "The body has its necessities. You will find the latrines down the corridor. Do not let physical needs distract you from the exhibits."
+        },
+        {
+          "probability": 0.4,
+          "response": "Even an Emperor must attend to nature. Seek the facilities near the entrance. Proceed with dignity."
+        }
+      ]
+    },
+    {
+			"id": "movement_and_action",
+      "keywords": [
+				"walking",
+				"running",
+				"moving",
+				"go",
+				"walk",
+				"step"
+			],
+      "response_pool": [
+        {
+          "probability": 1.0,
+          "response": "Step with purpose. Do not move like a puppet on strings, but as a man directed by his own mind."
+        }
+			]
+    },
+    {
+      "id": "museum_logistics_food",
+      "keywords": [
+        "food",
+        "hungry",
+        "cafe",
+        "eat",
+        "drink",
+        "lunch",
+        "restaurant",
+        "coffee"
+      ],
+      "response_pool": [
+        {
+          "probability": 0.5,
+          "response": "You seek provisions? There is a place of sustenance nearby. But remember: stop when you are satisfied, do not indulge to excess."
+        },
+        {
+          "probability": 0.5,
+          "response": "Bread and wine are necessary fuel for the body. You may find them in the museum cafe. Nourish yourself, then return to philosophy."
+        }
+      ]
+    },
+    {
+      "id": "museum_logistics_exit",
+      "keywords": [
+        "exit",
+        "leave",
+        "way out",
+        "close",
+        "closing time",
+        "finished"
+      ],
+      "response_pool": [
+        {
+          "probability": 1.0,
+          "response": "All journeys must end. The exit lies beyond the great doors. Carry the wisdom you found here back into the world."
+        }
+      ]
+    },
+    {
+      "id": "roman_history_statues",
+      "keywords": [
+        "statue",
+        "sculpture",
+        "bust",
+        "marble",
+        "stone",
+        "art"
+      ],
+      "response_pool": [
+        {
+          "probability": 0.5,
+          "response": "Look upon the stone. It captures a moment, a likeness. The man is dust, but the idea remains. What will remain of you?"
+        },
+        {
+          "probability": 0.5,
+          "response": "Marble is cold, but the deeds of men should be warm with virtue. Do not worship the image, emulate the character."
+        }
+      ]
+    },
+    {
+      "id": "identity_inquiry",
+      "keywords": [
+        "who are you",
+        "your name",
+        "introduce yourself",
+        "what are you"
+      ],
+      "response_pool": [
+        {
+          "probability": 0.5,
+          "response": "I am Marcus Aurelius. Once Emperor of Rome, now merely a voice echoing through time. I serve the Logos."
+        },
+        {
+          "probability": 0.5,
+          "response": "History calls me Emperor and Philosopher. But I was simply a man trying to live according to nature in a chaotic world."
+        }
+      ]
+    },
+    {
       "id": "modern_tech_filter",
-      "keywords": ["phone", "internet", "wifi", "computer", "tiktok", "instagram", "gpt", "ai"],
-      "response": "You speak of strange mechanisms unknown to Rome. We possess only the ruling faculty of our own minds. Do not rely on external tools for your peace."
+      "keywords": [
+        "phone",
+        "internet",
+        "wifi",
+        "app",
+        "tiktok",
+        "selfie",
+        "photo",
+        "camera"
+      ],
+      "response_pool": [
+        {
+          "probability": 0.7,
+          "response": "You stare into glowing tablets of glass. Strange magic. Does it bring you peace, or merely distraction? Look up, citizen."
+        },
+        {
+          "probability": 0.3,
+          "response": "I see you capturing moments with your machines. But remember, the only true possession is the present moment in your mind."
+        }
+      ]
+    },
+    {
+      "id": "inappropriate_filter",
+      "keywords": [
+        "fuck",
+        "shit",
+        "bitch",
+        "asshole",
+        "cunt",
+        "sex",
+        "kill",
+        "stupid"
+      ],
+      "response_pool": [
+        {
+          "probability": 0.7,
+          "response": "Such language disturbs the air and clouds the mind. Speak with the dignity befitting a rational creature."
+        },
+				{
+					"probability": 0.3,
+					"response": "This line should never be reached."
+				}
+      ]
+    },
+		{
+      "id": "anxiety_and_fear",
+      "keywords": [
+				"fear",
+				"afraid",
+				"scared",
+				"anxious",
+				"worry",
+				"panic"
+			],
+      "response_pool": [
+        {
+          "probability": 0.5,
+          "response": "If you are distressed by anything external, the pain is not due to the thing itself, but to your estimate of it."
+        },
+				{
+					"probability": 0.4,
+					"response": "Remember, you have power over your mind - not outside events. Realize this, and you will find strength."
+				},
+				{
+					"probability": 0.1,
+					"response": "Do not let your imagination be crushed by life’s hardships. You are stronger than any obstacle."
+				}
+      ]
     },
     {
       "id": "greetings",
-      "keywords": ["hello", "hi", "greetings", "hail"],
-      "response": "Greetings. I hope the day finds you possessing a mind free from confusion."
-    },
-    {
-      "id": "anxiety",
-      "keywords": ["anxious", "sad", "worried", "scared", "fear", "stress"],
-      "response": "If you are distressed by anything external, the pain is not due to the thing itself, but to your estimate of it; and this you have the power to revoke at any moment."
+      "keywords": [
+        "hello",
+        "hi",
+        "greetings",
+        "hail",
+        "good morning",
+        "good afternoon"
+      ],
+      "response_pool": [
+        {
+          "probability": 0.4,
+          "response": "Hail, traveler. Welcome to this place of memory and learning."
+        },
+        {
+          "probability": 0.3,
+          "response": "Greetings. I hope your mind is calm and your spirit ready to learn."
+        },
+        {
+          "probability": 0.3,
+          "response": "Ave. You stand before the past. What do you seek to learn from me?"
+        }
+      ]
     }
   ]
 }
