@@ -5,16 +5,22 @@ const API_BASE_URL = 'http://localhost:5000/api';
 
 /**
  * Main chat logic hook.
- * * Contains fixes for:
- * 1. 404 Synchronization (Syncs list on load)
- * 2. Instant UI Updates (React state updates immediately)
+ * Features:
+ * 1. Auto-Sync with Server
+ * 2. Optimistic UI Updates (Immediate user feedback)
+ * 3. clearAllConversations support
+ * * @returns {Object} Chat state and methods
  */
 export const useChat = () => {
   const [conversations, setConversations] = useLocalStorage('chat-conversations', []);
   const [activeConversationId, setActiveConversationId] = useLocalStorage('active-conversation', null);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Helper for API calls
+  /**
+   * Helper for API calls with standardized error handling.
+   * @param {string} endpoint - API endpoint (e.g., '/conversations')
+   * @param {Object} options - Fetch options
+   */
   const apiCall = useCallback(async (endpoint, options = {}) => {
     try {
       const response = await fetch(`${API_BASE_URL}${endpoint}`, {
@@ -33,46 +39,53 @@ export const useChat = () => {
   }, []);
 
   /**
-   * CRITICAL FIX: Syncs frontend list with backend reality.
-   * Removes stale IDs that cause 404 errors.
+   * Syncs frontend list with backend reality.
+   * Prevents 404 errors by removing stale IDs.
    */
   const syncConversations = useCallback(async () => {
     try {
-      // 1. Get the real list from server
       const serverConversations = await apiCall('/conversations');
 
-      // 2. Update frontend list (Object.values handles if server sends a map)
+      // Normalize response (handle Map vs Array)
       const validList = Array.isArray(serverConversations)
         ? serverConversations
         : Object.values(serverConversations);
 
+      // Sort by newest first
+      validList.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+
       setConversations(validList);
 
-      // 3. Verify active conversation still exists
+      // Reset active ID if it no longer exists on server
       if (activeConversationId) {
         const exists = validList.find(c => c.id === activeConversationId);
-        if (!exists) {
-          console.warn('Active conversation no longer exists on server. Resetting.');
-          setActiveConversationId(null);
-        }
+        if (!exists) setActiveConversationId(null);
       }
     } catch (error) {
-      console.warn('Could not sync with server (Offline?)');
+      console.warn('Sync failed (Server Offline?)');
     }
   }, [activeConversationId, apiCall, setConversations, setActiveConversationId]);
 
+  /**
+   * Creates a new conversation session.
+   * Falls back to offline mode if server fails.
+   */
   const createNewConversation = async () => {
     setIsLoading(true);
     try {
       const data = await apiCall('/conversations', { method: 'POST' });
-      // Add new chat to the TOP of the list
       setConversations(prev => [data, ...prev]);
       setActiveConversationId(data.id);
       setIsLoading(false);
       return data.id;
     } catch (error) {
       // Offline fallback
-      const newConv = { id: Date.now().toString(), title: 'New Conversation', messages: [], createdAt: new Date().toISOString() };
+      const newConv = {
+        id: Date.now().toString(),
+        title: 'New Conversation',
+        messages: [],
+        createdAt: new Date().toISOString()
+      };
       setConversations(prev => [newConv, ...prev]);
       setActiveConversationId(newConv.id);
       setIsLoading(false);
@@ -80,19 +93,68 @@ export const useChat = () => {
     }
   };
 
+  /**
+   * Imports a conversation history from a JSON file.
+   * Merges with existing conversations (avoiding ID duplicates).
+   * @param {Array} fileData - The parsed JSON array of conversations.
+   */
+  const importConversations = useCallback((fileData) => {
+    if (!Array.isArray(fileData)) {
+      throw new Error("Invalid import format: Expected an array.");
+    }
+
+    setConversations(prev => {
+      // Create a Map of existing IDs to prevent duplicates
+      const existingIds = new Set(prev.map(c => c.id));
+      const newConversations = fileData.filter(c => !existingIds.has(c.id));
+
+      // Combine and sort by newest
+      const combined = [...newConversations, ...prev].sort(
+        (a, b) => new Date(b.updatedAt || b.createdAt) - new Date(a.updatedAt || a.createdAt)
+      );
+
+      return combined;
+    });
+  }, [setConversations]);
+
+  /**
+   * Sends a message to the backend.
+   * * IMPLEMENTS OPTIMISTIC UPDATES:
+   * 1. Immediately adds user message to local state.
+   * 2. Sends request to backend.
+   * 3. Updates state with real backend response (User msg + AI response).
+   * * @param {string} conversationId
+   * @param {Object} message - { text, isUser, timestamp, attachment }
+   */
   const addMessageToConversation = async (conversationId, message) => {
+    // Generate a temporary ID for the optimistic message
+    const tempId = `temp-${Date.now()}`;
+    const optimisticMessage = { ...message, id: tempId };
+
+    // Update UI immediately before network request
+    setConversations(prev => prev.map(conv => {
+      if (conv.id === conversationId) {
+        return {
+          ...conv,
+          messages: [...(conv.messages || []), optimisticMessage],
+          updatedAt: new Date().toISOString()
+        };
+      }
+      return conv;
+    }));
+
     setIsLoading(true);
+
     try {
-      // 1. Send to backend
+      // Send to backend
       const data = await apiCall(`/conversations/${conversationId}/messages`, {
         method: 'POST',
         body: JSON.stringify({ text: message.text })
       });
 
-      // 2. INSTANT UPDATE: Update the specific conversation in the list
+      // Confirms the user message was saved and adds the AI's response.
       setConversations(prev => prev.map(conv => {
         if (conv.id === conversationId) {
-          // Backend returns the FULL updated conversation object
           return data.conversation;
         }
         return conv;
@@ -101,34 +163,61 @@ export const useChat = () => {
       setIsLoading(false);
       return data;
     } catch (error) {
-      console.warn('Message failed, using offline mode');
+      console.warn('Message failed, using offline mode or rolling back');
+
+      // Turn off loading.
       setIsLoading(false);
-      // ... (Keep your existing offline logic here if you wish) ...
+      throw error;
     }
   };
 
+  /**
+   * Deletes a specific conversation.
+   * @param {string} id
+   */
   const deleteConversation = async (id) => {
-    try { await apiCall(`/conversations/${id}`, { method: 'DELETE' }); } catch (e) {}
+    // Optimistic delete
     setConversations(prev => prev.filter(c => c.id !== id));
     if (activeConversationId === id) setActiveConversationId(null);
+
+    try { await apiCall(`/conversations/${id}`, { method: 'DELETE' }); } catch (e) {}
   };
 
+  /**
+   * Deletes ALL conversations history.
+   * Requires user confirmation.
+   */
+  const clearAllConversations = async () => {
+    if (!window.confirm("Are you sure you want to delete the entire history? This cannot be undone.")) return;
+
+    setConversations([]);
+    setActiveConversationId(null);
+
+    try {
+      await apiCall('/conversations', { method: 'DELETE' });
+    } catch (e) {
+      console.warn("Failed to clear on server");
+    }
+  };
+
+  /**
+   * Loads a specific conversation details from server.
+   * @param {string} id
+   */
   const loadConversation = useCallback(async (id) => {
     if (!id) return;
     try {
       const data = await apiCall(`/conversations/${id}`);
       setConversations(prev => {
         const index = prev.findIndex(c => c.id === id);
-        if (index === -1) return [data, ...prev]; // If missing, add it
+        if (index === -1) return [data, ...prev];
 
-        // Update existing item
         const newList = [...prev];
         newList[index] = data;
         return newList;
       });
     } catch (error) {
       if (error.message === 'NOT_FOUND') {
-        // If 404, remove it locally to stop the loop
         setConversations(prev => prev.filter(c => c.id !== id));
         if (activeConversationId === id) setActiveConversationId(null);
       }
@@ -142,8 +231,10 @@ export const useChat = () => {
     createNewConversation,
     addMessageToConversation,
     deleteConversation,
+    clearAllConversations,
     loadConversation,
-    syncConversations, // Exporting this so Sidebar can use it
+    syncConversations,
+    importConversations,
     getActiveConversation: () => conversations.find(c => c.id === activeConversationId),
     startNewChat: () => setActiveConversationId(null),
     isLoading
