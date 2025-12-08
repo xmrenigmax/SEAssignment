@@ -17,7 +17,7 @@ export const AttachmentButton = ({ onFileAttach }) => {
       // Validation (10MB Limit)
       const maxSize = 10 * 1024 * 1024;
       if (file.size > maxSize) {
-        alert('File is too large. Maximum size is 10MB.'); // Keeping simple alert for robustness
+        alert('File is too large. Maximum size is 10MB.');
         return;
       }
       onFileAttach(file);

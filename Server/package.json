@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js",
+    "dev": "nodemon server.js --ignore 'data/' --ignore 'conversations.json'",
     "export-data": "node scripts/exportData.js",
     "import-data": "node scripts/importData.js",
     "deep-seek-rl": "node deepseek-r1.js"

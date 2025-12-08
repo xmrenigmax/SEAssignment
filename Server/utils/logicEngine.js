@@ -60,6 +60,7 @@ function robustRandomSelect(pool) {
  */
 export function checkScriptedResponse(input) {
   if (!scriptData || !scriptData.rules) return null;
+
   // Preprocess input
   const inputLower = input.toLowerCase().trim();
   const inputTokens = tokenizer.tokenize(inputLower);
@@ -96,6 +97,7 @@ export function checkScriptedResponse(input) {
       }
       return false;
     });
+
     // Matches
     if (matchFound) {
       console.log(`⚡ [Logic Engine] Match found for rule: ${rule.id}`);

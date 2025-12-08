@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useLocalStorage } from '../../../hooks/useLocalStorage';
+import { useTheme } from '../../../context/ThemeContext';
 
 /**
  * Enhanced Accessibility Controls.
@@ -13,9 +14,7 @@ export const AccessibilitySettings = () => {
   const [highContrast, setHighContrast] = useLocalStorage('high-contrast', false);
   const [dyslexicFont, setDyslexicFont] = useLocalStorage('dyslexic-font', false);
   const [reducedMotion, setReducedMotion] = useLocalStorage('reduced-motion', false);
-
-  // NFR8: Theme State (Defaults to true/Dark based on your previous config)
-  const [isDark, setIsDark] = useLocalStorage('theme', true);
+  const { isDark, toggleTheme } = useTheme();
 
   // Apply Font Size
   useEffect(() => {
@@ -26,15 +25,6 @@ export const AccessibilitySettings = () => {
   useEffect(() => {
     document.documentElement.style.filter = highContrast ? 'contrast(1.5)' : 'none';
   }, [highContrast]);
-
-  // Apply Theme (NFR8)
-  useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.remove('light');
-    } else {
-      document.documentElement.classList.add('light');
-    }
-  }, [isDark]);
 
   // Apply Dyslexic Font (OpenDyslexic alternative using system fonts)
   useEffect(() => {
@@ -108,7 +98,7 @@ export const AccessibilitySettings = () => {
           label="Dark Mode"
           description="Switch between light and dark themes."
           active={isDark}
-          onToggle={() => setIsDark(!isDark)}
+          onToggle={toggleTheme}
         />
 
         {/* NFR7: High Contrast */}

@@ -6,8 +6,9 @@
 
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { ChatProvider } from './context/ChatContext'; // The Shared Brain
+import { ChatProvider } from './context/ChatContext';
 import Landing from './pages/LandingPage';
+import { ThemeProvider } from './context/ThemeContext';
 
 // Create router with future flags
 const router = createBrowserRouter([
@@ -24,10 +25,11 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    // Wrap the Router in the Provider so all pages share the same chat state
-    <ChatProvider>
-      <RouterProvider router={router} />
-    </ChatProvider>
+    <ThemeProvider>
+      <ChatProvider>
+        <RouterProvider router={router} />
+      </ChatProvider>
+    </ThemeProvider>
   );
 }
 
