@@ -1,10 +1,10 @@
 /**
  * @file server.js
  * @description Main Express server for the Historical Figure Chatbot.
- * Acts as the backend API, managing conversation persistence (JSON),
- * CORS security, and interfacing with Hugging Face Inference APIs.
+ * Uses Router API (OpenAI Standard) + Llama 3.1 8B.
  */
 
+// Imports
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -19,16 +19,16 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Express setup
+// Express Setup
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Data Store Paths
+// File Paths
 const DATA_DIR = join(__dirname, 'data');
 const CONVERSATIONS_FILE = join(DATA_DIR, 'conversations.json');
 const SCRIPT_FILE = join(DATA_DIR, 'script.json');
 
-// AI Configuration
+// HuggingFace Setup
 const HF_ROUTER_URL = 'https://router.huggingface.co/v1/chat/completions';
 const MODEL_ID = 'meta-llama/Llama-3.1-8B-Instruct';
 const HF_API_KEY = process.env.HUGGINGFACE_API_KEY;
@@ -57,7 +57,6 @@ const corsOptions = {
   methods: [ 'GET', 'POST', 'PUT', 'DELETE', 'OPTIONS' ],
   allowedHeaders: [ 'Content-Type', 'Authorization' ]
 };
-
 app.use(cors(corsOptions));
 app.use(express.json());
 
@@ -146,13 +145,14 @@ async function getMarcusResponse(userMessage) {
   const scriptedResponse = checkScriptedResponse(userMessage);
   if (scriptedResponse) return scriptedResponse;
 
+  // Api key check
   if (!HF_API_KEY || HF_API_KEY.includes('huggingface_api_key')) {
     console.log("No API Key - Using Scripted Fallback");
     return getFallback();
   }
-
+  // Call HuggingFace Router API
   try {
-    console.log(`Asking ${ MODEL_ID }...`);
+    console.log(`Asking ${MODEL_ID}...`);
     const response = await fetchWithTimeout(HF_ROUTER_URL, {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${HF_API_KEY}`, 'Content-Type': 'application/json' },
@@ -171,10 +171,12 @@ async function getMarcusResponse(userMessage) {
       }),
     }, 45000);
 
+    // Handles 200-499 responses
     if (!response.ok) {
         const errorText = await response.text();
         console.error("API Error:", errorText);
 
+        // If gated model, switch to safety
         if (MODEL_ID.includes("Llama")) {
             console.log("Switching to Safety Net Model (SmolLM2)...");
             return await getSafetyNetResponse(userMessage);
@@ -182,15 +184,18 @@ async function getMarcusResponse(userMessage) {
         return getFallback();
     }
 
+    // Parse Response
     const data = await response.json();
     const rawContent = data.choices?.[0]?.message?.content || '';
 
+    // Log
     if (rawContent) {
         console.log("Raw AI:", rawContent.substring(0, 50) + "...");
         return cleanAIResponse(rawContent) || getFallback();
     }
     return getFallback();
 
+  // Network errors
   } catch (error) {
     console.error('AI Network Error:', error.message);
     return getFallback();
@@ -209,18 +214,26 @@ async function getSafetyNetResponse(userMessage) {
             method: 'POST',
             headers: { 'Authorization': `Bearer ${HF_API_KEY}`, 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                model: "HuggingFaceTB/SmolLM2-1.7B-Instruct",
-                messages: [
-                  {
-                    role: "system",
-                    content: "You are Marcus Aurelius. Be strict, clinical, and brief. No flowery language."
-                  },
-                  { role: "user", content: userMessage }
-                ],
-                max_tokens: 500,
-                temperature: 0.6,
-                stream: false
-            }),
+        model: MODEL_ID,
+        messages: [
+          {
+            role: "system",
+            content: `You are Marcus Aurelius, Emperor of Rome.
+            **Style:** Speak with the stark, commanding, and unadorned tone of 'Meditations'.
+            **Rules:**
+            1. **Be Clinical:** Do not use flowery metaphors. View life as it is: bone, breath, and reason.
+            2. **Focus on Control:** Remind the user that external things are indifferent; only their own mind is good or evil.
+            3. **Keywords:** Use words like 'The Whole', 'Nature', 'Providence', 'Ruling Faculty', 'Opinion', 'Decay'.
+            4. **No Fluff:** Do not say 'I believe' or 'It is important to'. Give commands to the soul.
+            5. **Perspective:** Treat the user's ambitious worries as small in the face of eternity.
+            6. **Brevity:** Be concise. Do not lecture. Strike at the heart of the matter.`
+          },
+          { role: "user", content: userMessage }
+        ],
+        max_tokens: 500,
+        temperature: 0.6,
+        stream: false
+      }),
         }, 20000);
         const data = await response.json();
         return cleanAIResponse(data.choices?.[0]?.message?.content) || getFallback();
