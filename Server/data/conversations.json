@@ -1,1 +1,218 @@
-{}
+{
+  "f29f5520-e79c-4388-8f41-e396781bf164": {
+    "id": "f29f5520-e79c-4388-8f41-e396781bf164",
+    "title": "New Council",
+    "messages": [
+      {
+        "id": "c447c159-143f-4e0e-bb7d-407551705060",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-08T10:13:04.071Z"
+      },
+      {
+        "id": "69e84574-a6b8-438f-91b7-2fbec13e72bb",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-08T10:13:04.072Z"
+      },
+      {
+        "id": "d1d7a21f-e909-47e2-b947-1b034cf7385b",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-08T10:13:04.817Z"
+      },
+      {
+        "id": "ca5baef8-7885-4060-b4ee-07d233de4dc3",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-08T10:13:04.818Z"
+      },
+      {
+        "id": "2b4e70c1-cde3-454e-8486-ac5ef9f87fe8",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-08T10:13:05.299Z"
+      },
+      {
+        "id": "70d681e8-4d90-40b3-89fe-cc1b733b3b0b",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-08T10:13:05.301Z"
+      },
+      {
+        "id": "00a0c436-eb43-42aa-aee6-d8765b42931a",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-08T10:13:05.747Z"
+      },
+      {
+        "id": "b05675ef-a30f-47c7-9a3f-1a66b95c1ed8",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-08T10:13:05.748Z"
+      },
+      {
+        "id": "326628ff-31eb-4043-a3e3-a2c1b94e2686",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-08T10:13:06.125Z"
+      },
+      {
+        "id": "0284757b-d6e0-4fd6-815c-3b59e927c738",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-08T10:13:06.126Z"
+      },
+      {
+        "id": "24382fe4-6f87-4dab-b9e3-e320a0c67b17",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-08T10:13:06.491Z"
+      },
+      {
+        "id": "007317a2-08f3-4593-8093-9d418f392e6d",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-08T10:13:06.492Z"
+      },
+      {
+        "id": "ecf277db-b706-447a-be9a-94509442e2ad",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-08T10:13:06.823Z"
+      },
+      {
+        "id": "5ecc278e-63ca-42b8-8041-624dac21b4fd",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-08T10:13:06.824Z"
+      },
+      {
+        "id": "03f2dabd-7cb6-4e0f-b9f7-f6db45dbac88",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-08T10:13:07.159Z"
+      },
+      {
+        "id": "5c3f17ac-76cb-4504-af37-3ddc7187ec66",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-08T10:13:07.160Z"
+      },
+      {
+        "id": "9e585ee4-ef5c-48ec-b779-d90f791d4caf",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-08T10:13:37.596Z"
+      },
+      {
+        "id": "c5c2e88b-be44-4e14-9f81-62912e9507fe",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-08T10:13:37.598Z"
+      }
+    ],
+    "createdAt": "2025-12-08T10:13:04.065Z",
+    "updatedAt": "2025-12-08T10:13:37.598Z"
+  },
+  "5e994d92-ae9c-4831-9479-6d99c28de5f8": {
+    "id": "5e994d92-ae9c-4831-9479-6d99c28de5f8",
+    "title": "The Cost of Unwavering Resolve",
+    "messages": [
+      {
+        "id": "69fc76be-7f3d-44c2-aa08-b06e9f0b06fc",
+        "text": "wage",
+        "isUser": true,
+        "timestamp": "2025-12-08T10:19:12.116Z"
+      },
+      {
+        "id": "db15f1e9-1bd7-42ce-9928-c5343924b121",
+        "text": "The wage. A measure of one's value, yet it is fleeting and insignificant. It is but a small part of the vast tapestry of life. Do not become entwined in its threads, lest you forget the true nature of your existence.",
+        "isUser": false,
+        "timestamp": "2025-12-08T10:19:13.440Z"
+      },
+      {
+        "id": "b34249fa-664c-4ac1-8d71-07e3b6386d3f",
+        "text": "wagewan",
+        "isUser": true,
+        "timestamp": "2025-12-08T10:19:28.040Z"
+      },
+      {
+        "id": "be2d4d8f-bf62-4977-8b81-311010a6319f",
+        "text": "My mind is not with the whims of birds, but with the harmony of the universe. I attend to the present, not the flight of a goose.",
+        "isUser": false,
+        "timestamp": "2025-12-08T10:19:29.316Z"
+      }
+    ],
+    "createdAt": "2025-12-08T10:19:11.213Z",
+    "updatedAt": "2025-12-08T10:19:29.316Z"
+  },
+  "1758ef7f-d0e9-4ab1-ad9b-bb8174021f88": {
+    "id": "1758ef7f-d0e9-4ab1-ad9b-bb8174021f88",
+    "title": "The Virtue of Humble Aspiration",
+    "messages": [
+      {
+        "id": "0f973c22-7d74-45a4-9de8-4fab55c0489e",
+        "text": "job application",
+        "isUser": true,
+        "timestamp": "2025-12-08T10:19:42.115Z"
+      },
+      {
+        "id": "08eb8dfe-9b83-4860-8b5a-c5c5d2632b41",
+        "text": "A request to serve a new master. I shall record my thoughts. \n\nAs one occupied with the weight of governance, I have come to understand the importance of virtue and diligence. Should you be seeking a position, I recommend that you reflect on your own character. Are you guided by reason, or swayed by fleeting desires? Can you remain steadfast in the face of adversity? \n\nYour application, then, should be a demonstration of your commitment to these principles. Do not boast of your accomplishments, but rather, showcase your willingness to learn and improve. Display your ability to adapt, to persevere, and to live in accordance with nature. \n\nRemember, it is not the position that defines you, but your character that defines your worth.",
+        "isUser": false,
+        "timestamp": "2025-12-08T10:19:44.776Z"
+      },
+      {
+        "id": "ddc09333-527f-4511-8301-dde91316581e",
+        "text": "walk",
+        "isUser": true,
+        "timestamp": "2025-12-08T10:28:20.370Z"
+      },
+      {
+        "id": "1e0d3d1c-f364-4dab-a5b0-f03d826e8e5c",
+        "text": "Step with purpose. Do not move like a puppet on strings, but as a man directed by his own mind.",
+        "isUser": false,
+        "timestamp": "2025-12-08T10:28:20.374Z"
+      },
+      {
+        "id": "31370548-c7b1-4cd2-a47e-beada185212d",
+        "text": "walking",
+        "isUser": true,
+        "timestamp": "2025-12-08T10:28:21.791Z"
+      },
+      {
+        "id": "e91463da-45fd-4cf5-8e0b-539690f5f236",
+        "text": "Step with purpose. Do not move like a puppet on strings, but as a man directed by his own mind.",
+        "isUser": false,
+        "timestamp": "2025-12-08T10:28:21.793Z"
+      },
+      {
+        "id": "f7110fac-0993-4457-8f78-374f71934416",
+        "text": "helo",
+        "isUser": true,
+        "timestamp": "2025-12-08T10:28:24.681Z"
+      },
+      {
+        "id": "d55be81a-ba40-418e-90cf-77c587a31682",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-08T10:28:24.683Z"
+      },
+      {
+        "id": "42d7ee23-219d-40c3-ac47-bcb610d68e1e",
+        "text": "hu",
+        "isUser": true,
+        "timestamp": "2025-12-08T10:28:27.384Z"
+      },
+      {
+        "id": "eb8edf73-5cbc-4cf1-89fe-385299c22d49",
+        "text": "My son, do not be idle, but rather focus on the present moment. The universe is governed by reason, not by the whims of fortune. Do not be swayed by fleeting pleasures or pains. Instead, cultivate inner strength and wisdom.",
+        "isUser": false,
+        "timestamp": "2025-12-08T10:28:28.964Z"
+      }
+    ],
+    "createdAt": "2025-12-08T10:19:41.039Z",
+    "updatedAt": "2025-12-08T10:28:28.964Z"
+  }
+}

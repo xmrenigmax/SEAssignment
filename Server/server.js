@@ -132,11 +132,51 @@ async function fetchWithTimeout(url, options, timeout = 40000) {
 }
 
 /**
+ * Generates a short, relevant title for a conversation based on the user's first message.
+ * @param { string } userMessage - The initial message from the user.
+ * @returns { Promise<string> } A short, cleaned title (e.g., "On the Nature of Virtue").
+ */
+async function generateTitle(userMessage) {
+  // Use a very fast, restrictive prompt for title generation
+  const titlePrompt = `The user's first message to Marcus Aurelius is: "${userMessage}". Based on the philosophy of Marcus Aurelius, generate a concise, four-to-six word, Stoic-themed title for this conversation. Do not use quotes or introductory phrases. Examples: 'On the Nature of Ambition', 'A Discussion of Duty', 'The Fleetingness of Fame'.`;
+
+  try {
+    const response = await fetchWithTimeout(HF_ROUTER_URL, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${HF_API_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: MODEL_ID,
+        messages: [
+          { role: "system", content: titlePrompt },
+          { role: "user", content: userMessage }
+        ],
+        max_tokens: 20,
+        temperature: 0.2,
+        stream: false
+      }),
+    }, 10000);
+
+    if (!response.ok) throw new Error("Title API failed");
+
+    const data = await response.json();
+    const rawContent = data.choices?.[0]?.message?.content || 'A New Reflection';
+
+    // Clean and truncate the title if necessary
+    let title = rawContent.replace(/["'.]/g, '').trim();
+    if (title.length > 50) title = title.substring(0, 50) + '...';
+    return title;
+
+  } catch (error) {
+    console.warn("Title generation failed, using default.");
+    return "A New Reflection";
+  }
+}
+/**
  * Main AI Orchestrator.
- * 1. Checks for hardcoded script matches.
- * 2. Tries Llama 3.1 via Hugging Face.
- * 3. Falls back to SmolLM2 (Safety Net) on error.
- * 4. Falls back to generic quotes if all else fails.
+ * Checks for hardcoded script matches.
+ * Tries Llama 3.1 via Hugging Face.
+ * Falls back to SmolLM2 (Safety Net) on error.
+ * Falls back to generic quotes if all else fails.
  * @param { string } userMessage - The user's input text.
  * @returns { Promise<string> } The final response text.
  */
@@ -319,6 +359,12 @@ app.post('/api/conversations/:conversationId/messages', async (req, res) => {
     const conversation = conversationCache[conversationId];
     if (!conversation) return res.status(404).json({ error: 'Conversation not found' });
 
+    // Check if this is the FIRST message in the conversation
+    if (conversation.messages.length === 0 && conversation.title === 'New Council') {
+        const dynamicTitle = await generateTitle(text);
+        conversation.title = dynamicTitle; // Update the title here!
+    }
+
     // Add User Message
     const userMessage = { id: uuidv4(), text, isUser: true, timestamp: new Date() };
     conversation.messages.push(userMessage);
@@ -332,6 +378,7 @@ app.post('/api/conversations/:conversationId/messages', async (req, res) => {
     conversation.updatedAt = new Date();
     await syncToDisk();
 
+    // The frontend receives the updated conversation object, including the new title.
     res.json({ userMessage, marcusMessage, conversation });
   } catch (error) {
     console.error(error);
