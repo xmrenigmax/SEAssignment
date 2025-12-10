@@ -219,24 +219,105 @@
     "createdAt": "2025-12-10T22:22:26.004Z",
     "updatedAt": "2025-12-10T22:22:27.944Z"
   },
-  "f8677075-1ac8-4ef6-8103-d63f53653269": {
-    "id": "f8677075-1ac8-4ef6-8103-d63f53653269",
-    "title": "Cultivating Inner Calm at Dawns Break \n\nAs I begin...",
+  "e227c946-c8cb-4608-bd6c-73a41b1e161d": {
+    "id": "e227c946-c8cb-4608-bd6c-73a41b1e161d",
+    "title": "Silence Amidst the Turbulent Mind",
     "messages": [
       {
-        "id": "b9e4d824-2f1a-45e0-bdbc-3f07f6e64774",
-        "text": "What is the best way to start my morning?",
+        "id": "d4a478e6-975c-4555-aa60-b2a82d03ebe9",
+        "text": ".",
         "isUser": true,
-        "timestamp": "2025-12-10T22:22:32.552Z"
+        "timestamp": "2025-12-10T22:24:45.447Z"
       },
       {
-        "id": "0009f5f1-835c-430d-9a4d-a254e21d76e9",
-        "text": "My young friend, the morning is a time for reflection, not indulgence. Begin by rising before the sun, while the world is still quiet. Take a moment to breathe deeply, and let your mind settle. Then, take up your pen and write down your thoughts, your worries, and your intentions for the day. This is a practice of self-examination, a habit of self-awareness. Let the weight of the world settle upon your shoulders, that you may carry it with dignity and wisdom.",
+        "id": "4c5cb73f-297e-4067-8849-59d60b795fdb",
+        "text": ".",
+        "isUser": true,
+        "timestamp": "2025-12-10T22:24:46.035Z"
+      },
+      {
+        "id": "7996e41c-e978-4e93-aa48-51473a58e0ea",
+        "text": "You seek my counsel. Speak your mind, that I may offer guidance. What is it that weighs upon your heart?",
         "isUser": false,
-        "timestamp": "2025-12-10T22:22:34.983Z"
+        "timestamp": "2025-12-10T22:24:46.481Z"
       }
     ],
-    "createdAt": "2025-12-10T22:22:30.193Z",
-    "updatedAt": "2025-12-10T22:22:34.983Z"
+    "createdAt": "2025-12-10T22:24:43.497Z",
+    "updatedAt": "2025-12-10T22:24:46.481Z"
+  },
+  "29893cb3-6186-401a-9436-522d065bdccd": {
+    "id": "29893cb3-6186-401a-9436-522d065bdccd",
+    "title": "The Silence of Inner Reflection",
+    "messages": [
+      {
+        "id": "7a13ba8d-0df4-464d-8758-f35b0e4d1786",
+        "text": ".",
+        "isUser": true,
+        "timestamp": "2025-12-10T22:24:49.391Z"
+      },
+      {
+        "id": "10895c1e-40d8-430a-9180-0f9a555a6ecc",
+        "text": ".",
+        "isUser": true,
+        "timestamp": "2025-12-10T22:24:50.890Z"
+      }
+    ],
+    "createdAt": "2025-12-10T22:24:47.602Z",
+    "updatedAt": "2025-12-10T22:24:47.602Z"
+  },
+  "97186ff9-ceff-49b8-9d8d-d289a0cf7bb0": {
+    "id": "97186ff9-ceff-49b8-9d8d-d289a0cf7bb0",
+    "title": "The Impermanence of Silence",
+    "messages": [
+      {
+        "id": "3966aacf-0d31-4ab3-95db-4654b89fc55e",
+        "text": ".",
+        "isUser": true,
+        "timestamp": "2025-12-10T22:24:51.701Z"
+      }
+    ],
+    "createdAt": "2025-12-10T22:24:49.782Z",
+    "updatedAt": "2025-12-10T22:24:49.782Z"
+  },
+  "4f634a89-8ef2-4677-9ad8-10620bb96b63": {
+    "id": "4f634a89-8ef2-4677-9ad8-10620bb96b63",
+    "title": "New Council",
+    "messages": [],
+    "createdAt": "2025-12-10T22:24:51.868Z",
+    "updatedAt": "2025-12-10T22:24:51.868Z"
+  },
+  "98c7f9bb-0b4b-409a-8412-fae30c8ad2a0": {
+    "id": "98c7f9bb-0b4b-409a-8412-fae30c8ad2a0",
+    "title": "The Silence of Inner Reflection",
+    "messages": [
+      {
+        "id": "46af6778-badf-4a87-aff5-647e8f654f89",
+        "text": ".",
+        "isUser": true,
+        "timestamp": "2025-12-10T22:24:55.997Z"
+      }
+    ],
+    "createdAt": "2025-12-10T22:24:54.023Z",
+    "updatedAt": "2025-12-10T22:24:54.023Z"
+  },
+  "57b03394-bd63-4292-91c4-09810ad78861": {
+    "id": "57b03394-bd63-4292-91c4-09810ad78861",
+    "title": "The Silence of Inner Reflection",
+    "messages": [
+      {
+        "id": "b59df037-3f9c-4cfd-a1ca-55775587fc71",
+        "text": ".",
+        "isUser": true,
+        "timestamp": "2025-12-10T22:24:59.017Z"
+      },
+      {
+        "id": "92b13e16-37f4-4a33-94a3-a3dd1a1303e1",
+        "text": "The silence before contemplation. Let us begin then. What is it that weighs upon your mind?",
+        "isUser": false,
+        "timestamp": "2025-12-10T22:25:00.063Z"
+      }
+    ],
+    "createdAt": "2025-12-10T22:24:57.000Z",
+    "updatedAt": "2025-12-10T22:25:00.063Z"
   }
 }
