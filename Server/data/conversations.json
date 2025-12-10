@@ -178,5 +178,65 @@
     ],
     "createdAt": "2025-12-10T21:29:16.607Z",
     "updatedAt": "2025-12-10T21:29:23.473Z"
+  },
+  "b2a6205b-c17b-4684-8b2d-04ec00390432": {
+    "id": "b2a6205b-c17b-4684-8b2d-04ec00390432",
+    "title": "Calmly Observing the Incompetence Within",
+    "messages": [
+      {
+        "id": "0d052bbe-7b1c-4853-b143-fc03381d8f3b",
+        "text": "I am angry at a colleague's incompetence. How should I react?",
+        "isUser": true,
+        "timestamp": "2025-12-10T22:20:57.772Z"
+      },
+      {
+        "id": "3f6d327b-0dc0-4db3-b78a-1effd5150ee3",
+        "text": "My son, let not the winds of anger blow within you. Instead, consider the imperfections of this colleague as a mirror, reflecting the imperfections within yourself. For in our shared humanity, we are but fleeting moments of dust, prone to error and weakness. Observe, then, the incompetence with detachment, and consider how you might cultivate patience and understanding, that you might guide this colleague with compassion, rather than the sting of reprimand.",
+        "isUser": false,
+        "timestamp": "2025-12-10T22:20:59.514Z"
+      }
+    ],
+    "createdAt": "2025-12-10T22:20:55.728Z",
+    "updatedAt": "2025-12-10T22:20:59.514Z"
+  },
+  "7d01d161-bbd4-4181-99ba-fec4316e37cc": {
+    "id": "7d01d161-bbd4-4181-99ba-fec4316e37cc",
+    "title": "Uncertainty and the Human Condition",
+    "messages": [
+      {
+        "id": "781abbd0-ff0b-4db8-9d12-8da3a2d7f73c",
+        "text": "I feel anxious about the uncertainty of the future.",
+        "isUser": true,
+        "timestamp": "2025-12-10T22:22:27.941Z"
+      },
+      {
+        "id": "0fddbcca-c72b-4844-90cd-481f2be5575a",
+        "text": "If you are distressed by anything external, the pain is not due to the thing itself, but to your estimate of it.",
+        "isUser": false,
+        "timestamp": "2025-12-10T22:22:27.944Z"
+      }
+    ],
+    "createdAt": "2025-12-10T22:22:26.004Z",
+    "updatedAt": "2025-12-10T22:22:27.944Z"
+  },
+  "f8677075-1ac8-4ef6-8103-d63f53653269": {
+    "id": "f8677075-1ac8-4ef6-8103-d63f53653269",
+    "title": "Cultivating Inner Calm at Dawns Break \n\nAs I begin...",
+    "messages": [
+      {
+        "id": "b9e4d824-2f1a-45e0-bdbc-3f07f6e64774",
+        "text": "What is the best way to start my morning?",
+        "isUser": true,
+        "timestamp": "2025-12-10T22:22:32.552Z"
+      },
+      {
+        "id": "0009f5f1-835c-430d-9a4d-a254e21d76e9",
+        "text": "My young friend, the morning is a time for reflection, not indulgence. Begin by rising before the sun, while the world is still quiet. Take a moment to breathe deeply, and let your mind settle. Then, take up your pen and write down your thoughts, your worries, and your intentions for the day. This is a practice of self-examination, a habit of self-awareness. Let the weight of the world settle upon your shoulders, that you may carry it with dignity and wisdom.",
+        "isUser": false,
+        "timestamp": "2025-12-10T22:22:34.983Z"
+      }
+    ],
+    "createdAt": "2025-12-10T22:22:30.193Z",
+    "updatedAt": "2025-12-10T22:22:34.983Z"
   }
 }
