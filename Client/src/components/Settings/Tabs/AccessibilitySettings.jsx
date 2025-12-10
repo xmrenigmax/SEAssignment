@@ -129,7 +129,7 @@ export const AccessibilitySettings = () => {
   );
 };
 
-// Helper component for cleaner code
+{/* Helper component for cleaner code */}
 const ToggleCard = ({ label, description, active, onToggle }) => (
   <button
     onClick= { onToggle }
