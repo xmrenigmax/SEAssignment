@@ -214,5 +214,49 @@
     ],
     "createdAt": "2025-12-08T10:19:41.039Z",
     "updatedAt": "2025-12-08T10:28:28.964Z"
+  },
+  "a3c9a6af-b4d7-434d-a111-18b3cfd57bba": {
+    "id": "a3c9a6af-b4d7-434d-a111-18b3cfd57bba",
+    "title": "A New Reflection",
+    "messages": [
+      {
+        "id": "c9c40e33-4ba6-4cba-a15b-388aa9c4fd66",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-10T18:16:35.112Z"
+      },
+      {
+        "id": "ce08af3a-ef68-4216-b770-91d069389770",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-10T18:16:35.115Z"
+      },
+      {
+        "id": "8ffb2803-9729-43fc-814e-213a8b3beaf4",
+        "text": "\"I am angry at a colleague's incompetence. How should I react?\"",
+        "isUser": true,
+        "timestamp": "2025-12-10T18:18:08.865Z"
+      },
+      {
+        "id": "2f0465fc-5ab5-40c6-a44c-2910598c5173",
+        "text": "The happiness of your life depends upon the quality of your thoughts. Ponder this as you walk these halls.",
+        "isUser": false,
+        "timestamp": "2025-12-10T18:18:08.869Z"
+      },
+      {
+        "id": "1ad13d27-7e16-43a8-bee0-25094e84e5f3",
+        "text": "how should i go about it then?",
+        "isUser": true,
+        "timestamp": "2025-12-10T18:18:50.311Z"
+      },
+      {
+        "id": "ae180bf3-79c1-434a-8fbe-e8a3c96ba6ee",
+        "text": "Step with purpose. Do not move like a puppet on strings, but as a man directed by his own mind.",
+        "isUser": false,
+        "timestamp": "2025-12-10T18:18:50.313Z"
+      }
+    ],
+    "createdAt": "2025-12-10T18:16:33.490Z",
+    "updatedAt": "2025-12-10T18:18:50.313Z"
   }
 }

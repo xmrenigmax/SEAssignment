@@ -130,6 +130,7 @@ export const AccessibilitySettings = () => {
 };
 
 // Helper component for cleaner code
+// Helper component for cleaner code
 const ToggleCard = ({ label, description, active, onToggle }) => (
   <button
     onClick={onToggle}
@@ -144,8 +145,18 @@ const ToggleCard = ({ label, description, active, onToggle }) => (
       <div className="font-semibold">{label}</div>
       <div className="text-xs text-[var(--text-secondary)] mt-1">{description}</div>
     </div>
+    
+    {/* TRACK */}
     <div className={`w-12 h-6 rounded-full transition-colors relative flex-shrink-0 ml-4 ${active ? 'bg-[var(--accent)]' : 'bg-gray-300 dark:bg-gray-600'}`}>
-      <div className={`w-5 h-5 bg-white rounded-full absolute top-0.5 transition-transform shadow-sm ${active ? 'left-6.5 translate-x-1' : 'left-0.5'}`} />
+      {/* KNOB - FIXED */}
+      {/* Changed logic: Fixed 'left-0.5' and used 'translate-x-6' (24px) for movement */}
+      <div 
+        className={`
+          w-5 h-5 bg-white rounded-full absolute top-0.5 left-0.5 
+          transition-transform shadow-sm 
+          ${active ? 'translate-x-6' : 'translate-x-0'}
+        `} 
+      />
     </div>
   </button>
 );
