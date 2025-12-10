@@ -130,32 +130,26 @@ export const AccessibilitySettings = () => {
 };
 
 // Helper component for cleaner code
-// Helper component for cleaner code
 const ToggleCard = ({ label, description, active, onToggle }) => (
   <button
-    onClick={onToggle}
-    className={`p-4 rounded-xl border text-left transition-all duration-200 flex justify-between items-center ${
+    onClick= { onToggle }
+    className= { `p-4 rounded-xl border text-left transition-all duration-200 flex justify-between items-center ${
       active
         ? 'bg-[var(--bg-primary)] border-[var(--accent)] ring-1 ring-[var(--accent)]'
-        : 'bg-[var(--bg-primary)] border-[var(--border)] hover:border-[var(--text-secondary)]'
-    }`}
-    aria-pressed={active}
+        : 'bg-[var(--bg-primary)] border-[var(--border)] hover:border-[var(--text-secondary)]' } ` }
+    aria-pressed= { active }
   >
     <div>
-      <div className="font-semibold">{label}</div>
-      <div className="text-xs text-[var(--text-secondary)] mt-1">{description}</div>
+      <div className="font-semibold"> { label } </div>
+      <div className="text-xs text-[var(--text-secondary)] mt-1"> { description } </div>
     </div>
     
     {/* TRACK */}
-    <div className={`w-12 h-6 rounded-full transition-colors relative flex-shrink-0 ml-4 ${active ? 'bg-[var(--accent)]' : 'bg-gray-300 dark:bg-gray-600'}`}>
+    <div className={`w-12 h-6 rounded-full transition-colors relative flex-shrink-0 ml-4 ${ active ? 'bg-[var(--accent)]' : 'bg-gray-300 dark:bg-gray-600'} `}>
       {/* KNOB - FIXED */}
       {/* Changed logic: Fixed 'left-0.5' and used 'translate-x-6' (24px) for movement */}
       <div 
-        className={`
-          w-5 h-5 bg-white rounded-full absolute top-0.5 left-0.5 
-          transition-transform shadow-sm 
-          ${active ? 'translate-x-6' : 'translate-x-0'}
-        `} 
+        className= { ` w-5 h-5 bg-white rounded-full absolute top-0.5 left-0.5 transition-transform shadow-sm ${active ? 'translate-x-6' : 'translate-x-0'} `} 
       />
     </div>
   </button>
