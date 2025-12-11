@@ -214,5 +214,25 @@
     ],
     "createdAt": "2025-12-08T10:19:41.039Z",
     "updatedAt": "2025-12-08T10:28:28.964Z"
+  },
+  "d1c9a247-74cc-4072-8828-62d9cd7e0c7b": {
+    "id": "d1c9a247-74cc-4072-8828-62d9cd7e0c7b",
+    "title": "A New Reflection",
+    "messages": [
+      {
+        "id": "67a580cd-9337-4d61-a68f-5635ba5577d4",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-11T21:24:52.511Z"
+      },
+      {
+        "id": "b1989cf3-83ef-4e23-84a4-cb4139113933",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-11T21:24:52.516Z"
+      }
+    ],
+    "createdAt": "2025-12-11T21:24:52.083Z",
+    "updatedAt": "2025-12-11T21:24:52.516Z"
   }
 }
