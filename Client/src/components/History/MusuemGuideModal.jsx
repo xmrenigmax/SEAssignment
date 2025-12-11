@@ -8,6 +8,12 @@ import { useChatContext } from '../../context/ChatContext';
 export const MuseumGuideModal = ({ isOpen, onClose }) => {
   const { startConversationWithPrompt } = useChatContext();
 
+  const suggestedPrompts = [
+    "I am angry at a colleague's incompetence. How should I react?",
+    "I feel anxious about the uncertainty of the future.",
+    "What is the best way to start my morning?"
+  ];
+
   const handlePromptClick = async (text) => {
     try {
       onClose?.();
@@ -68,24 +74,15 @@ export const MuseumGuideModal = ({ isOpen, onClose }) => {
             </p>
             <div className="space-y-2">
               <p className="text-xs font-bold text-[var(--text-secondary)] uppercase">Suggested Inquiries</p>
-              <button
-                onClick={() => handlePromptClick("I am angry at a colleague's incompetence. How should I react?")}
-                className="w-full text-left p-2 rounded hover:bg-[var(--bg-primary)] text-sm text-[var(--accent)] transition-colors border border-transparent hover:border-[var(--border)]"
-              >
-                "I am angry at a colleague's incompetence. How should I react?"
-              </button>
-              <button
-                onClick={() => handlePromptClick('I feel anxious about the uncertainty of the future.')}
-                className="w-full text-left p-2 rounded hover:bg-[var(--bg-primary)] text-sm text-[var(--accent)] transition-colors border border-transparent hover:border-[var(--border)]"
-              >
-                "I feel anxious about the uncertainty of the future."
-              </button>
-              <button
-                onClick={() => handlePromptClick('What is the best way to start my morning?')}
-                className="w-full text-left p-2 rounded hover:bg-[var(--bg-primary)] text-sm text-[var(--accent)] transition-colors border border-transparent hover:border-[var(--border)]"
-              >
-                "What is the best way to start my morning?"
-              </button>
+              {suggestedPrompts.map((prompt, index) => (
+                <button
+                  key={index}
+                  onClick={() => handlePromptClick(prompt)}
+                  className="w-full text-left p-2 rounded hover:bg-[var(--bg-primary)] text-sm text-[var(--accent)] transition-colors border border-transparent hover:border-[var(--border)]"
+                >
+                  "{prompt}"
+                </button>
+              ))}
             </div>
           </section>
         </div>
