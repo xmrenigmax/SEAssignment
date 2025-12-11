@@ -6,23 +6,12 @@ import { useChatContext } from '../../context/ChatContext';
  * Features historical biography, philosophy summary, and suggested prompts.
  */
 export const MuseumGuideModal = ({ isOpen, onClose }) => {
-  const { createNewConversation, addMessageToConversation, setActiveConversationId } = useChatContext();
+  const { startConversationWithPrompt } = useChatContext();
 
   const handlePromptClick = async (text) => {
     try {
-      // Close the modal immediately for snappy UX
       onClose?.();
-
-      // Create a fresh conversation
-      const newId = await createNewConversation();
-      // Ensure UI switches to it
-      setActiveConversationId(newId);
-      // Send the prompt as the user message
-      await addMessageToConversation(newId, {
-        text,
-        isUser: true,
-        timestamp: new Date().toISOString(),
-      });
+      await startConversationWithPrompt(text);
     } catch (e) {
       console.error('Failed to start conversation from prompt:', e);
     }

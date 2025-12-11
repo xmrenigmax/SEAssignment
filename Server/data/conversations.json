@@ -319,5 +319,25 @@
     ],
     "createdAt": "2025-12-10T22:24:57.000Z",
     "updatedAt": "2025-12-10T22:25:00.063Z"
+  },
+  "9aff0cab-69e7-45bb-aac4-bf9e1505cf6e": {
+    "id": "9aff0cab-69e7-45bb-aac4-bf9e1505cf6e",
+    "title": "Calmly Observing the Incompetence Within",
+    "messages": [
+      {
+        "id": "3a60c90a-0459-4fd2-9674-d40bfe058916",
+        "text": "I am angry at a colleague's incompetence. How should I react?",
+        "isUser": true,
+        "timestamp": "2025-12-10T23:54:21.249Z"
+      },
+      {
+        "id": "2491e5cd-a601-4af6-96cb-68779431a489",
+        "text": "My friend, do not let the sun set on a day with unbridled anger within you. Instead, recall that the incompetent colleague is still a human being, worthy of compassion and understanding. Recognize the imperfections of yourself, also, for they too may be a source of frustration.\n\nConsider the nature of the task at hand, and whether the incompetence is truly a fault of the colleague, or rather a test of your own patience and wisdom. Adjust your expectations, and seek to teach, rather than scold.",
+        "isUser": false,
+        "timestamp": "2025-12-10T23:54:23.453Z"
+      }
+    ],
+    "createdAt": "2025-12-10T23:54:18.915Z",
+    "updatedAt": "2025-12-10T23:54:23.453Z"
   }
 }
