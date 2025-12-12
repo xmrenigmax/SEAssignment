@@ -65,7 +65,7 @@ export const Sidebar = ({
   return (
     <>
       <MuseumGuideModal isOpen={showMuseumModal} onClose={() => setShowMuseumModal(false)} />
-      
+
       {/* Mobile Overlay */}
       {isMobileOpen && (
         <div
@@ -129,22 +129,22 @@ export const Sidebar = ({
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </button>
-              <button 
-                onClick={toggleMobile} 
+              <button
+                onClick={toggleMobile}
                 className="md:hidden p-2 text-[var(--text-secondary)] hover:bg-[var(--bg-primary)] rounded-full"
               >
                 ✕
               </button>
             </div>
           </div>
-          
+
           <button
             onClick={handleNewChat}
             className={`
               flex items-center gap-3 transition-all duration-200 group
-              ${isCollapsed 
-                ? 'w-10 h-10 justify-center rounded-full bg-[var(--bg-primary)] hover:text-[var(--accent)] mx-auto' 
-                : 'px-4 py-3 rounded-xl bg-[var(--bg-primary)] hover:shadow-md text-[var(--text-secondary)] hover:text-[var(--accent)]' 
+              ${isCollapsed
+                ? 'w-10 h-10 justify-center rounded-full bg-[var(--bg-primary)] hover:text-[var(--accent)] mx-auto'
+                : 'px-4 py-3 rounded-xl bg-[var(--bg-primary)] hover:shadow-md text-[var(--text-secondary)] hover:text-[var(--accent)]'
               }
             `}
             title="New Chat"
@@ -163,7 +163,7 @@ export const Sidebar = ({
               <SidebarSearch searchTerm={searchTerm} onSearchChange={setSearchTerm} />
             </div>
           )}
-          
+
           {!isCollapsed && <div className="border-t border-[var(--border)] mx-2 mb-4" role="presentation" />}
 
           {!isCollapsed ? (
@@ -176,11 +176,11 @@ export const Sidebar = ({
                   {filteredConversations.length}
                 </span>
               </div>
-              
+
               {filteredConversations.length === 0 && (
                 <p className="px-3 text-xs text-[var(--text-secondary)] opacity-60">No history found.</p>
               )}
-              
+
               {filteredConversations.map(conv => (
                 <div
                   key={conv.id}
@@ -235,7 +235,7 @@ export const Sidebar = ({
             </svg>
             {!isCollapsed && <span className="text-sm font-medium">Exhibit Guide</span>}
           </button>
-          
+
           {/* Settings & Theme Row */}
           <div className={`flex items-center ${isCollapsed ? 'flex-col gap-4' : 'justify-between border-t border-[var(--border)] pt-3'}`}>
              <ThemeToggle isCollapsed={isCollapsed} />

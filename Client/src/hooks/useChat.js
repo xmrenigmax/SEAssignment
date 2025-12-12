@@ -224,6 +224,22 @@ export const useChat = () => {
     }
   }, [apiCall, activeConversationId, setConversations, setActiveConversationId]);
 
+  const startConversationWithPrompt = async (promptText) => {
+    try {
+      const newId = await createNewConversation();
+      setActiveConversationId(newId);
+      await addMessageToConversation(newId, {
+        text: promptText,
+        isUser: true,
+        timestamp: new Date().toISOString(),
+      });
+      return newId;
+    } catch (error) {
+      console.error('Failed to start conversation from prompt:', error);
+      throw error;
+    }
+  };
+
   return {
     conversations,
     activeConversationId,
@@ -235,6 +251,7 @@ export const useChat = () => {
     loadConversation,
     syncConversations,
     importConversations,
+    startConversationWithPrompt,
     getActiveConversation: () => conversations.find(c => c.id === activeConversationId),
     startNewChat: () => setActiveConversationId(null),
     isLoading
