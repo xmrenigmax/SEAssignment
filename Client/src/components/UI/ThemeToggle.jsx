@@ -16,13 +16,10 @@ export const ThemeToggle = ({ isCollapsed }) => {
   return (
     <button
       onClick={toggleTheme}
-      className={`
-        flex items-center gap-2 p-2.5 rounded-lg transition-all duration-200
-        bg-[var(--bg-primary)] border border-[var(--border)] text-[var(--text-secondary)]
-        hover:border-[var(--accent)] hover:text-[var(--accent)]
-        focus:outline-none focus:ring-2 focus:ring-[var(--accent)]
-        ${ isCollapsed ? 'justify-center w-10 h-10' : 'flex-1 justify-center' }
-      `}
+      className={
+        `flex items-center gap-2 p-2.5 rounded-lg transition-all duration-200 bg-[var(--bg-primary)] border border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--accent)] hover:text-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]
+        ${ isCollapsed ? 'justify-center w-10 h-10' : 'flex-1 justify-center' } `
+      }
       title={ isDark ? "Switch to Light Mode" : "Switch to Dark Mode" }
       aria-label={ isDark ? "Switch to Light Mode" : "Switch to Dark Mode" }
     >
@@ -35,11 +32,7 @@ export const ThemeToggle = ({ isCollapsed }) => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
         </svg>
       )}
-      { !isCollapsed && (
-        <span className="text-sm font-medium whitespace-nowrap">
-          { isDark ? 'Light' : 'Dark' }
-        </span>
-      )}
+      { !isCollapsed && ( <span className="text-sm font-medium whitespace-nowrap"> { isDark ? 'Light' : 'Dark' } </span> )}
     </button>
   );
 };
