@@ -161,7 +161,6 @@ export const ChatPanel = () => {
           ))
         )}
 
-        {/* Loading Indicator */}
         {isLoading && (
           <div className="flex justify-start ml-11">
             <div className="bg-[var(--bg-secondary)] px-4 py-3 rounded-2xl border border-[var(--border)] flex gap-1.5">
@@ -174,7 +173,6 @@ export const ChatPanel = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input Area */}
       <div className="flex-none p-4 bg-[var(--bg-primary)]">
         <div className="max-w-3xl mx-auto bg-[var(--bg-secondary)] border border-[var(--border)] rounded-2xl shadow-sm p-2 flex items-end gap-2 focus-within:ring-2 focus-within:ring-[var(--accent)] transition-all">
           <AttachmentButton onFileAttach={setAttachedFile} />
