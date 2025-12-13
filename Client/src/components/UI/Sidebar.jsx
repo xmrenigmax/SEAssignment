@@ -238,9 +238,9 @@ export const Sidebar = ({
 
           {/* Settings & Theme Row */}
           <div className={ `flex items-center ${ isCollapsed ? 'flex-col gap-4' : 'justify-between border-t border-[var(--border)] pt-3' }` }>
-             <ThemeToggle isCollapsed={ isCollapsed } />
-             { !isCollapsed && <div className="h-4 w-px bg-[var(--border)]" role="presentation" /> }
-             <SettingsButton activeView={ activeView } setActiveView={ setActiveView } isCollapsed={ isCollapsed } />
+            <ThemeToggle isCollapsed={ isCollapsed } />
+            { !isCollapsed && <div className="h-4 w-px bg-[var(--border)]" role="presentation" /> }
+            <SettingsButton activeView={ activeView } setActiveView={ setActiveView } isCollapsed={ isCollapsed } />
           </div>
         </div>
       </aside>
