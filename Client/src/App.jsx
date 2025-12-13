@@ -9,6 +9,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ChatProvider } from './context/ChatContext';
 import Landing from './pages/LandingPage';
 import { ThemeProvider } from './context/ThemeContext';
+import { useLocalStorage } from './hooks/useLocalStorage';
 
 // Create router with future flags
 const router = createBrowserRouter([
@@ -18,16 +19,18 @@ const router = createBrowserRouter([
   }
 ], {
   future: {
-    v7_startTransition: true, // navigation
-    v7_relativeSplatPath: true // linking
+    v7_startTransition: true,
+    v7_relativeSplatPath: true
   }
 });
 
 function App() {
+  const [hasCompletedTour, setHasCompletedTour] = useLocalStorage('marcus-tour-complete', false);
+
   return (
     <ThemeProvider>
       <ChatProvider>
-        <RouterProvider router={router} />
+        <RouterProvider router={router} context={{ hasCompletedTour, setHasCompletedTour }} />
       </ChatProvider>
     </ThemeProvider>
   );

@@ -7,18 +7,8 @@ import { AboutSettings } from './Tabs/AboutSettings';
 
 /**
  * Main Settings Modal Component.
- * Renders as a full-screen overlay on top of the main application interface.
- * @component
- * @param {object} props - The component props.
- * @param {function(): void} props.onClose - Function to close the modal and return to the chat view.
- * @returns {JSX.Element} The SettingsPanel component modal interface.
  */
-export const SettingsPanel = ( { onClose } ) => {
-  /**
-   * State hook for managing which tab is currently visible in the panel.
-   * Defaults to 'accessibility'.
-   * @type {[string, function(string): void]}
-   */
+export const SettingsPanel = ({ onClose, onStartTour }) => {
   const [activeTab, setActiveTab] = useState('accessibility');
 
   // Close modal on escape key
@@ -29,16 +19,19 @@ export const SettingsPanel = ( { onClose } ) => {
      * @returns {void}
      */
     const handleEscapeKey = (event) => {
-      if (event.key === 'Escape') {
-        onClose();
-      };
+      if (event.key === 'Escape') onClose();
     };
     window.addEventListener('keydown', handleEscapeKey);
-
-    return () => {
-      window.removeEventListener('keydown', handleEscapeKey);
-    };
+    return () => window.removeEventListener('keydown', handleEscapeKey);
   }, [onClose]);
+
+  const handleTourStart = () => {
+    onClose();
+    // Slight delay to allow modal animation to finish before tour starts
+    setTimeout(() => {
+        if (onStartTour) onStartTour();
+    }, 300);
+  };
 
   return (
     <div
@@ -50,17 +43,15 @@ export const SettingsPanel = ( { onClose } ) => {
     >
       <div
         className="bg-[var(--bg-secondary)] w-full max-w-4xl max-h-[85vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row border border-[var(--border)] animate-in zoom-in-95 duration-200"
-        onClick={ ( event ) => event.stopPropagation() }
+        onClick={ (event) => event.stopPropagation() }
       >
         <div className="md:hidden p-4 border-b border-[var(--border)] flex justify-between items-center">
           <h2 className="font-bold text-lg">Settings</h2>
-          <button onClick={ onClose } className="p-2 hover:bg-[var(--bg-primary)] rounded-full">
-            ✕
-          </button>
+          <button onClick={ onClose } className="p-2 hover:bg-[var(--bg-primary)] rounded-full">✕</button>
         </div>
         <div className="w-full md:w-64 bg-[var(--bg-primary)] p-4 border-r border-[var(--border)] flex flex-col">
           <h2 className="hidden md:block text-2xl font-bold mb-6 px-2">Settings</h2>
-          <SettingsTabs activeTab={ activeTab } setActiveTab={ setActiveTab } />
+          <SettingsTabs activeTab={ activeTab } setActiveTab={ setActiveTab } onStartTour={ handleTourStart }/>
           <div className="mt-auto hidden md:block pt-6 border-t border-[var(--border)]">
             <button
               onClick={ onClose }
