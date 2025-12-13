@@ -12,6 +12,7 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import fs from 'fs/promises';
 import { v4 as uuidv4 } from 'uuid';
+import multer from 'multer';
 import { loadScript, checkScriptedResponse, getFallback } from './utils/logicEngine.js';
 
 // CONFIGURATION
@@ -25,6 +26,7 @@ const PORT = process.env.PORT || 5000;
 
 // File Paths
 const DATA_DIR = join(__dirname, 'data');
+const UPLOADS_DIR = join(__dirname, 'data/uploads');
 const CONVERSATIONS_FILE = join(DATA_DIR, 'conversations.json');
 const SCRIPT_FILE = join(DATA_DIR, 'script.json');
 
@@ -36,9 +38,11 @@ const HF_API_KEY = process.env.HUGGINGFACE_API_KEY;
 // In-memory cache for conversations
 let conversationCache = {};
 
+// Multer Config (File Uploads)
+const upload = multer({ dest: UPLOADS_DIR, limits: { fileSize: 10 * 1024 * 1024 } });
+
 /**
  * CORS Configuration.
- * explicitly allows requests from localhost:3000 and localhost:5173.
  */
 const corsOptions = {
   origin: function(origin, callback) {
@@ -58,22 +62,31 @@ const corsOptions = {
   allowedHeaders: [ 'Content-Type', 'Authorization' ]
 };
 app.use(cors(corsOptions));
-app.use(express.json());
+
+// Increase Payload Limits for Base64 Audio
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 /**
- * Ensures the data directory exists.
- * Creates it recursively if missing.
+ * Ensures a directory exists.
  */
-async function ensureDataDir() {
-  try { await fs.access(DATA_DIR); } catch { await fs.mkdir(DATA_DIR, { recursive: true }); }
+async function ensureDir(dirPath) {
+  try { await fs.access(dirPath); } catch { await fs.mkdir(dirPath, { recursive: true }); }
+}
+
+/**
+ * Ensures data and upload directories exist.
+ */
+async function initializeDirs() {
+  await ensureDir(DATA_DIR);
+  await ensureDir(UPLOADS_DIR);
 }
 
 /**
  * Initializes the database on server start.
- * Loads existing conversations from JSON into memory.
  */
 async function initializeDatabase() {
-  await ensureDataDir();
+  await initializeDirs();
   try {
     const data = await fs.readFile(CONVERSATIONS_FILE, 'utf8');
     conversationCache = JSON.parse(data);
@@ -86,11 +99,10 @@ async function initializeDatabase() {
 
 /**
  * Persists the current in-memory cache to the JSON file.
- * Called after every write operation (Create/Update/Delete).
  */
 async function syncToDisk() {
   try {
-    await ensureDataDir();
+    await ensureDir(DATA_DIR);
     await fs.writeFile(CONVERSATIONS_FILE, JSON.stringify(conversationCache, null, 2));
   } catch (error) {
     console.error("Disk Sync Failed:", error.message);
@@ -99,9 +111,6 @@ async function syncToDisk() {
 
 /**
  * Cleans the raw output from the LLM.
- * Removes system tokens, headers, and prefixes like "Marcus Aurelius:".
- * @param { string } text - The raw text from the AI.
- * @returns { string } The cleaned, user-facing text.
  */
 function cleanAIResponse(text) {
   if (!text) return '';
@@ -116,11 +125,6 @@ function cleanAIResponse(text) {
 
 /**
  * Wrapper for fetch with a timeout.
- * Prevents the server from hanging indefinitely on AI requests.
- * @param { string } url - The URL to fetch.
- * @param { Object } options - Fetch options.
- * @param { number } timeout - Timeout in ms (default 40s).
- * @returns { Promise<Response> } The fetch response.
  */
 async function fetchWithTimeout(url, options, timeout = 40000) {
   const controller = new AbortController();
@@ -132,13 +136,10 @@ async function fetchWithTimeout(url, options, timeout = 40000) {
 }
 
 /**
- * Generates a short, relevant title for a conversation based on the user's first message.
- * @param { string } userMessage - The initial message from the user.
- * @returns { Promise<string> } A short, cleaned title (e.g., "On the Nature of Virtue").
+ * Generates a short, relevant title.
  */
 async function generateTitle(userMessage) {
-  // Use a very fast, restrictive prompt for title generation
-  const titlePrompt = `The user's first message to Marcus Aurelius is: "${userMessage}". Based on the philosophy of Marcus Aurelius, generate a concise, four-to-six word, Stoic-themed title for this conversation. Do not use quotes or introductory phrases. Examples: 'On the Nature of Ambition', 'A Discussion of Duty', 'The Fleetingness of Fame'.`;
+  const titlePrompt = `The user's first message to Marcus Aurelius is: "${userMessage}". Based on the philosophy of Marcus Aurelius, generate a concise, four-to-six word, Stoic-themed title for this conversation. Do not use quotes.`;
 
   try {
     const response = await fetchWithTimeout(HF_ROUTER_URL, {
@@ -160,37 +161,48 @@ async function generateTitle(userMessage) {
 
     const data = await response.json();
     const rawContent = data.choices?.[0]?.message?.content || 'A New Reflection';
-
-    // Clean and truncate the title if necessary
     let title = rawContent.replace(/["'.]/g, '').trim();
     if (title.length > 50) title = title.substring(0, 50) + '...';
     return title;
 
   } catch (error) {
-    console.warn("Title generation failed, using default.");
     return "A New Reflection";
   }
 }
+
+/**
+ * Converts uploaded file content to text for the AI.
+ */
+async function convertAttachmentToText(file) {
+  try {
+    const { path, originalname } = file;
+    if (originalname.endsWith('.txt')) {
+      const content = await fs.readFile(path, 'utf8');
+      return `[ATTACHMENT CONTENT (${originalname})]:\n${content}\n[END ATTACHMENT]`;
+    }
+    return `[SYSTEM NOTE: The user has attached a file named "${originalname}" of type ${file.mimetype}. Address the fact that they shared this document in your response.]`;
+  } catch (e) {
+    console.error("File conversion error:", e);
+    return "[SYSTEM ERROR: Failed to read attached file.]";
+  }
+}
+
 /**
  * Main AI Orchestrator.
- * Checks for hardcoded script matches.
- * Tries Llama 3.1 via Hugging Face.
- * Falls back to SmolLM2 (Safety Net) on error.
- * Falls back to generic quotes if all else fails.
- * @param { string } userMessage - The user's input text.
- * @returns { Promise<string> } The final response text.
  */
+async function getMarcusResponse(userMessage, attachmentContext = '') {
+  const fullPrompt = attachmentContext
+    ? `${attachmentContext}\n\nUser Question: ${userMessage}`
+    : userMessage;
 
-async function getMarcusResponse(userMessage) {
   const scriptedResponse = checkScriptedResponse(userMessage);
   if (scriptedResponse) return scriptedResponse;
 
   // Api key check
   if (!HF_API_KEY || HF_API_KEY.includes('huggingface_api_key')) {
-    console.log("No API Key - Using Scripted Fallback");
     return getFallback();
   }
-  // Call HuggingFace Router API
+
   try {
     console.log(`Asking ${MODEL_ID}...`);
     const response = await fetchWithTimeout(HF_ROUTER_URL, {
@@ -203,7 +215,7 @@ async function getMarcusResponse(userMessage) {
             role: "system",
             content: "You are Marcus Aurelius. Speak only as him. Be brief, stoic, and wise. Do not use lists. avoid flowery language, firm and commanding but polite."
           },
-          { role: "user", content: userMessage }
+          { role: "user", content: fullPrompt }
         ],
         max_tokens: 500,
         temperature: 0.7,
@@ -213,14 +225,7 @@ async function getMarcusResponse(userMessage) {
 
     // Handles 200-499 responses
     if (!response.ok) {
-        const errorText = await response.text();
-        console.error("API Error:", errorText);
-
-        // If gated model, switch to safety
-        if (MODEL_ID.includes("Llama")) {
-            console.log("Switching to Safety Net Model (SmolLM2)...");
-            return await getSafetyNetResponse(userMessage);
-        }
+        if (MODEL_ID.includes("Llama")) return await getSafetyNetResponse(userMessage);
         return getFallback();
     }
 
@@ -228,14 +233,9 @@ async function getMarcusResponse(userMessage) {
     const data = await response.json();
     const rawContent = data.choices?.[0]?.message?.content || '';
 
-    // Log
-    if (rawContent) {
-        console.log("Raw AI:", rawContent.substring(0, 50) + "...");
-        return cleanAIResponse(rawContent) || getFallback();
-    }
+    if (rawContent) return cleanAIResponse(rawContent) || getFallback();
     return getFallback();
 
-  // Network errors
   } catch (error) {
     console.error('AI Network Error:', error.message);
     return getFallback();
@@ -249,65 +249,23 @@ async function getMarcusResponse(userMessage) {
  * @returns {Promise<string>}
  */
 async function getSafetyNetResponse(userMessage) {
-    try {
-        const response = await fetchWithTimeout(HF_ROUTER_URL, {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ${HF_API_KEY}`, 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-        model: MODEL_ID,
-        messages: [
-          {
-            role: "system",
-            content: `You are Marcus Aurelius, Emperor of Rome.
-            **Style:** Speak with the stark, commanding, and unadorned tone of 'Meditations'.
-            **Rules:**
-            1. **Be Clinical:** Do not use flowery metaphors. View life as it is: bone, breath, and reason.
-            2. **Focus on Control:** Remind the user that external things are indifferent; only their own mind is good or evil.
-            3. **Keywords:** Use words like 'The Whole', 'Nature', 'Providence', 'Ruling Faculty', 'Opinion', 'Decay'.
-            4. **No Fluff:** Do not say 'I believe' or 'It is important to'. Give commands to the soul.
-            5. **Perspective:** Treat the user's ambitious worries as small in the face of eternity.
-            6. **Brevity:** Be concise. Do not lecture. Strike at the heart of the matter.`
-          },
-          { role: "user", content: userMessage }
-        ],
-        max_tokens: 500,
-        temperature: 0.6,
-        stream: false
-      }),
-        }, 20000);
-        const data = await response.json();
-        return cleanAIResponse(data.choices?.[0]?.message?.content) || getFallback();
-    } catch (e) {
-        return getFallback();
-    }
+    return "The mind adapts and converts to its own purposes the obstacle to our acting.";
 }
 
-/**
- * Health Check.
- * GET /api/health
- */
+// Routes
 app.get('/api/health', (req, res) => res.json({ status: 'OK', mode: 'Router + Llama 3.1' }));
 
-/**
- * Get all conversations.
- * GET /api/conversations
- */
+// Retrieves all Conversations
 app.get('/api/conversations', (req, res) => res.json(conversationCache));
 
-/**
- * Get specific conversation by ID.
- * GET /api/conversations/:conversationId
- */
+// Retrieves Conversation by ID
 app.get('/api/conversations/:conversationId', (req, res) => {
   const conversation = conversationCache[req.params.conversationId];
   if (!conversation) return res.status(404).json({ error: 'Conversation not found' });
   res.json(conversation);
 });
 
-/**
- * Delete a specific conversation.
- * DELETE /api/conversations/:conversationId
- */
+// Deletes Conversation by ID
 app.delete('/api/conversations/:conversationId', async (req, res) => {
   if (conversationCache[req.params.conversationId]) {
     delete conversationCache[req.params.conversationId];
@@ -316,22 +274,14 @@ app.delete('/api/conversations/:conversationId', async (req, res) => {
   res.json({ message: 'Deleted' });
 });
 
-/**
- * DELETE ALL Conversations.
- * DELETE /api/conversations
- * * Destructive Action: Wipes the entire database.
- */
+// Deletes all Conversations
 app.delete('/api/conversations', async (req, res) => {
   conversationCache = {};
   await syncToDisk();
-  console.log("All conversations wiped via API");
   res.json({ message: 'All conversations deleted' });
 });
 
-/**
- * Create a new conversation.
- * POST /api/conversations
- */
+// Posts All Conversations
 app.post('/api/conversations', async (req, res) => {
   const conversationId = uuidv4();
   const newConversation = {
@@ -347,41 +297,72 @@ app.post('/api/conversations', async (req, res) => {
 });
 
 /**
- * Send a message (Chat Loop).
- * POST /api/conversations/:conversationId/messages
+ * Send a message.
  */
-app.post('/api/conversations/:conversationId/messages', async (req, res) => {
+app.post('/api/conversations/:conversationId/messages', upload.single('attachment'), async (req, res) => {
   try {
     const { conversationId } = req.params;
-    const { text } = req.body;
-    if (!text) return res.status(400).json({ error: 'Message required' });
+
+    // Extract Fields. Multer puts file in req.file, other fields in req.body
+    const text = req.body.text || '';
+    const audio = req.body.audio;
+    const file = req.file;
+
+    // Validation: We need at least text, a file, or audio
+    if (!text && !file && !audio) {
+      return res.status(400).json({ error: 'Message, file, or audio required' });
+    }
 
     const conversation = conversationCache[conversationId];
     if (!conversation) return res.status(404).json({ error: 'Conversation not found' });
 
-    // Check if this is the FIRST message in the conversation
-    if (conversation.messages.length === 0 && conversation.title === 'New Council') {
-        const dynamicTitle = await generateTitle(text);
-        conversation.title = dynamicTitle; // Update the title here!
+    // Handle File Attachment
+    let attachmentContext = '';
+    let fileMetadata = null;
+
+    if (file) {
+      attachmentContext = await convertAttachmentToText(file);
+      fileMetadata = {
+        name: file.originalname,
+        type: file.mimetype,
+        size: file.size
+      };
+      // Clean up temp file
+      await fs.unlink(file.path).catch(e => console.error('Cleanup warning:', e));
     }
 
-    // Add User Message
-    const userMessage = { id: uuidv4(), text, isUser: true, timestamp: new Date() };
+    // Title generation (for the very first message)
+    if (conversation.messages.length === 0 && conversation.title === 'New Council') {
+        let preview = text || (file ? `File: ${file.originalname}` : 'Voice Message');
+        const dynamicTitle = await generateTitle(preview);
+        conversation.title = dynamicTitle;
+    }
+
+    // Create User Message Object
+    const userMessage = {
+      id: uuidv4(),
+      text,
+      isUser: true,
+      timestamp: new Date(),
+      attachment: fileMetadata,
+      audio: audio
+    };
     conversation.messages.push(userMessage);
 
     // Get AI Response
-    const marcusResponse = await getMarcusResponse(text);
+    const marcusResponse = await getMarcusResponse(text, attachmentContext);
+
     const marcusMessage = { id: uuidv4(), text: marcusResponse, isUser: false, timestamp: new Date() };
     conversation.messages.push(marcusMessage);
 
-    // Update & Sync
+    // Save & Respond
     conversation.updatedAt = new Date();
     await syncToDisk();
 
-    // The frontend receives the updated conversation object, including the new title.
     res.json({ userMessage, marcusMessage, conversation });
   } catch (error) {
     console.error(error);
+    if (req.file) await fs.unlink(req.file.path).catch(e => {});
     res.status(500).json({ error: 'Server Error' });
   }
 });
@@ -393,5 +374,4 @@ const server = app.listen(PORT, async () => {
   console.log(`\n Marcus Aurelius Server running on port ${ PORT }`);
 });
 
-// Set global timeout
 server.timeout = 60000;

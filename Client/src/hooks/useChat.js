@@ -7,9 +7,9 @@ const API_BASE_URL = 'http://localhost:5000/api';
  * Main chat logic hook.
  * Features:
  * 1. Auto-Sync with Server
- * 2. Optimistic UI Updates (Immediate user feedback)
- * 3. clearAllConversations support
- * * @returns {Object} Chat state and methods
+ * 2. Optimistic UI Updates
+ * 3. File Upload Support
+ * @returns {Object} Chat state and methods
  */
 export const useChat = () => {
   const [conversations, setConversations] = useLocalStorage('chat-conversations', []);
@@ -18,29 +18,33 @@ export const useChat = () => {
 
   /**
    * Helper for API calls with standardized error handling.
-   * @param {string} endpoint - API endpoint (e.g., '/conversations')
-   * @param {Object} options - Fetch options
    */
   const apiCall = useCallback(async (endpoint, options = {}) => {
     try {
+      const isFormData = options.body instanceof FormData;
+      const headers = { ...options.headers };
+
+      if (!isFormData) {
+        headers['Content-Type'] = 'application/json';
+      }
+
       const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-        headers: { 'Content-Type': 'application/json', ...options.headers },
         ...options,
+        headers,
       });
 
       if (response.status === 404) throw new Error('NOT_FOUND');
-      if (!response.ok) throw new Error(`API error: ${response.status}`);
+      if (!response.ok) throw new Error(`API error: ${ response.status }`);
 
       return await response.json();
     } catch (error) {
-      console.error(`API Call Failed [${endpoint}]:`, error);
+      console.error(`API Call Failed [${ endpoint }]:`, error);
       throw error;
     }
   }, []);
 
   /**
    * Syncs frontend list with backend reality.
-   * Prevents 404 errors by removing stale IDs.
    */
   const syncConversations = useCallback(async () => {
     try {
@@ -58,7 +62,7 @@ export const useChat = () => {
 
       // Reset active ID if it no longer exists on server
       if (activeConversationId) {
-        const exists = validList.find(c => c.id === activeConversationId);
+        const exists = validList.find(conversation => conversation.id === activeConversationId);
         if (!exists) setActiveConversationId(null);
       }
     } catch (error) {
@@ -68,7 +72,6 @@ export const useChat = () => {
 
   /**
    * Creates a new conversation session.
-   * Falls back to offline mode if server fails.
    */
   const createNewConversation = async () => {
     setIsLoading(true);
@@ -79,6 +82,7 @@ export const useChat = () => {
       setIsLoading(false);
       return data.id;
     } catch (error) {
+
       // Offline fallback
       const newConv = {
         id: Date.now().toString(),
@@ -94,9 +98,7 @@ export const useChat = () => {
   };
 
   /**
-   * Imports a conversation history from a JSON file.
-   * Merges with existing conversations (avoiding ID duplicates).
-   * @param {Array} fileData - The parsed JSON array of conversations.
+   * Imports a conversation history.
    */
   const importConversations = useCallback((fileData) => {
     if (!Array.isArray(fileData)) {
@@ -105,8 +107,8 @@ export const useChat = () => {
 
     setConversations(prev => {
       // Create a Map of existing IDs to prevent duplicates
-      const existingIds = new Set(prev.map(c => c.id));
-      const newConversations = fileData.filter(c => !existingIds.has(c.id));
+      const existingIds = new Set(prev.map(conversation => conversation.id));
+      const newConversations = fileData.filter(conversation => !existingIds.has(conversation.id));
 
       // Combine and sort by newest
       const combined = [...newConversations, ...prev].sort(
@@ -119,12 +121,6 @@ export const useChat = () => {
 
   /**
    * Sends a message to the backend.
-   * * IMPLEMENTS OPTIMISTIC UPDATES:
-   * 1. Immediately adds user message to local state.
-   * 2. Sends request to backend.
-   * 3. Updates state with real backend response (User msg + AI response).
-   * * @param {string} conversationId
-   * @param {Object} message - { text, isUser, timestamp, attachment }
    */
   const addMessageToConversation = async (conversationId, message) => {
     // Generate a temporary ID for the optimistic message
@@ -132,32 +128,43 @@ export const useChat = () => {
     const optimisticMessage = { ...message, id: tempId };
 
     // Update UI immediately before network request
-    setConversations(prev => prev.map(conv => {
-      if (conv.id === conversationId) {
+    setConversations(prev => prev.map(conversation => {
+      if (conversation.id === conversationId) {
         return {
-          ...conv,
-          messages: [...(conv.messages || []), optimisticMessage],
+          ...conversation,
+          messages: [...(conversation.messages || []), optimisticMessage],
           updatedAt: new Date().toISOString()
         };
       }
-      return conv;
+      return conversation;
     }));
 
     setIsLoading(true);
 
     try {
-      // Send to backend
-      const data = await apiCall(`/conversations/${conversationId}/messages`, {
+      let body;
+      // Check if we have an attachment to send
+      if (message.attachment) {
+        const formData = new FormData();
+        formData.append('text', message.text || '');
+        formData.append('attachment', message.attachment);
+        body = formData;
+      } else {
+        // Standard JSON for text-only
+        body = JSON.stringify({ text: message.text });
+      }
+
+      const data = await apiCall(`/conversations/${ conversationId }/messages`, {
         method: 'POST',
-        body: JSON.stringify({ text: message.text })
+        body: body
       });
 
       // Confirms the user message was saved and adds the AI's response.
-      setConversations(prev => prev.map(conv => {
-        if (conv.id === conversationId) {
+      setConversations(prev => prev.map(conversation => {
+        if (conversation.id === conversationId) {
           return data.conversation;
         }
-        return conv;
+        return conversation;
       }));
 
       setIsLoading(false);
@@ -173,19 +180,17 @@ export const useChat = () => {
 
   /**
    * Deletes a specific conversation.
-   * @param {string} id
    */
   const deleteConversation = async (id) => {
     // Optimistic delete
-    setConversations(prev => prev.filter(c => c.id !== id));
+    setConversations(prev => prev.filter(conversation=> conversation.id !== id));
     if (activeConversationId === id) setActiveConversationId(null);
 
-    try { await apiCall(`/conversations/${id}`, { method: 'DELETE' }); } catch (e) {}
+    try { await apiCall(`/conversations/${ id }`, { method: 'DELETE' }); } catch (error) { console.warn(error) }
   };
 
   /**
    * Deletes ALL conversations history.
-   * Requires user confirmation.
    */
   const clearAllConversations = async () => {
     if (!window.confirm("Are you sure you want to delete the entire history? This cannot be undone.")) return;
@@ -195,21 +200,20 @@ export const useChat = () => {
 
     try {
       await apiCall('/conversations', { method: 'DELETE' });
-    } catch (e) {
+    } catch (error) {
       console.warn("Failed to clear on server");
     }
   };
 
   /**
-   * Loads a specific conversation details from server.
-   * @param {string} id
+   * Loads a specific conversation.
    */
   const loadConversation = useCallback(async (id) => {
     if (!id) return;
     try {
-      const data = await apiCall(`/conversations/${id}`);
+      const data = await apiCall( `/conversations/${ id }` );
       setConversations(prev => {
-        const index = prev.findIndex(c => c.id === id);
+        const index = prev.findIndex(conversation => conversation.id === id);
         if (index === -1) return [data, ...prev];
 
         const newList = [...prev];
@@ -218,7 +222,7 @@ export const useChat = () => {
       });
     } catch (error) {
       if (error.message === 'NOT_FOUND') {
-        setConversations(prev => prev.filter(c => c.id !== id));
+        setConversations(prev => prev.filter(conversation => conversation.id !== id));
         if (activeConversationId === id) setActiveConversationId(null);
       }
     }
@@ -251,8 +255,7 @@ export const useChat = () => {
     loadConversation,
     syncConversations,
     importConversations,
-    startConversationWithPrompt,
-    getActiveConversation: () => conversations.find(c => c.id === activeConversationId),
+    getActiveConversation: () => conversations.find(conversation => conversation.id === activeConversationId),
     startNewChat: () => setActiveConversationId(null),
     isLoading
   };
