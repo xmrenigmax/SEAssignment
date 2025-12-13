@@ -49,17 +49,31 @@ body {
   font-family: system-ui, -apple-system, sans-serif;
 }
 
-/* Custom Scrollbar for Chat History (FR8) */
-::-webkit-scrollbar {
-  width: 6px;
+/* Global default scrollbar (subtle) */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
+
+/* Themed custom scrollbar utility */
+.custom-scrollbar {
+  /* Firefox */
+  scrollbar-width: thin; /* auto | thin | none */
+  scrollbar-color: var(--border) transparent; /* thumb track */
 }
-::-webkit-scrollbar-track {
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
-::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 3px;
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--border), color-mix(in oklab, var(--border) 70%, var(--accent) 30%));
+  border-radius: 9999px;
+  border: 2px solid transparent; /* adds spacing for a pill look */
 }
-::-webkit-scrollbar-thumb:hover {
-  background: var(--text-secondary);
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--text-secondary), var(--accent));
 }
+.custom-scrollbar::-webkit-scrollbar-corner { background: transparent; }

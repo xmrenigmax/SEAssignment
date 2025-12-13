@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ThemeToggle } from './ThemeToggle';
 import { SettingsButton } from './SettingsButton';
 import { SidebarSearch } from './SidebarSearch';
-import { MuseumGuideModal } from '../History/MusuemGuideModal';
+import { MuseumGuideModal } from '../History/MuseumGuideModal';
 import { useChatContext } from '../../context/ChatContext';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useSidebarResizer } from '../../hooks/UseSidebarResizer';
@@ -73,7 +73,7 @@ export const Sidebar = ({
         />
       )}
       <aside
-        ref={sidebarRef}
+        ref={ sidebarRef }
         className={`
           fixed inset-y-0 left-0 z-50 bg-[var(--bg-secondary)] border-r border-[var(--border)]
           flex flex-col
@@ -114,7 +114,7 @@ export const Sidebar = ({
                 title={ isCollapsed ? "Expand menu" : "Collapse menu" }
               >
                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2} d="M4 6h16M4 12h16M4 18h16" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </button>
               <button
@@ -126,10 +126,10 @@ export const Sidebar = ({
             </div>
           </div>
           <button
-            onClick={handleNewChat}
+            onClick={ handleNewChat }
             className={`
               flex items-center gap-3 transition-all duration-200 group
-              ${isCollapsed
+              ${ isCollapsed
                 ? 'w-10 h-10 justify-center rounded-full bg-[var(--bg-primary)] hover:text-[var(--accent)] mx-auto'
                 : 'px-4 py-3 rounded-xl bg-[var(--bg-primary)] hover:shadow-md text-[var(--text-secondary)] hover:text-[var(--accent)]'
               }
@@ -137,9 +137,9 @@ export const Sidebar = ({
             title="New Chat"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M12 4v16m8-8H4" />
             </svg>
-            {!isCollapsed && <span className="font-medium text-sm whitespace-nowrap">New Chat</span>}
+            { !isCollapsed && <span className="font-medium text-sm whitespace-nowrap">New Chat</span> }
           </button>
         </div>
         <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar px-3 py-2">
@@ -159,16 +159,14 @@ export const Sidebar = ({
                   { filteredConversations.length }
                 </span>
               </div>
-              { filteredConversations.length === 0 && (
-                <p className="px-3 text-xs text-[var(--text-secondary)] opacity-60">No history found.</p>
-              )}
+              { filteredConversations.length === 0 && (<p className="px-3 text-xs text-[var(--text-secondary)] opacity-60">No history found.</p>) }
               { filteredConversations.map(conversation => (
                 <div
                   key={ conversation.id }
                   onClick={ () => setActiveConversationId(conversation.id) }
                   className={`
                     group relative flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-all duration-200 border border-transparent
-                    ${activeConversationId === conversation.id
+                    ${ activeConversationId === conversation.id
                       ? 'bg-[var(--accent)]/10 text-[var(--accent)] font-medium'
                       : 'text-[var(--text-primary)] hover:bg-[var(--bg-primary)] hover:border-[var(--border)]'
                     }
@@ -179,15 +177,12 @@ export const Sidebar = ({
                   </svg>
                   <span className="truncate flex-1 text-sm">{ conversation.title || 'New Chat' }</span>
                   <button
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      if(window.confirm('Delete this conversation?')) deleteConversation(conversation.id);
-                    }}
+                    onClick={ (event) => { event.stopPropagation(); if(window.confirm('Delete this conversation?')) deleteConversation(conversation.id); }}
                     className="opacity-0 group-hover:opacity-100 p-1.5 text-[var(--text-secondary)] hover:text-red-500 rounded-md transition-all"
                     title="Delete Conversation"
                   >
                     <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
                 </div>
@@ -215,7 +210,7 @@ export const Sidebar = ({
           </button>
           <div className={ `flex items-center ${ isCollapsed ? 'flex-col gap-4' : 'justify-between border-t border-[var(--border)] pt-3' }` }>
             <ThemeToggle isCollapsed={ isCollapsed } />
-            {!isCollapsed && <div className="h-4 w-px bg-[var(--border)]" role="presentation" /> }
+            { !isCollapsed && <div className="h-4 w-px bg-[var(--border)]" role="presentation" /> }
             <SettingsButton activeView={ activeView } setActiveView={ setActiveView } isCollapsed={ isCollapsed } />
           </div>
         </div>

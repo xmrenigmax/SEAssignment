@@ -40,7 +40,7 @@ export const AccessibilitySettings = () => {
 
   //  Apply the selected font size to the document's root element.
   useEffect(() => {
-    document.documentElement.style.fontSize = `${fontSize}px`;
+    document.documentElement.style.fontSize = `${ fontSize }px`;
   }, [fontSize]);
 
   // Apply High Contrast
@@ -92,7 +92,7 @@ export const AccessibilitySettings = () => {
         <div className="flex justify-between items-center mb-4">
           <label htmlFor="font-slider" className="font-semibold">Text Size</label>
           <span className="text-sm font-mono bg-[var(--bg-secondary)] px-2 py-1 rounded border border-[var(--border)]">
-            {fontSize}px
+            { fontSize }px
           </span>
         </div>
         <div className="flex items-center gap-4">
@@ -103,8 +103,8 @@ export const AccessibilitySettings = () => {
             min="12"
             max="24"
             step="1"
-            value={fontSize}
-            onChange={(event) => setFontSize(Number(event.target.value))}
+            value={ fontSize }
+            onChange={ (event) => setFontSize(Number(event.target.value) )}
             className="flex-1 h-2 bg-[var(--border)] rounded-lg appearance-none cursor-pointer accent-[var(--accent)]"
             aria-label="Adjust font size"
           />
@@ -116,26 +116,26 @@ export const AccessibilitySettings = () => {
         <ToggleCard
           label="Dark Mode"
           description="Switch between light and dark themes."
-          active={isDark}
-          onToggle={toggleTheme}
+          active={ isDark }
+          onToggle={ toggleTheme }
         />
         <ToggleCard
           label="High Contrast"
           description="Increases visual distinction."
-          active={highContrast}
-          onToggle={() => setHighContrast(!highContrast)}
+          active={ highContrast }
+          onToggle={ () => setHighContrast(!highContrast) }
         />
         <ToggleCard
           label="Dyslexia Friendly"
           description="Uses accessible fonts and spacing."
-          active={dyslexicFont}
-          onToggle={() => setDyslexicFont(!dyslexicFont)}
+          active={ dyslexicFont }
+          onToggle={ () => setDyslexicFont(!dyslexicFont) }
         />
         <ToggleCard
           label="Reduced Motion"
           description="Disables animations and transitions."
-          active={reducedMotion}
-          onToggle={() => setReducedMotion(!reducedMotion)}
+          active={ reducedMotion }
+          onToggle={ () => setReducedMotion(!reducedMotion) }
         />
       </div>
     </div>
@@ -155,20 +155,20 @@ export const AccessibilitySettings = () => {
  */
 const ToggleCard = ({ label, description, active, onToggle }) => (
   <button
-    onClick={onToggle}
+    onClick={ onToggle }
     className={`p-4 rounded-xl border text-left transition-all duration-200 flex justify-between items-center ${
       active
         ? 'bg-[var(--bg-primary)] border-[var(--accent)] ring-1 ring-[var(--accent)]'
         : 'bg-[var(--bg-primary)] border-[var(--border)] hover:border-[var(--text-secondary)]'
     }`}
-    aria-pressed={active}
+    aria-pressed={ active }
   >
     <div>
-      <div className="font-semibold">{label}</div>
-      <div className="text-xs text-[var(--text-secondary)] mt-1">{description}</div>
+      <div className="font-semibold">{ label }</div>
+      <div className="text-xs text-[var(--text-secondary)] mt-1">{ description }</div>
     </div>
-    <div className={`w-12 h-6 rounded-full transition-colors relative flex-shrink-0 ml-4 ${active ? 'bg-[var(--accent)]' : 'bg-gray-300 dark:bg-gray-600'}`}>
-      <div className={`w-5 h-5 bg-white rounded-full absolute top-0.5 transition-transform shadow-sm ${active ? 'left-6.5 translate-x-1' : 'left-0.5'}`} />
+    <div className={ `w-12 h-6 rounded-full transition-colors relative flex-shrink-0 ml-4 ${ active ? 'bg-[var(--accent)]' : 'bg-gray-300 dark:bg-gray-600' }` }>
+      <div className={ `w-5 h-5 bg-white rounded-full absolute top-0.5 transition-transform shadow-sm ${ active ? 'left-6.5 translate-x-1' : 'left-0.5' }` } />
     </div>
   </button>
 );

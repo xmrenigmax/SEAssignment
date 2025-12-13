@@ -8,6 +8,9 @@ import { MuseumTour } from '../components/Settings/Tabs/MuseumTour';
 
 /**
  * Landing Page Layout.
+ * Logic:
+ * Mobile: Sidebar is an overlay (controlled by isMobileOpen).
+ * Desktop: Sidebar is a rail (controlled by isCollapsed).
  */
 const Landing = () => {
   // Safe Context Access
