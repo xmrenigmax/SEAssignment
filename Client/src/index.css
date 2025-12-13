@@ -38,8 +38,6 @@
   --message-bot: #334155;
 }
 
-
-
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
