@@ -516,5 +516,47 @@
     ],
     "createdAt": "2025-12-13T15:02:28.557Z",
     "updatedAt": "2025-12-13T15:13:13.934Z"
+  },
+  "63bd444c-1774-43fd-a07e-f856a0339ff6": {
+    "id": "63bd444c-1774-43fd-a07e-f856a0339ff6",
+    "title": "A Mind at Peace with Chaos",
+    "messages": [
+      {
+        "id": "d9974cc2-f4e0-44da-8142-c995d3fe97d2",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-13T19:40:13.107Z",
+        "attachment": null
+      },
+      {
+        "id": "9cd437e6-aa77-4de6-9362-8158064b27b9",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-13T19:40:13.111Z"
+      }
+    ],
+    "createdAt": "2025-12-13T19:40:12.037Z",
+    "updatedAt": "2025-12-13T19:40:13.111Z"
+  },
+  "254b5282-06e5-46cf-b2a9-fc1e038e3a94": {
+    "id": "254b5282-06e5-46cf-b2a9-fc1e038e3a94",
+    "title": "Morning Reflection and Inner Calm Found",
+    "messages": [
+      {
+        "id": "d0d0cb8d-8619-4d44-866c-99d6f7499cd7",
+        "text": "What is the best way to start my morning?",
+        "isUser": true,
+        "timestamp": "2025-12-13T20:07:19.714Z",
+        "attachment": null
+      },
+      {
+        "id": "f4ef01f7-77ab-4754-988d-ebad98e7c5e5",
+        "text": "My young friend, the best way to start your morning is to begin with a steadfast resolve. As you rise from slumber, recall the words of Epictetus: \"It's not what happens to you, but how you react to it that matters.\" \n\nTake a moment to breathe in the stillness of the morning, and remind yourself of your purpose. Ask yourself, \"What is the most important thing I must accomplish today?\" Focus on that goal, and let it guide your actions.\n\nThen, take a walk, or engage in some form of physical discipline. This will help you clear your mind and prepare your body for the challenges ahead.\n\nFinally, sit in silence, and reflect on your thoughts and intentions. As I wrote in my Meditations, \"The impediment to action advances action. What stands in the way becomes the way.\" \n\nMay your mornings be guided by wisdom and purpose.",
+        "isUser": false,
+        "timestamp": "2025-12-13T20:07:22.990Z"
+      }
+    ],
+    "createdAt": "2025-12-13T20:07:18.695Z",
+    "updatedAt": "2025-12-13T20:07:22.990Z"
   }
 }

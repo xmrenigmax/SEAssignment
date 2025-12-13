@@ -163,8 +163,7 @@ export const ChatPanel = () => {
                     <audio controls src={ msg.audio } className="h-8 w-full max-w-[200px]" />
                   </div>
                 )}
-
-                <div className="whitespace-pre-wrap">{msg.text}</div>
+                <div className="whitespace-pre-wrap">{ msg.text }</div>
               </div>
             </div>
           ))
@@ -178,10 +177,10 @@ export const ChatPanel = () => {
             </div>
           </div>
         )}
-        <div ref={messagesEndRef} />
+        <div ref={ messagesEndRef } />
       </div>
       <div className="flex-none p-4 bg-[var(--bg-primary)]">
-        <div className="max-w-3xl mx-auto bg-[var(--bg-secondary)] border border-[var(--border)] rounded-2xl shadow-sm p-2 flex items-end gap-2">
+        <div className="max-w-3xl mx-auto bg-[var(--bg-secondary)] border border-[var(--border)] rounded-2xl shadow-sm p-2 flex items-end gap-2 focus-within:ring-2 focus-within:ring-[var(--accent)] transition-all">
           <AttachmentButton onFileAttach={ setAttachedFile } />
           <div className="flex-1 min-w-0 py-1.5">
             { (attachedFile || audioData) && (
@@ -196,8 +195,9 @@ export const ChatPanel = () => {
               onChange={ handleInputChange }
               onKeyDown={ handleKeyDown }
               placeholder={ isRecording ? "Listening..." : "Ask the Emperor..." }
-              className="w-full bg-transparent border-none outline-none text-[var(--text-primary)] resize-none max-h-[150px]"
+              className="w-full bg-transparent border-none outline-none text-[var(--text-primary)] placeholder-[var(--text-secondary)] resize-none max-h-[150px]"
               rows={ 1 }
+              style={{ minHeight: '24px' }}
             />
           </div>
           <VoiceInputButton
