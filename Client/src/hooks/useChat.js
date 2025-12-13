@@ -255,6 +255,7 @@ export const useChat = () => {
     loadConversation,
     syncConversations,
     importConversations,
+    startConversationWithPrompt,
     getActiveConversation: () => conversations.find(conversation => conversation.id === activeConversationId),
     startNewChat: () => setActiveConversationId(null),
     isLoading

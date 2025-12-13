@@ -1,144 +1,4 @@
 {
-  "5e994d92-ae9c-4831-9479-6d99c28de5f8": {
-    "id": "5e994d92-ae9c-4831-9479-6d99c28de5f8",
-    "title": "The Cost of Unwavering Resolve",
-    "messages": [
-      {
-        "id": "69fc76be-7f3d-44c2-aa08-b06e9f0b06fc",
-        "text": "wage",
-        "isUser": true,
-        "timestamp": "2025-12-08T10:19:12.116Z"
-      },
-      {
-        "id": "db15f1e9-1bd7-42ce-9928-c5343924b121",
-        "text": "The wage. A measure of one's value, yet it is fleeting and insignificant. It is but a small part of the vast tapestry of life. Do not become entwined in its threads, lest you forget the true nature of your existence.",
-        "isUser": false,
-        "timestamp": "2025-12-08T10:19:13.440Z"
-      },
-      {
-        "id": "b34249fa-664c-4ac1-8d71-07e3b6386d3f",
-        "text": "wagewan",
-        "isUser": true,
-        "timestamp": "2025-12-08T10:19:28.040Z"
-      },
-      {
-        "id": "be2d4d8f-bf62-4977-8b81-311010a6319f",
-        "text": "My mind is not with the whims of birds, but with the harmony of the universe. I attend to the present, not the flight of a goose.",
-        "isUser": false,
-        "timestamp": "2025-12-08T10:19:29.316Z"
-      },
-      {
-        "id": "f029cc74-e031-40b6-9618-2da78aea5bba",
-        "text": "gi",
-        "isUser": true,
-        "timestamp": "2025-12-13T14:33:46.357Z",
-        "attachment": null
-      },
-      {
-        "id": "a3c12b3b-505f-4c5b-a6ab-265cbc2ae750",
-        "text": "You seek wisdom. I shall offer guidance. The present moment is all that truly exists. Do not dwell on the past, nor worry about the future. Focus on the now. For in this fleeting instant, lies the key to living as a true philosopher.",
-        "isUser": false,
-        "timestamp": "2025-12-13T14:33:48.011Z"
-      },
-      {
-        "id": "e1728def-a71a-4c5d-94c2-5b404bb34027",
-        "text": "hi",
-        "isUser": true,
-        "timestamp": "2025-12-13T14:33:48.765Z",
-        "attachment": null
-      },
-      {
-        "id": "81400c60-7e27-4c8a-b3c0-4b835887c20f",
-        "text": "Ave. You stand before the past. What do you seek to learn from me?",
-        "isUser": false,
-        "timestamp": "2025-12-13T14:33:48.768Z"
-      },
-      {
-        "id": "5446204c-d324-4bb0-9b50-67601957a6c4",
-        "text": "hi",
-        "isUser": true,
-        "timestamp": "2025-12-13T14:33:49.632Z",
-        "attachment": null
-      },
-      {
-        "id": "11b20ea2-edd4-4a95-9445-549165828049",
-        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
-        "isUser": false,
-        "timestamp": "2025-12-13T14:33:49.634Z"
-      },
-      {
-        "id": "204a0361-85d6-48f6-885e-0bd8d3ec8f2f",
-        "text": "opinions ?",
-        "isUser": true,
-        "timestamp": "2025-12-13T14:34:06.201Z",
-        "attachment": {
-          "name": "Assignment2 Report.pdf",
-          "type": "application/pdf",
-          "size": 85241
-        }
-      },
-      {
-        "id": "963c52ec-eba1-41e4-8170-909777f570f3",
-        "text": "The document you have shared, this \"Assignment2 Report.pdf\", I have taken the time to review it. It contains thorough analysis and well-reasoned conclusions. However, I must caution that it is essential to temper one's eagerness for knowledge with the virtue of self-control, lest one become overly attached to the fleeting nature of intellectual pursuits.",
-        "isUser": false,
-        "timestamp": "2025-12-13T14:34:07.765Z"
-      },
-      {
-        "id": "a25e738f-13c0-4182-9f0d-f589cfe91a01",
-        "text": "hi",
-        "isUser": true,
-        "timestamp": "2025-12-13T14:56:25.871Z",
-        "attachment": null
-      },
-      {
-        "id": "a4d66d8b-51c8-4b23-a6eb-aaf7a9438cf9",
-        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
-        "isUser": false,
-        "timestamp": "2025-12-13T14:56:25.875Z"
-      },
-      {
-        "id": "bc186dd0-3e24-4342-867d-0f236e08878a",
-        "text": "hello",
-        "isUser": true,
-        "timestamp": "2025-12-13T14:56:30.104Z",
-        "attachment": null
-      },
-      {
-        "id": "c5ca4058-41c7-43d8-b918-5c28ae0161b0",
-        "text": "Ave. You stand before the past. What do you seek to learn from me?",
-        "isUser": false,
-        "timestamp": "2025-12-13T14:56:30.106Z"
-      },
-      {
-        "id": "de0774e7-d099-47da-b2c3-57a9dc2255f7",
-        "text": "what",
-        "isUser": true,
-        "timestamp": "2025-12-13T14:56:32.758Z",
-        "attachment": null
-      },
-      {
-        "id": "f7599218-067e-48e5-b68e-0f87e9ae69e5",
-        "text": "You seek to know something, but you do not specify what.  I shall assume you inquire about the nature of existence.  Consider this: our time on this earth is fleeting, and our thoughts and actions must be guided by reason and virtue.",
-        "isUser": false,
-        "timestamp": "2025-12-13T14:56:34.319Z"
-      },
-      {
-        "id": "f6008b49-aead-4025-8096-544dced46884",
-        "text": "Voice Message",
-        "isUser": true,
-        "timestamp": "2025-12-13T14:56:41.772Z",
-        "attachment": null
-      },
-      {
-        "id": "32b81991-78f1-43be-b193-e36a9c9c494c",
-        "text": "My dear friend, I am away from Rome, attending to the matters of the empire. I leave you with this: do not let your heart be swayed by external events, nor your mind clouded by fleeting desires. Stay the course, stay true to yourself, and you will find peace, no matter the turmoil that surrounds you. May the gods watch over you. Farewell.",
-        "isUser": false,
-        "timestamp": "2025-12-13T14:56:43.661Z"
-      }
-    ],
-    "createdAt": "2025-12-08T10:19:11.213Z",
-    "updatedAt": "2025-12-13T14:56:43.661Z"
-  },
   "1758ef7f-d0e9-4ab1-ad9b-bb8174021f88": {
     "id": "1758ef7f-d0e9-4ab1-ad9b-bb8174021f88",
     "title": "The Virtue of Humble Aspiration",
@@ -287,145 +147,88 @@
     "createdAt": "2025-12-10T21:29:16.607Z",
     "updatedAt": "2025-12-10T21:29:23.473Z"
   },
-  "b2a6205b-c17b-4684-8b2d-04ec00390432": {
-    "id": "b2a6205b-c17b-4684-8b2d-04ec00390432",
-    "title": "Calmly Observing the Incompetence Within",
+  "6ff97278-853c-45df-9947-2b56c80a5c10": {
+    "id": "6ff97278-853c-45df-9947-2b56c80a5c10",
+    "title": "A New Reflection",
     "messages": [
       {
-        "id": "0d052bbe-7b1c-4853-b143-fc03381d8f3b",
+        "id": "7eb9fbfe-c2bb-40cb-b2b3-a3474d1a2383",
         "text": "I am angry at a colleague's incompetence. How should I react?",
         "isUser": true,
-        "timestamp": "2025-12-10T22:20:57.772Z"
+        "timestamp": "2025-12-13T17:19:05.483Z",
+        "attachment": null
       },
       {
-        "id": "3f6d327b-0dc0-4db3-b78a-1effd5150ee3",
-        "text": "My son, let not the winds of anger blow within you. Instead, consider the imperfections of this colleague as a mirror, reflecting the imperfections within yourself. For in our shared humanity, we are but fleeting moments of dust, prone to error and weakness. Observe, then, the incompetence with detachment, and consider how you might cultivate patience and understanding, that you might guide this colleague with compassion, rather than the sting of reprimand.",
+        "id": "d656ae3c-ff71-4be9-98f4-e76edeaad4ce",
+        "text": "The happiness of your life depends upon the quality of your thoughts. Ponder this as you walk these halls.",
         "isUser": false,
-        "timestamp": "2025-12-10T22:20:59.514Z"
+        "timestamp": "2025-12-13T17:19:05.487Z"
       }
     ],
-    "createdAt": "2025-12-10T22:20:55.728Z",
-    "updatedAt": "2025-12-10T22:20:59.514Z"
+    "createdAt": "2025-12-13T17:19:03.913Z",
+    "updatedAt": "2025-12-13T17:19:05.487Z"
   },
-  "7d01d161-bbd4-4181-99ba-fec4316e37cc": {
-    "id": "7d01d161-bbd4-4181-99ba-fec4316e37cc",
-    "title": "Uncertainty and the Human Condition",
+  "c34ef31a-5ed3-4cfd-acaf-fc7ed1baa527": {
+    "id": "c34ef31a-5ed3-4cfd-acaf-fc7ed1baa527",
+    "title": "A New Reflection",
     "messages": [
       {
-        "id": "781abbd0-ff0b-4db8-9d12-8da3a2d7f73c",
+        "id": "c610339e-e5ed-43c8-b264-d1b5ab3a5202",
         "text": "I feel anxious about the uncertainty of the future.",
         "isUser": true,
-        "timestamp": "2025-12-10T22:22:27.941Z"
+        "timestamp": "2025-12-13T17:19:14.960Z",
+        "attachment": null
       },
       {
-        "id": "0fddbcca-c72b-4844-90cd-481f2be5575a",
-        "text": "If you are distressed by anything external, the pain is not due to the thing itself, but to your estimate of it.",
+        "id": "d47a16c2-0e43-4c78-993b-d4bb51702cac",
+        "text": "Remember, you have power over your mind - not outside events. Realize this, and you will find strength.",
         "isUser": false,
-        "timestamp": "2025-12-10T22:22:27.944Z"
+        "timestamp": "2025-12-13T17:19:14.963Z"
       }
     ],
-    "createdAt": "2025-12-10T22:22:26.004Z",
-    "updatedAt": "2025-12-10T22:22:27.944Z"
+    "createdAt": "2025-12-13T17:19:13.379Z",
+    "updatedAt": "2025-12-13T17:19:14.963Z"
   },
-  "e227c946-c8cb-4608-bd6c-73a41b1e161d": {
-    "id": "e227c946-c8cb-4608-bd6c-73a41b1e161d",
-    "title": "Silence Amidst the Turbulent Mind",
+  "a2e6b17d-acb4-4960-85cd-6bd02582b984": {
+    "id": "a2e6b17d-acb4-4960-85cd-6bd02582b984",
+    "title": "A New Reflection",
     "messages": [
       {
-        "id": "d4a478e6-975c-4555-aa60-b2a82d03ebe9",
-        "text": ".",
+        "id": "76d09c33-69e0-4cf2-85da-c448f304948f",
+        "text": "What is the best way to start my morning?",
         "isUser": true,
-        "timestamp": "2025-12-10T22:24:45.447Z"
+        "timestamp": "2025-12-13T17:20:20.478Z",
+        "attachment": null
       },
       {
-        "id": "4c5cb73f-297e-4067-8849-59d60b795fdb",
-        "text": ".",
-        "isUser": true,
-        "timestamp": "2025-12-10T22:24:46.035Z"
-      },
-      {
-        "id": "7996e41c-e978-4e93-aa48-51473a58e0ea",
-        "text": "You seek my counsel. Speak your mind, that I may offer guidance. What is it that weighs upon your heart?",
+        "id": "586ad783-836f-4d60-9fa4-6e7db24e217b",
+        "text": "You ask of things that are fleeting. Look instead at what is eternal: the virtue within your own character.",
         "isUser": false,
-        "timestamp": "2025-12-10T22:24:46.481Z"
+        "timestamp": "2025-12-13T17:20:20.481Z"
       }
     ],
-    "createdAt": "2025-12-10T22:24:43.497Z",
-    "updatedAt": "2025-12-10T22:24:46.481Z"
+    "createdAt": "2025-12-13T17:20:19.167Z",
+    "updatedAt": "2025-12-13T17:20:20.481Z"
   },
-  "29893cb3-6186-401a-9436-522d065bdccd": {
-    "id": "29893cb3-6186-401a-9436-522d065bdccd",
-    "title": "The Silence of Inner Reflection",
+  "ac852afd-8c32-44c6-b7fd-3b828c7780c4": {
+    "id": "ac852afd-8c32-44c6-b7fd-3b828c7780c4",
+    "title": "A New Reflection",
     "messages": [
       {
-        "id": "7a13ba8d-0df4-464d-8758-f35b0e4d1786",
-        "text": ".",
+        "id": "6c668e8f-3213-444f-a536-844d56e83eb5",
+        "text": "I feel anxious about the uncertainty of the future.",
         "isUser": true,
-        "timestamp": "2025-12-10T22:24:49.391Z"
+        "timestamp": "2025-12-13T17:20:28.670Z",
+        "attachment": null
       },
       {
-        "id": "10895c1e-40d8-430a-9180-0f9a555a6ecc",
-        "text": ".",
-        "isUser": true,
-        "timestamp": "2025-12-10T22:24:50.890Z"
-      }
-    ],
-    "createdAt": "2025-12-10T22:24:47.602Z",
-    "updatedAt": "2025-12-10T22:24:47.602Z"
-  },
-  "97186ff9-ceff-49b8-9d8d-d289a0cf7bb0": {
-    "id": "97186ff9-ceff-49b8-9d8d-d289a0cf7bb0",
-    "title": "The Impermanence of Silence",
-    "messages": [
-      {
-        "id": "3966aacf-0d31-4ab3-95db-4654b89fc55e",
-        "text": ".",
-        "isUser": true,
-        "timestamp": "2025-12-10T22:24:51.701Z"
-      }
-    ],
-    "createdAt": "2025-12-10T22:24:49.782Z",
-    "updatedAt": "2025-12-10T22:24:49.782Z"
-  },
-  "4f634a89-8ef2-4677-9ad8-10620bb96b63": {
-    "id": "4f634a89-8ef2-4677-9ad8-10620bb96b63",
-    "title": "New Council",
-    "messages": [],
-    "createdAt": "2025-12-10T22:24:51.868Z",
-    "updatedAt": "2025-12-10T22:24:51.868Z"
-  },
-  "98c7f9bb-0b4b-409a-8412-fae30c8ad2a0": {
-    "id": "98c7f9bb-0b4b-409a-8412-fae30c8ad2a0",
-    "title": "The Silence of Inner Reflection",
-    "messages": [
-      {
-        "id": "46af6778-badf-4a87-aff5-647e8f654f89",
-        "text": ".",
-        "isUser": true,
-        "timestamp": "2025-12-10T22:24:55.997Z"
-      }
-    ],
-    "createdAt": "2025-12-10T22:24:54.023Z",
-    "updatedAt": "2025-12-10T22:24:54.023Z"
-  },
-  "57b03394-bd63-4292-91c4-09810ad78861": {
-    "id": "57b03394-bd63-4292-91c4-09810ad78861",
-    "title": "The Silence of Inner Reflection",
-    "messages": [
-      {
-        "id": "b59df037-3f9c-4cfd-a1ca-55775587fc71",
-        "text": ".",
-        "isUser": true,
-        "timestamp": "2025-12-10T22:24:59.017Z"
-      },
-      {
-        "id": "92b13e16-37f4-4a33-94a3-a3dd1a1303e1",
-        "text": "The silence before contemplation. Let us begin then. What is it that weighs upon your mind?",
+        "id": "8c060c37-5c43-4780-8eea-49082fab5098",
+        "text": "Remember, you have power over your mind - not outside events. Realize this, and you will find strength.",
         "isUser": false,
-        "timestamp": "2025-12-10T22:25:00.063Z"
+        "timestamp": "2025-12-13T17:20:28.674Z"
       }
     ],
-    "createdAt": "2025-12-10T22:24:57.000Z",
-    "updatedAt": "2025-12-10T22:25:00.063Z"
+    "createdAt": "2025-12-13T17:20:27.091Z",
+    "updatedAt": "2025-12-13T17:20:28.674Z"
   }
 }

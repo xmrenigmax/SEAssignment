@@ -30,7 +30,7 @@ export const MuseumGuideModal = ({ isOpen, onClose }) => {
         <div className="bg-[var(--bg-primary)] p-6 border-b border-[var(--border)] relative flex-shrink-0">
           <div className="absolute top-0 left-0 w-full h-1 bg-[var(--accent)] opacity-50"></div>
           <button
-            onClick={onClose}
+            onClick={ onClose }
             className="absolute top-4 right-4 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
             aria-label="Close"
           >
@@ -39,7 +39,7 @@ export const MuseumGuideModal = ({ isOpen, onClose }) => {
           <div className="flex items-center gap-3 mb-1">
             <span className="text-[var(--accent)] opacity-80">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
             </span>
             <h2 className="text-xs font-bold uppercase tracking-widest text-[var(--text-secondary)]">Interactive Exhibit</h2>
@@ -74,13 +74,13 @@ export const MuseumGuideModal = ({ isOpen, onClose }) => {
             </p>
             <div className="space-y-2">
               <p className="text-xs font-bold text-[var(--text-secondary)] uppercase">Suggested Inquiries</p>
-              {suggestedPrompts.map((prompt, index) => (
+              { suggestedPrompts.map((prompt, index) => (
                 <button
-                  key={index}
+                  key={ index }
                   onClick={() => handlePromptClick(prompt)}
                   className="w-full text-left p-2 rounded hover:bg-[var(--bg-primary)] text-sm text-[var(--accent)] transition-colors border border-transparent hover:border-[var(--border)]"
                 >
-                  "{prompt}"
+                  "{ prompt }"
                 </button>
               ))}
             </div>
@@ -88,7 +88,7 @@ export const MuseumGuideModal = ({ isOpen, onClose }) => {
         </div>
         <div className="p-4 bg-[var(--bg-primary)] border-t border-[var(--border)] flex justify-end flex-shrink-0">
           <button
-            onClick={onClose}
+            onClick={ onClose }
             className="px-6 py-2 bg-[var(--accent)] text-white rounded-lg hover:shadow-lg hover:opacity-90 transition-all text-sm font-medium"
           >
             Enter Discussion
