@@ -45,14 +45,20 @@ export const ChatPanel = () => {
 
   /**
    * Handles Recording Completion.
-   * Receives { audioData: "data:audio/webm;base64,..." }
+   * Receives { audioData, text }
    */
   const handleRecordingComplete = (result) => {
     setIsRecording(false);
-    if (result && result.audioData) {
-      setAudioData(result.audioData);
+    if (result) {
+      // Save the Audio Blob (Base64) for the player
+      if (result.audioData) setAudioData(result.audioData);
 
-      if (!transcribedText) setTranscribedText("Voice Message");
+      // Save the Text for the LLM
+      if (result.text && result.text.trim().length > 0) {
+        setTranscribedText(result.text);
+      } else if (!transcribedText) {
+        setTranscribedText("Voice Message");
+      }
     }
   };
 
@@ -98,7 +104,7 @@ export const ChatPanel = () => {
    */
   const handleKeyDown = (event) => {
     if (event.key === 'Enter' && !event.shiftKey) {
-      e.preventDefault();
+      event.preventDefault();
       handleSend();
     }
   };

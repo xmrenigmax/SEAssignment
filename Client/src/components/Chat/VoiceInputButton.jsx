@@ -6,7 +6,7 @@ import React, { useState, useRef, useEffect } from 'react';
  * @param {Object} props
  * @param {boolean} props.isRecording - External recording state
  * @param {Function} props.onRecordingStart - Handler for start
- * @param {Function} props.onRecordingStop - Handler for stop (returns text)
+ * @param {Function} props.onRecordingStop - Handler for stop (returns object { text, audioData })
  * @param {boolean} props.disabled - Whether button is disabled
  */
 export const VoiceInputButton = ({ isRecording, onRecordingStart, onRecordingStop, disabled }) => {
@@ -14,6 +14,7 @@ export const VoiceInputButton = ({ isRecording, onRecordingStart, onRecordingSto
   const recognitionRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
+  const transcriptRef = useRef(''); // NEW: Ref to store the text as it comes in
 
   // Initialize Web Speech API (for Text)
   useEffect(() => {
@@ -23,7 +24,14 @@ export const VoiceInputButton = ({ isRecording, onRecordingStart, onRecordingSto
       recognitionRef.current.continuous = true;
       recognitionRef.current.interimResults = true;
 
+      // Capture the text result
       recognitionRef.current.onresult = (event) => {
+        const currentTranscript = Array.from(event.results)
+          .map(result => result[0])
+          .map(result => result.transcript)
+          .join('');
+
+        transcriptRef.current = currentTranscript;
       };
     }
   }, []);
@@ -31,6 +39,7 @@ export const VoiceInputButton = ({ isRecording, onRecordingStart, onRecordingSto
   const startRecording = async () => {
     onRecordingStart();
     audioChunksRef.current = [];
+    transcriptRef.current = '';
 
     try {
       // Start Audio Recording (For Storage/Playback)
@@ -74,8 +83,10 @@ export const VoiceInputButton = ({ isRecording, onRecordingStart, onRecordingSto
 
           // Wait slightly for recognition to finalize
           setTimeout(() => {
-            // We can pass back an object with both Text and Audio
-            onRecordingStop({ audioData: base64Audio });
+            onRecordingStop({
+              audioData: base64Audio,
+              text: transcriptRef.current
+            });
           }, 500);
         };
       };
@@ -127,7 +138,7 @@ export const VoiceInputButton = ({ isRecording, onRecordingStart, onRecordingSto
           </svg>
         ) : (
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 016 0v6a3 3 0 01-3 3z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 016 0v6a3 3 0 01-3 3z" />
           </svg>
         )}
       </button>

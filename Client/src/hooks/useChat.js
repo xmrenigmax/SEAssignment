@@ -34,11 +34,11 @@ export const useChat = () => {
       });
 
       if (response.status === 404) throw new Error('NOT_FOUND');
-      if (!response.ok) throw new Error(`API error: ${response.status}`);
+      if (!response.ok) throw new Error(`API error: ${ response.status }`);
 
       return await response.json();
     } catch (error) {
-      console.error(`API Call Failed [${endpoint}]:`, error);
+      console.error(`API Call Failed [${ endpoint }]:`, error);
       throw error;
     }
   }, []);
@@ -62,7 +62,7 @@ export const useChat = () => {
 
       // Reset active ID if it no longer exists on server
       if (activeConversationId) {
-        const exists = validList.find(c => c.id === activeConversationId);
+        const exists = validList.find(conversation => conversation.id === activeConversationId);
         if (!exists) setActiveConversationId(null);
       }
     } catch (error) {
@@ -107,8 +107,8 @@ export const useChat = () => {
 
     setConversations(prev => {
       // Create a Map of existing IDs to prevent duplicates
-      const existingIds = new Set(prev.map(c => c.id));
-      const newConversations = fileData.filter(c => !existingIds.has(c.id));
+      const existingIds = new Set(prev.map(conversation => conversation.id));
+      const newConversations = fileData.filter(conversation => !existingIds.has(conversation.id));
 
       // Combine and sort by newest
       const combined = [...newConversations, ...prev].sort(
@@ -128,15 +128,15 @@ export const useChat = () => {
     const optimisticMessage = { ...message, id: tempId };
 
     // Update UI immediately before network request
-    setConversations(prev => prev.map(conv => {
-      if (conv.id === conversationId) {
+    setConversations(prev => prev.map(conversation => {
+      if (conversation.id === conversationId) {
         return {
-          ...conv,
-          messages: [...(conv.messages || []), optimisticMessage],
+          ...conversation,
+          messages: [...(conversation.messages || []), optimisticMessage],
           updatedAt: new Date().toISOString()
         };
       }
-      return conv;
+      return conversation;
     }));
 
     setIsLoading(true);
@@ -154,17 +154,17 @@ export const useChat = () => {
         body = JSON.stringify({ text: message.text });
       }
 
-      const data = await apiCall(`/conversations/${conversationId}/messages`, {
+      const data = await apiCall(`/conversations/${ conversationId }/messages`, {
         method: 'POST',
         body: body
       });
 
       // Confirms the user message was saved and adds the AI's response.
-      setConversations(prev => prev.map(conv => {
-        if (conv.id === conversationId) {
+      setConversations(prev => prev.map(conversation => {
+        if (conversation.id === conversationId) {
           return data.conversation;
         }
-        return conv;
+        return conversation;
       }));
 
       setIsLoading(false);
@@ -183,10 +183,10 @@ export const useChat = () => {
    */
   const deleteConversation = async (id) => {
     // Optimistic delete
-    setConversations(prev => prev.filter(c => c.id !== id));
+    setConversations(prev => prev.filter(conversation=> conversation.id !== id));
     if (activeConversationId === id) setActiveConversationId(null);
 
-    try { await apiCall(`/conversations/${id}`, { method: 'DELETE' }); } catch (e) {}
+    try { await apiCall(`/conversations/${ id }`, { method: 'DELETE' }); } catch (error) { console.warn(error) }
   };
 
   /**
@@ -200,7 +200,7 @@ export const useChat = () => {
 
     try {
       await apiCall('/conversations', { method: 'DELETE' });
-    } catch (e) {
+    } catch (error) {
       console.warn("Failed to clear on server");
     }
   };
@@ -211,9 +211,9 @@ export const useChat = () => {
   const loadConversation = useCallback(async (id) => {
     if (!id) return;
     try {
-      const data = await apiCall(`/conversations/${id}`);
+      const data = await apiCall( `/conversations/${ id }` );
       setConversations(prev => {
-        const index = prev.findIndex(c => c.id === id);
+        const index = prev.findIndex(conversation => conversation.id === id);
         if (index === -1) return [data, ...prev];
 
         const newList = [...prev];
@@ -222,7 +222,7 @@ export const useChat = () => {
       });
     } catch (error) {
       if (error.message === 'NOT_FOUND') {
-        setConversations(prev => prev.filter(c => c.id !== id));
+        setConversations(prev => prev.filter(conversation => conversation.id !== id));
         if (activeConversationId === id) setActiveConversationId(null);
       }
     }
@@ -239,7 +239,7 @@ export const useChat = () => {
     loadConversation,
     syncConversations,
     importConversations,
-    getActiveConversation: () => conversations.find(c => c.id === activeConversationId),
+    getActiveConversation: () => conversations.find(conversation => conversation.id === activeConversationId),
     startNewChat: () => setActiveConversationId(null),
     isLoading
   };
