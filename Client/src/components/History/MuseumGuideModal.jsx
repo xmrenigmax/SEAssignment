@@ -81,22 +81,20 @@ export const MuseumGuideModal = ({ isOpen, onClose, onStartTour }) => {
               </li>
             </ul>
           </section>
-          { !isTourMode && (
-            <section>
-              <h3 className="text-[var(--text-primary)] font-serif font-bold text-lg mb-3">Consulting the Emperor</h3>
-              <p className="text-xs text-[var(--text-secondary)] mb-3">
-                This AI simulates Marcus's perspective. He will not give modern technical advice, but will frame your problems through Stoic reason.
-              </p>
-              <div className="space-y-2">
-                <p className="text-xs font-bold text-[var(--text-secondary)] uppercase">Suggested Inquiries</p>
-              { suggestedPrompts.map((prompt, index) => (
-                <button key={ index } onClick={ () => handlePromptClick(prompt) } className="w-full text-left p-2 rounded hover:bg-[var(--bg-primary)] text-sm text-[var(--accent)] transition-colors border border-transparent hover:border-[var(--border)]">
-                "{ prompt }"
-                </button>
-              ))}
-              </div>
-            </section>
-          )}
+          <section>
+            <h3 className="text-[var(--text-primary)] font-serif font-bold text-lg mb-3">Consulting the Emperor</h3>
+            <p className="text-xs text-[var(--text-secondary)] mb-3">
+              This AI simulates Marcus's perspective. He will not give modern technical advice, but will frame your problems through Stoic reason.
+            </p>
+            <div className="space-y-2">
+              <p className="text-xs font-bold text-[var(--text-secondary)] uppercase">Suggested Inquiries</p>
+            { suggestedPrompts.map((prompt, index) => (
+              <button key={ index } onClick={ () => handlePromptClick(prompt) } className="w-full text-left p-2 rounded hover:bg-[var(--bg-primary)] text-sm text-[var(--accent)] transition-colors border border-transparent hover:border-[var(--border)]">
+              "{ prompt }"
+              </button>
+            ))}
+            </div>
+          </section>
         </div>
         <div className="p-4 bg-[var(--bg-primary)] border-t border-[var(--border)] flex justify-end flex-shrink-0">
           <button onClick={ handleAction } className="px-6 py-2 bg-[var(--accent)] text-white rounded-lg hover:shadow-lg hover:opacity-90 transition-all text-sm font-medium flex items-center gap-2">

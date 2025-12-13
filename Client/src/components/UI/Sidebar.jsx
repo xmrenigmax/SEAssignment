@@ -5,37 +5,16 @@ import { SidebarSearch } from './SidebarSearch';
 import { MuseumGuideModal } from '../History/MuseumGuideModal';
 import { useChatContext } from '../../context/ChatContext';
 import { useDebounce } from '../../hooks/useDebounce';
-import { useSidebarResizer } from '../../hooks/UseSidebarResizer';
 
 /**
  * Navigation Sidebar.
  */
-export const Sidebar = ({
-  activeView,
-  setActiveView,
-  isCollapsed,
-  toggleCollapse,
-  isMobileOpen,
-  toggleMobile
-}) => {
-  const {
-    conversations,
-    activeConversationId,
-    setActiveConversationId,
-    startNewChat,
-    deleteConversation,
-    syncConversations,
-    loadConversation
-  } = useChatContext();
+export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse, isMobileOpen, toggleMobile, sidebarWidth, startResizing, isResizing, sidebarRef }) => {
+  const { conversations, activeConversationId, setActiveConversationId, startNewChat, deleteConversation, syncConversations, loadConversation } = useChatContext();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [showMuseumModal, setShowMuseumModal] = useState(false);
-
-  // Debounce search term by 300ms
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
-
-  // Custom hook for resizing logic
-  const { sidebarWidth, startResizing, isResizing, sidebarRef } = useSidebarResizer(288);
 
   // Effects
   useEffect(() => {
@@ -74,14 +53,7 @@ export const Sidebar = ({
       )}
       <aside
         ref={ sidebarRef }
-        className={`
-          fixed inset-y-0 left-0 z-50 bg-[var(--bg-secondary)] border-r border-[var(--border)]
-          flex flex-col
-          /* Mobile Logic: Fixed width, slide in/out */
-          ${ isMobileOpen ? 'translate-x-0 w-[85vw] max-w-xs shadow-2xl' : '-translate-x-full md:translate-x-0' }
-          /* Desktop Logic: Dynamic width or fixed collapsed width */
-          ${ isCollapsed ? 'md:w-20' : '' }
-        `}
+        className={` fixed inset-y-0 left-0 z-50 bg-[var(--bg-secondary)] border-r border-[var(--border)] flex flex-col ${ isMobileOpen ? 'translate-x-0 w-[85vw] max-w-xs shadow-2xl' : '-translate-x-full md:translate-x-0' } ${ isCollapsed ? 'md:w-20' : '' } `}
         style={{ width: !isCollapsed && !isMobileOpen ? sidebarWidth : undefined, transition: isResizing ? 'none' : 'width 300ms cubic-bezier(0.4, 0, 0.2, 1), transform 300ms ease-in-out' }}
         aria-label="Sidebar Navigation"
       >
