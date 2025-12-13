@@ -7,7 +7,7 @@ import { ChatProvider } from '../context/ChatContext';
 /**
  * Landing Page Layout.
  * Manages the "Gemini-style" responsive layout.
- * * Logic:
+ * Logic:
  * - Mobile: Sidebar is an overlay (controlled by isMobileOpen).
  * - Desktop: Sidebar is a rail (controlled by isCollapsed).
  */
