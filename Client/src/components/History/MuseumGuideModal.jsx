@@ -4,6 +4,11 @@ import { useChatContext } from '../../context/ChatContext';
 /**
  * Modal displaying context about the AI Persona (Marcus Aurelius).
  * Features historical biography, philosophy summary, and suggested prompts.
+ * * Updated to support "Tour Mode".
+ * @param {object} props
+ * @param {boolean} props.isOpen - Visibility state.
+ * @param {function} props.onClose - Function to close the modal.
+ * @param {function} [props.onStartTour] - Optional. If provided, changes button to "Start Tour".
  */
 export const MuseumGuideModal = ({ isOpen, onClose }) => {
   const { startConversationWithPrompt } = useChatContext();
@@ -26,18 +31,25 @@ export const MuseumGuideModal = ({ isOpen, onClose }) => {
   };
   if (!isOpen) return null;
 
+  // Determine button behavior based on context
+  const isTourMode = typeof onStartTour === 'function';
+  const handleAction = isTourMode ? onStartTour : onClose;
+  const buttonText = isTourMode ? "Start Tour" : "Enter Discussion";
+
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-200">
       <div className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden flex flex-col max-h-[90vh]">
         <div className="bg-[var(--bg-primary)] p-6 border-b border-[var(--border)] relative flex-shrink-0">
           <div className="absolute top-0 left-0 w-full h-1 bg-[var(--accent)] opacity-50"></div>
-          <button
-            onClick={ onClose }
-            className="absolute top-4 right-4 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
-            aria-label="Close"
-          >
-            ✕
-          </button>
+          { !isTourMode && (
+            <button
+              onClick={onClose}
+              className="absolute top-4 right-4 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+              aria-label="Close"
+            >
+              ✕
+            </button>
+          )}
           <div className="flex items-center gap-3 mb-1">
             <span className="text-[var(--accent)] opacity-80">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -69,31 +81,35 @@ export const MuseumGuideModal = ({ isOpen, onClose }) => {
               </li>
             </ul>
           </section>
-          <section>
-            <h3 className="text-[var(--text-primary)] font-serif font-bold text-lg mb-3">Consulting the Emperor</h3>
-            <p className="text-xs text-[var(--text-secondary)] mb-3">
-              This AI simulates Marcus's perspective. He will not give modern technical advice, but will frame your problems through Stoic reason.
-            </p>
-            <div className="space-y-2">
-              <p className="text-xs font-bold text-[var(--text-secondary)] uppercase">Suggested Inquiries</p>
+          { !isTourMode && (
+            <section>
+              <h3 className="text-[var(--text-primary)] font-serif font-bold text-lg mb-3">Consulting the Emperor</h3>
+              <p className="text-xs text-[var(--text-secondary)] mb-3">
+                This AI simulates Marcus's perspective. He will not give modern technical advice, but will frame your problems through Stoic reason.
+              </p>
+              <div className="space-y-2">
+                <p className="text-xs font-bold text-[var(--text-secondary)] uppercase">Suggested Inquiries</p>
               { suggestedPrompts.map((prompt, index) => (
                 <button
                   key={ index }
                   onClick={ () => handlePromptClick(prompt) }
                   className="w-full text-left p-2 rounded hover:bg-[var(--bg-primary)] text-sm text-[var(--accent)] transition-colors border border-transparent hover:border-[var(--border)]"
                 >
-                  "{ prompt }"
+                "{ prompt }"
                 </button>
               ))}
-            </div>
-          </section>
+              </div>
+            </section>
+          )}
         </div>
         <div className="p-4 bg-[var(--bg-primary)] border-t border-[var(--border)] flex justify-end flex-shrink-0">
-          <button
-            onClick={ onClose }
-            className="px-6 py-2 bg-[var(--accent)] text-white rounded-lg hover:shadow-lg hover:opacity-90 transition-all text-sm font-medium"
-          >
-            Enter Discussion
+          <button onClick={ handleAction } className="px-6 py-2 bg-[var(--accent)] text-white rounded-lg hover:shadow-lg hover:opacity-90 transition-all text-sm font-medium flex items-center gap-2">
+            { buttonText }
+            { isTourMode && (
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            )}
           </button>
         </div>
       </div>

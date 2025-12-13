@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ThemeToggle } from './ThemeToggle';
 import { SettingsButton } from './SettingsButton';
 import { SidebarSearch } from './SidebarSearch';
-import { MuseumGuideModal } from '../History/MusuemGuideModal';
+import { MuseumGuideModal } from '../History/MuseumGuideModal';
 import { useChatContext } from '../../context/ChatContext';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useSidebarResizer } from '../../hooks/UseSidebarResizer';
@@ -64,7 +64,7 @@ export const Sidebar = ({
 
   return (
     <>
-      <MuseumGuideModal isOpen={ showMuseumModal } onClose={() => setShowMuseumModal(false)} />
+      <MuseumGuideModal isOpen={ showMuseumModal } onClose={ () => setShowMuseumModal(false) } />
       { isMobileOpen && (
         <div
           className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300"
@@ -82,12 +82,7 @@ export const Sidebar = ({
           /* Desktop Logic: Dynamic width or fixed collapsed width */
           ${ isCollapsed ? 'md:w-20' : '' }
         `}
-        style={{
-          // Only apply dynamic width on Desktop when Expanded
-          width: !isCollapsed && !isMobileOpen ? sidebarWidth : undefined,
-          // CRITICAL: Disable transition while resizing to prevent lag/rubber-banding
-          transition: isResizing ? 'none' : 'width 300ms cubic-bezier(0.4, 0, 0.2, 1), transform 300ms ease-in-out'
-        }}
+        style={{ width: !isCollapsed && !isMobileOpen ? sidebarWidth : undefined, transition: isResizing ? 'none' : 'width 300ms cubic-bezier(0.4, 0, 0.2, 1), transform 300ms ease-in-out' }}
         aria-label="Sidebar Navigation"
       >
         { !isCollapsed && !isMobileOpen && (
@@ -182,10 +177,7 @@ export const Sidebar = ({
                   </svg>
                   <span className="truncate flex-1 text-sm">{ conversation.title || 'New Chat' }</span>
                   <button
-                    onClick={ (e) => {
-                      e.stopPropagation();
-                      if(window.confirm('Delete this conversation?')) deleteConversation(conversation.id);
-                    }}
+                    onClick={ (event) => { event.stopPropagation(); if(window.confirm('Delete this conversation?')) deleteConversation(conversation.id); }}
                     className="opacity-0 group-hover:opacity-100 p-1.5 text-[var(--text-secondary)] hover:text-red-500 rounded-md transition-all"
                     title="Delete Conversation"
                   >
