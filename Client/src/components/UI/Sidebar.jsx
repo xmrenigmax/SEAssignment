@@ -108,7 +108,7 @@ export const Sidebar = ({
 
         {/* Top Section */}
         <div className="p-4 flex flex-col gap-6 flex-shrink-0">
-          <div className={`flex items-center ${isCollapsed ? 'justify-center' : 'justify-between'}`}>
+          <div className={ `flex items-center ${ isCollapsed ? 'justify-center' : 'justify-between' }` }>
             {!isCollapsed && (
               <div className="flex items-center gap-3 pl-1 animate-in fade-in duration-200 overflow-hidden">
                 <div className="w-8 h-8 flex-shrink-0 bg-[var(--accent)] rounded-lg flex items-center justify-center text-white font-serif font-bold shadow-sm">
@@ -123,7 +123,7 @@ export const Sidebar = ({
               <button
                 onClick={toggleCollapse}
                 className="p-2 rounded-full hover:bg-[var(--bg-primary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors hidden md:block"
-                title={isCollapsed ? "Expand menu" : "Collapse menu"}
+                title={ isCollapsed ? "Expand menu" : "Collapse menu" }
               >
                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -185,9 +185,9 @@ export const Sidebar = ({
                 <div
                   key={conv.id}
                   onClick={() => setActiveConversationId(conv.id)}
-                  className={`
+                  className={ `
                     group relative flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-all duration-200 border border-transparent
-                    ${activeConversationId === conv.id
+                    ${ activeConversationId === conv.id
                       ? 'bg-[var(--accent)]/10 text-[var(--accent)] font-medium'
                       : 'text-[var(--text-primary)] hover:bg-[var(--bg-primary)] hover:border-[var(--border)]'
                     }
@@ -196,9 +196,9 @@ export const Sidebar = ({
                   <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                   </svg>
-                  <span className="truncate flex-1 text-sm">{conv.title || 'New Chat'}</span>
+                  <span className="truncate flex-1 text-sm">{ conv.title || 'New Chat' }</span>
                   <button
-                    onClick={(e) => {
+                    onClick={ (e) => {
                       e.stopPropagation();
                       if(window.confirm('Delete this conversation?')) deleteConversation(conv.id);
                     }}
@@ -214,7 +214,7 @@ export const Sidebar = ({
             </div>
           ) : (
             <div className="flex flex-col items-center gap-4 mt-2 opacity-30">
-              {[1, 2, 3].map(i => (<div key={i} className="w-1.5 h-1.5 bg-[var(--text-secondary)] rounded-full" />))}
+              { [1, 2, 3].map(i => (<div key={ i } className="w-1.5 h-1.5 bg-[var(--text-secondary)] rounded-full" />)) }
             </div>
           )}
         </div>
@@ -223,24 +223,24 @@ export const Sidebar = ({
         <div className="p-4 border-t border-[var(--border)] flex flex-col gap-3">
           {/* Museum Button: Full width block above settings */}
           <button
-            onClick={() => setShowMuseumModal(true)}
-            className={`
+            onClick={ () => setShowMuseumModal(true) }
+            className={ `
               flex items-center gap-3 px-3 py-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--accent)] hover:bg-[var(--bg-primary)] transition-all
-              ${isCollapsed ? 'justify-center w-full' : 'w-full'}
-            `}
+              ${ isCollapsed ? 'justify-center w-full' : 'w-full' }
+            ` }
             title="About Marcus Aurelius"
           >
             <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
             </svg>
-            {!isCollapsed && <span className="text-sm font-medium">Exhibit Guide</span>}
+            { !isCollapsed && <span className="text-sm font-medium">Exhibit Guide</span> }
           </button>
 
           {/* Settings & Theme Row */}
-          <div className={`flex items-center ${isCollapsed ? 'flex-col gap-4' : 'justify-between border-t border-[var(--border)] pt-3'}`}>
-             <ThemeToggle isCollapsed={isCollapsed} />
-             {!isCollapsed && <div className="h-4 w-px bg-[var(--border)]" role="presentation" />}
-             <SettingsButton activeView={activeView} setActiveView={setActiveView} isCollapsed={isCollapsed} />
+          <div className={ `flex items-center ${ isCollapsed ? 'flex-col gap-4' : 'justify-between border-t border-[var(--border)] pt-3' }` }>
+             <ThemeToggle isCollapsed={ isCollapsed } />
+             { !isCollapsed && <div className="h-4 w-px bg-[var(--border)]" role="presentation" /> }
+             <SettingsButton activeView={ activeView } setActiveView={ setActiveView } isCollapsed={ isCollapsed } />
           </div>
         </div>
       </aside>
