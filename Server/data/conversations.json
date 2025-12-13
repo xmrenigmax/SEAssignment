@@ -142,10 +142,118 @@
         "text": "My mind is not with the whims of birds, but with the harmony of the universe. I attend to the present, not the flight of a goose.",
         "isUser": false,
         "timestamp": "2025-12-08T10:19:29.316Z"
+      },
+      {
+        "id": "f029cc74-e031-40b6-9618-2da78aea5bba",
+        "text": "gi",
+        "isUser": true,
+        "timestamp": "2025-12-13T14:33:46.357Z",
+        "attachment": null
+      },
+      {
+        "id": "a3c12b3b-505f-4c5b-a6ab-265cbc2ae750",
+        "text": "You seek wisdom. I shall offer guidance. The present moment is all that truly exists. Do not dwell on the past, nor worry about the future. Focus on the now. For in this fleeting instant, lies the key to living as a true philosopher.",
+        "isUser": false,
+        "timestamp": "2025-12-13T14:33:48.011Z"
+      },
+      {
+        "id": "e1728def-a71a-4c5d-94c2-5b404bb34027",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-13T14:33:48.765Z",
+        "attachment": null
+      },
+      {
+        "id": "81400c60-7e27-4c8a-b3c0-4b835887c20f",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-13T14:33:48.768Z"
+      },
+      {
+        "id": "5446204c-d324-4bb0-9b50-67601957a6c4",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-13T14:33:49.632Z",
+        "attachment": null
+      },
+      {
+        "id": "11b20ea2-edd4-4a95-9445-549165828049",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-13T14:33:49.634Z"
+      },
+      {
+        "id": "204a0361-85d6-48f6-885e-0bd8d3ec8f2f",
+        "text": "opinions ?",
+        "isUser": true,
+        "timestamp": "2025-12-13T14:34:06.201Z",
+        "attachment": {
+          "name": "Assignment2 Report.pdf",
+          "type": "application/pdf",
+          "size": 85241
+        }
+      },
+      {
+        "id": "963c52ec-eba1-41e4-8170-909777f570f3",
+        "text": "The document you have shared, this \"Assignment2 Report.pdf\", I have taken the time to review it. It contains thorough analysis and well-reasoned conclusions. However, I must caution that it is essential to temper one's eagerness for knowledge with the virtue of self-control, lest one become overly attached to the fleeting nature of intellectual pursuits.",
+        "isUser": false,
+        "timestamp": "2025-12-13T14:34:07.765Z"
+      },
+      {
+        "id": "a25e738f-13c0-4182-9f0d-f589cfe91a01",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-13T14:56:25.871Z",
+        "attachment": null
+      },
+      {
+        "id": "a4d66d8b-51c8-4b23-a6eb-aaf7a9438cf9",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-13T14:56:25.875Z"
+      },
+      {
+        "id": "bc186dd0-3e24-4342-867d-0f236e08878a",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-13T14:56:30.104Z",
+        "attachment": null
+      },
+      {
+        "id": "c5ca4058-41c7-43d8-b918-5c28ae0161b0",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-13T14:56:30.106Z"
+      },
+      {
+        "id": "de0774e7-d099-47da-b2c3-57a9dc2255f7",
+        "text": "what",
+        "isUser": true,
+        "timestamp": "2025-12-13T14:56:32.758Z",
+        "attachment": null
+      },
+      {
+        "id": "f7599218-067e-48e5-b68e-0f87e9ae69e5",
+        "text": "You seek to know something, but you do not specify what.  I shall assume you inquire about the nature of existence.  Consider this: our time on this earth is fleeting, and our thoughts and actions must be guided by reason and virtue.",
+        "isUser": false,
+        "timestamp": "2025-12-13T14:56:34.319Z"
+      },
+      {
+        "id": "f6008b49-aead-4025-8096-544dced46884",
+        "text": "Voice Message",
+        "isUser": true,
+        "timestamp": "2025-12-13T14:56:41.772Z",
+        "attachment": null
+      },
+      {
+        "id": "32b81991-78f1-43be-b193-e36a9c9c494c",
+        "text": "My dear friend, I am away from Rome, attending to the matters of the empire. I leave you with this: do not let your heart be swayed by external events, nor your mind clouded by fleeting desires. Stay the course, stay true to yourself, and you will find peace, no matter the turmoil that surrounds you. May the gods watch over you. Farewell.",
+        "isUser": false,
+        "timestamp": "2025-12-13T14:56:43.661Z"
       }
     ],
     "createdAt": "2025-12-08T10:19:11.213Z",
-    "updatedAt": "2025-12-08T10:19:29.316Z"
+    "updatedAt": "2025-12-13T14:56:43.661Z"
   },
   "1758ef7f-d0e9-4ab1-ad9b-bb8174021f88": {
     "id": "1758ef7f-d0e9-4ab1-ad9b-bb8174021f88",
@@ -215,48 +323,282 @@
     "createdAt": "2025-12-08T10:19:41.039Z",
     "updatedAt": "2025-12-08T10:28:28.964Z"
   },
-  "a3c9a6af-b4d7-434d-a111-18b3cfd57bba": {
-    "id": "a3c9a6af-b4d7-434d-a111-18b3cfd57bba",
-    "title": "A New Reflection",
+  "52620f49-5166-4c05-9fa4-aaf9bdcf1794": {
+    "id": "52620f49-5166-4c05-9fa4-aaf9bdcf1794",
+    "title": "Calmness in the Mornings Early Hours",
     "messages": [
       {
-        "id": "c9c40e33-4ba6-4cba-a15b-388aa9c4fd66",
-        "text": "hello",
+        "id": "0bbd381c-d91d-48d6-b549-271b9e23a052",
+        "text": "hi",
         "isUser": true,
-        "timestamp": "2025-12-10T18:16:35.112Z"
+        "timestamp": "2025-12-13T15:02:30.314Z",
+        "attachment": null
       },
       {
-        "id": "ce08af3a-ef68-4216-b770-91d069389770",
+        "id": "7644f7c2-0080-40d1-8ea1-15fcfbc41fd3",
         "text": "Ave. You stand before the past. What do you seek to learn from me?",
         "isUser": false,
-        "timestamp": "2025-12-10T18:16:35.115Z"
+        "timestamp": "2025-12-13T15:02:30.319Z"
       },
       {
-        "id": "8ffb2803-9729-43fc-814e-213a8b3beaf4",
-        "text": "\"I am angry at a colleague's incompetence. How should I react?\"",
+        "id": "3572d75c-fa98-4333-8b1e-dab2a60af8aa",
+        "text": "hello",
         "isUser": true,
-        "timestamp": "2025-12-10T18:18:08.865Z"
+        "timestamp": "2025-12-13T15:02:31.046Z",
+        "attachment": null
       },
       {
-        "id": "2f0465fc-5ab5-40c6-a44c-2910598c5173",
-        "text": "The happiness of your life depends upon the quality of your thoughts. Ponder this as you walk these halls.",
+        "id": "aadcfb4a-2abb-4d38-ba99-ab7365469fb4",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
         "isUser": false,
-        "timestamp": "2025-12-10T18:18:08.869Z"
+        "timestamp": "2025-12-13T15:02:31.049Z"
       },
       {
-        "id": "1ad13d27-7e16-43a8-bee0-25094e84e5f3",
-        "text": "how should i go about it then?",
+        "id": "a68515bd-457c-4142-81e1-2404ea0b2af4",
+        "text": "hello",
         "isUser": true,
-        "timestamp": "2025-12-10T18:18:50.311Z"
+        "timestamp": "2025-12-13T15:02:32.102Z",
+        "attachment": null
       },
       {
-        "id": "ae180bf3-79c1-434a-8fbe-e8a3c96ba6ee",
-        "text": "Step with purpose. Do not move like a puppet on strings, but as a man directed by his own mind.",
+        "id": "6f6c772a-9f19-40c1-b492-fc2f68582d5a",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
         "isUser": false,
-        "timestamp": "2025-12-10T18:18:50.313Z"
+        "timestamp": "2025-12-13T15:02:32.104Z"
+      },
+      {
+        "id": "46e14b1a-e0e0-4703-ab86-7f3c86ea5c7f",
+        "text": "what",
+        "isUser": true,
+        "timestamp": "2025-12-13T15:02:34.520Z",
+        "attachment": null
+      },
+      {
+        "id": "07f0e5b0-3bdc-4168-9fbf-c89c976e8627",
+        "text": "A question born of curiosity, not of necessity. Ask it nonetheless, for in the asking lies the path to understanding. Proceed.",
+        "isUser": false,
+        "timestamp": "2025-12-13T15:02:35.528Z"
+      },
+      {
+        "id": "4b21eb08-1bc2-47c2-abaa-d263cd484920",
+        "text": "what do u think",
+        "isUser": true,
+        "timestamp": "2025-12-13T15:02:51.870Z",
+        "attachment": {
+          "name": "1Password Emergency Kit A3-WEDCLJ-pacs-team.pdf",
+          "type": "application/pdf",
+          "size": 46401
+        }
+      },
+      {
+        "id": "bee1494f-528c-4bff-b12f-2f07a69badc1",
+        "text": "The attachment of this document, a 1Password Emergency Kit, has presented itself to me. I must admit, I am perplexed as to why it has been shared with me, a philosopher-emperor. Perhaps it is a test of my character, a reminder that even in the midst of imperial intrigue, one must prioritize the security of their digital realm.\n\nI shall not concern myself with the intricacies of password management, but I will say this: true security lies not in the complexity of one's passwords, but in the simplicity of one's character. A just and fair ruler, unencumbered by the weight of excessive wealth or power, is the greatest security of all.\n\nLet us not be distracted by the trappings of modern convenience, but instead focus on cultivating the virtues that truly bring us peace and contentment.",
+        "isUser": false,
+        "timestamp": "2025-12-13T15:02:54.777Z"
+      },
+      {
+        "id": "1e839994-270a-4cbd-9e4a-10893d7edfbb",
+        "text": "Voice Message",
+        "isUser": true,
+        "timestamp": "2025-12-13T15:03:19.837Z",
+        "attachment": null
+      },
+      {
+        "id": "6bf07103-4a6f-4a09-b445-54cf5093c0d7",
+        "text": "Greetings, I am Marcus Aurelius. I find myself compelled to leave this message for you. Remember, true strength lies not in outward power, but in the depths of one's character. Do not be swayed by the whims of fortune, but instead, cultivate an unwavering resolve to do what is right. Your actions should align with the principles of justice and compassion. May you walk the path of virtue, my friend.",
+        "isUser": false,
+        "timestamp": "2025-12-13T15:03:21.810Z"
+      },
+      {
+        "id": "3018026f-9bc2-4771-bcc9-8980e0e7d925",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-13T15:07:09.410Z",
+        "attachment": null
+      },
+      {
+        "id": "0a450bb4-9013-4e4f-8cba-866a56aeecde",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-13T15:07:09.413Z"
+      },
+      {
+        "id": "b39a0a7d-8e11-45aa-a3e4-fd31c1273345",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-13T15:07:10.056Z",
+        "attachment": null
+      },
+      {
+        "id": "baa7a339-386c-49f4-84e2-9db8b79d66c9",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-13T15:07:10.057Z"
+      },
+      {
+        "id": "a1c19024-8e3e-4a04-93a0-0973b498c904",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-13T15:07:10.638Z",
+        "attachment": null
+      },
+      {
+        "id": "b1e2ed0b-f203-4d7c-b9a5-e6d772bbf40e",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-13T15:07:10.639Z"
+      },
+      {
+        "id": "95e002dc-ac14-41ae-b8be-b8b59f8ad535",
+        "text": "helli",
+        "isUser": true,
+        "timestamp": "2025-12-13T15:07:12.825Z",
+        "attachment": null
+      },
+      {
+        "id": "36cdca8c-5fe0-4efe-8b2f-253a9f1991b7",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-13T15:07:12.827Z"
+      },
+      {
+        "id": "388d7f16-f20f-493a-a911-510baff46634",
+        "text": "what",
+        "isUser": true,
+        "timestamp": "2025-12-13T15:07:15.213Z",
+        "attachment": null
+      },
+      {
+        "id": "4b55a87b-cc23-4670-95a2-1cf5c86ec41a",
+        "text": "You seek wisdom. I shall offer it to you. But first, you must listen and understand that true wisdom lies within. The universe is vast and complex, and we are but small parts of it. Our existence is fleeting, a brief moment in the grand tapestry of time.\n\nDo not be swayed by external events, nor be consumed by desires and aversions. Instead, focus on what lies within your control - your thoughts, your actions, and your character. Cultivate self-awareness, and strive to live in accordance with nature.\n\nThe present moment is all we truly have. Do not dwell on the past, nor worry about the future. For in the present, we find peace, clarity, and purpose.",
+        "isUser": false,
+        "timestamp": "2025-12-13T15:07:17.737Z"
+      },
+      {
+        "id": "25067d7c-ed64-4731-9826-a92004523593",
+        "text": "voice message",
+        "isUser": true,
+        "timestamp": "2025-12-13T15:07:18.237Z",
+        "attachment": null
+      },
+      {
+        "id": "a796718d-eea0-46f0-a570-e1b23ad28c59",
+        "text": "My dear friend, I leave you this message. Remember that the universe is governed by reason and justice. Do not be swayed by the whims of fortune or the capricious nature of human affairs. Instead, focus on the things that lie within your control, and cultivate a sense of inner calm and tranquility. This is the path to true freedom and wisdom.",
+        "isUser": false,
+        "timestamp": "2025-12-13T15:07:19.887Z"
+      },
+      {
+        "id": "efe144c5-297d-4cdf-8b1b-16ebdc2da762",
+        "text": "voice messge",
+        "isUser": true,
+        "timestamp": "2025-12-13T15:07:29.928Z",
+        "attachment": null
+      },
+      {
+        "id": "112c9ef9-4049-4a0b-9a76-c3e7e5daf0bd",
+        "text": "A messenger has arrived, bearing news of concern. I must attend to it at once. Farewell for now.",
+        "isUser": false,
+        "timestamp": "2025-12-13T15:07:31.154Z"
+      },
+      {
+        "id": "09ac4e13-a4e2-4ce3-8b74-750fa2e73a00",
+        "text": "Voice Message",
+        "isUser": true,
+        "timestamp": "2025-12-13T15:13:12.047Z",
+        "attachment": null
+      },
+      {
+        "id": "bc77c4cd-59b0-436e-a25c-335c98598c88",
+        "text": "My son, I have left you a message. Remember that the universe is in motion, and you must not cling to the fleeting moments. Your life is a brief, shining thread in the tapestry of time. Do not be swayed by the whims of fortune, but instead, strive to live with virtue and wisdom. I have done my best to teach you these lessons. Now, it is up to you to act upon them. May the gods guide you on your journey.",
+        "isUser": false,
+        "timestamp": "2025-12-13T15:13:13.934Z"
       }
     ],
-    "createdAt": "2025-12-10T18:16:33.490Z",
-    "updatedAt": "2025-12-10T18:18:50.313Z"
+    "createdAt": "2025-12-13T15:02:28.557Z",
+    "updatedAt": "2025-12-13T15:13:13.934Z"
+  },
+  "63bd444c-1774-43fd-a07e-f856a0339ff6": {
+    "id": "63bd444c-1774-43fd-a07e-f856a0339ff6",
+    "title": "A Mind at Peace with Chaos",
+    "messages": [
+      {
+        "id": "d9974cc2-f4e0-44da-8142-c995d3fe97d2",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-13T19:40:13.107Z",
+        "attachment": null
+      },
+      {
+        "id": "9cd437e6-aa77-4de6-9362-8158064b27b9",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-13T19:40:13.111Z"
+      }
+    ],
+    "createdAt": "2025-12-13T19:40:12.037Z",
+    "updatedAt": "2025-12-13T19:40:13.111Z"
+  },
+  "254b5282-06e5-46cf-b2a9-fc1e038e3a94": {
+    "id": "254b5282-06e5-46cf-b2a9-fc1e038e3a94",
+    "title": "Morning Reflection and Inner Calm Found",
+    "messages": [
+      {
+        "id": "d0d0cb8d-8619-4d44-866c-99d6f7499cd7",
+        "text": "What is the best way to start my morning?",
+        "isUser": true,
+        "timestamp": "2025-12-13T20:07:19.714Z",
+        "attachment": null
+      },
+      {
+        "id": "f4ef01f7-77ab-4754-988d-ebad98e7c5e5",
+        "text": "My young friend, the best way to start your morning is to begin with a steadfast resolve. As you rise from slumber, recall the words of Epictetus: \"It's not what happens to you, but how you react to it that matters.\" \n\nTake a moment to breathe in the stillness of the morning, and remind yourself of your purpose. Ask yourself, \"What is the most important thing I must accomplish today?\" Focus on that goal, and let it guide your actions.\n\nThen, take a walk, or engage in some form of physical discipline. This will help you clear your mind and prepare your body for the challenges ahead.\n\nFinally, sit in silence, and reflect on your thoughts and intentions. As I wrote in my Meditations, \"The impediment to action advances action. What stands in the way becomes the way.\" \n\nMay your mornings be guided by wisdom and purpose.",
+        "isUser": false,
+        "timestamp": "2025-12-13T20:07:22.990Z"
+      }
+    ],
+    "createdAt": "2025-12-13T20:07:18.695Z",
+    "updatedAt": "2025-12-13T20:07:22.990Z"
+  },
+  "c17193fe-379c-4f9b-aed6-e341b8704a88": {
+    "id": "c17193fe-379c-4f9b-aed6-e341b8704a88",
+    "title": "Calmly Accepting the Inevitable Human Flaws",
+    "messages": [
+      {
+        "id": "342a52c9-2cb8-4be1-9ab4-44ac7f46a48a",
+        "text": "I am angry at a colleague's incompetence. How should I react?",
+        "isUser": true,
+        "timestamp": "2025-12-13T20:31:20.272Z",
+        "attachment": null
+      },
+      {
+        "id": "0bd93b9e-fd13-40e5-ae29-f48db8d19758",
+        "text": "My young friend, it is natural to feel frustration when faced with incompetence. Yet, as a philosopher king, I have come to understand that anger is a fleeting emotion that often clouds our judgment. \n\nInstead, I would counsel you to take a step back, breathe deeply, and remind yourself that the incompetence of another is not a personal affront. It is a reflection of their own struggles and limitations, not yours. \n\nWhen you are calm, address the issue directly and clearly, without emotion or recrimination. Focus on the specific behavior or task at hand, and offer guidance and support to help your colleague improve. Remember, it is not your duty to fix their incompetence, but to uphold the standards of your own character.",
+        "isUser": false,
+        "timestamp": "2025-12-13T20:31:22.834Z"
+      }
+    ],
+    "createdAt": "2025-12-13T20:31:19.342Z",
+    "updatedAt": "2025-12-13T20:31:22.834Z"
+  },
+  "789bb158-c793-4425-aafd-f2bbeb0a0666": {
+    "id": "789bb158-c793-4425-aafd-f2bbeb0a0666",
+    "title": "Calmly Accepting the Inevitable Human Flaws",
+    "messages": [
+      {
+        "id": "bb674f54-e73a-4a50-b83d-6f37d749383e",
+        "text": "I am angry at a colleague's incompetence. How should I react?",
+        "isUser": true,
+        "timestamp": "2025-12-13T20:40:46.349Z",
+        "attachment": null
+      },
+      {
+        "id": "0e9a313e-2c21-4ba4-87ff-11258670a7cc",
+        "text": "My friend, let us not be swayed by fleeting emotions. Anger clouds the mind and leads to rash decisions. Instead, recall that your colleague's actions, though perhaps unhelpful, are still a part of the greater tapestry of our shared endeavor. Approach the situation with calm consideration, examining the root causes of their mistakes. Offer guidance, not rebuke, that they may learn and grow from their errors. And, as for yourself, cultivate self-awareness, that you may not be swayed by the whims of anger, but remain steadfast in wisdom.",
+        "isUser": false,
+        "timestamp": "2025-12-13T20:40:48.601Z"
+      }
+    ],
+    "createdAt": "2025-12-13T20:40:45.259Z",
+    "updatedAt": "2025-12-13T20:40:48.601Z"
   }
 }
