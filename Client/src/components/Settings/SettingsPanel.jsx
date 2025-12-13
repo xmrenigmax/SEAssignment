@@ -49,7 +49,7 @@ export const SettingsPanel = ( { onClose } ) => {
       aria-label="Settings"
     >
       <div
-        className="bg-[var(--bg-secondary)] w-full max-w-4xl max-h-[85vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row border border-[var(--border)] animate-in zoom-in-95 duration-200"
+        className="bg-[var(--bg-secondary)] w-full max-w-4xl max-h-[85vh] min-h-[600px] rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row border border-[var(--border)] animate-in zoom-in-95 duration-200"
         onClick={ ( event ) => event.stopPropagation() }
       >
         <div className="md:hidden p-4 border-b border-[var(--border)] flex justify-between items-center">
