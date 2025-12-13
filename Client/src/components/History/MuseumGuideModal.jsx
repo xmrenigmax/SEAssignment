@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useChatContext } from '../../context/ChatContext';
 
 /**
@@ -10,7 +10,7 @@ import { useChatContext } from '../../context/ChatContext';
  * @param {function} props.onClose - Function to close the modal.
  * @param {function} [props.onStartTour] - Optional. If provided, changes button to "Start Tour".
  */
-export const MuseumGuideModal = ({ isOpen, onClose }) => {
+export const MuseumGuideModal = ({ isOpen, onClose, onStartTour }) => {
   const { startConversationWithPrompt } = useChatContext();
   const [suggestedPrompts, setSuggestedPrompts] = useState([]);
 
@@ -91,7 +91,7 @@ export const MuseumGuideModal = ({ isOpen, onClose }) => {
                 <p className="text-xs font-bold text-[var(--text-secondary)] uppercase">Suggested Inquiries</p>
               { suggestedPrompts.map((prompt, index) => (
                 <button key={ index } onClick={ () => handlePromptClick(prompt) } className="w-full text-left p-2 rounded hover:bg-[var(--bg-primary)] text-sm text-[var(--accent)] transition-colors border border-transparent hover:border-[var(--border)]">
-                  "{ prompt }"
+                "{ prompt }"
                 </button>
               ))}
               </div>
