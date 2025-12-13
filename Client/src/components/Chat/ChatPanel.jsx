@@ -141,6 +141,9 @@ export const ChatPanel = () => {
               <span className="text-4xl font-serif">M</span>
             </div>
             <h1 className="text-2xl font-serif font-bold text-[var(--text-primary)] mb-2">Marcus Aurelius</h1>
+            <p className="text-sm text-[var(--text-secondary)] max-w-sm leading-relaxed">
+              Emperor of Rome (161–180 AD) and Stoic philosopher. His <em>Meditations</em> offer timeless wisdom on duty, resilience, and the nature of the human mind.
+            </p>
           </div>
         ) : 
         (
@@ -166,8 +169,7 @@ export const ChatPanel = () => {
                     <audio controls src={ msg.audio } className="h-8 w-full max-w-[200px]" />
                   </div>
                 )}
-
-                <div className="whitespace-pre-wrap">{msg.text}</div>
+                <div className="whitespace-pre-wrap">{ msg.text }</div>
               </div>
             </div>
           ))
@@ -181,12 +183,11 @@ export const ChatPanel = () => {
             </div>
           </div>
         )}
-
-        <div ref={messagesEndRef} />
+        <div ref={ messagesEndRef } />
       </div>
-      <div className="flex-none p-2 bg-[var(--bg-primary)]">
+      <div className="flex-none p-4 bg-[var(--bg-primary)]">
         <div className="max-w-3xl mx-auto bg-[var(--bg-secondary)] border border-[var(--border)] rounded-2xl shadow-sm p-2 flex items-end gap-2 focus-within:ring-2 focus-within:ring-[var(--accent)] transition-all">
-          AttachmentButton onFileAttach={ setAttachedFile } />
+          <AttachmentButton onFileAttach={ setAttachedFile } />
           <div className="flex-1 min-w-0 py-1.5">
             { (attachedFile || audioData) && (
               <div className="flex items-center gap-2 mb-2 text-xs text-[var(--accent)] bg-[var(--bg-primary)] w-fit px-2 py-1 rounded">
@@ -200,8 +201,9 @@ export const ChatPanel = () => {
               onChange={ handleInputChange }
               onKeyDown={ handleKeyDown }
               placeholder={ isRecording ? "Listening..." : "Ask the Emperor..." }
-              className="w-full bg-transparent border-none outline-none text-[var(--text-primary)] resize-none max-h-[150px]"
+              className="w-full bg-transparent border-none outline-none text-[var(--text-primary)] placeholder-[var(--text-secondary)] resize-none max-h-[150px]"
               rows={ 1 }
+              style={{ minHeight: '24px' }}
             />
           </div>
           <VoiceInputButton

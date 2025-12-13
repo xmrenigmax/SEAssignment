@@ -14,10 +14,10 @@
   --bg-secondary: #ffffff;
   --text-primary: #1e293b;
   --text-secondary: #64748b;
-  --accent: #2F67D0;  
+  --accent: #2F67D0;
   --accent-hover: #1e40af;
   --border: #e2e8f0;
-  
+
   /* Chat Specific Colors (Contrast compliant) */
   --message-user: #2F67D0;
   --message-bot: #f1f5f9;
@@ -29,17 +29,13 @@
   --bg-secondary: #1e293b;
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
-  --accent: #38bdf8; 
+  --accent: #38bdf8;
   --accent-hover: #0ea5e9;
   --border: #334155;
-  
+
   /* Chat Specific Colors */
   --message-user: #0ea5e9;
   --message-bot: #334155;
-}
-
-* {
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 body {
@@ -49,17 +45,31 @@ body {
   font-family: system-ui, -apple-system, sans-serif;
 }
 
-/* Custom Scrollbar for Chat History (FR8) */
-::-webkit-scrollbar {
-  width: 6px;
+/* Global default scrollbar (subtle) */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
+
+/* Themed custom scrollbar utility */
+.custom-scrollbar {
+  /* Firefox */
+  scrollbar-width: thin; /* auto | thin | none */
+  scrollbar-color: var(--border) transparent; /* thumb track */
 }
-::-webkit-scrollbar-track {
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
-::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 3px;
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--border), color-mix(in oklab, var(--border) 70%, var(--accent) 30%));
+  border-radius: 9999px;
+  border: 2px solid transparent; /* adds spacing for a pill look */
 }
-::-webkit-scrollbar-thumb:hover {
-  background: var(--text-secondary);
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--text-secondary), var(--accent));
 }
+.custom-scrollbar::-webkit-scrollbar-corner { background: transparent; }
