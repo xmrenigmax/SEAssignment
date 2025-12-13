@@ -64,27 +64,27 @@ export const Sidebar = ({
 
   return (
     <>
-      <MuseumGuideModal isOpen={showMuseumModal} onClose={() => setShowMuseumModal(false)} />
+      <MuseumGuideModal isOpen={ showMuseumModal } onClose={() => setShowMuseumModal(false)} />
 
       {/* Mobile Overlay */}
-      {isMobileOpen && (
+      { isMobileOpen && (
         <div
           className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300"
-          onClick={toggleMobile}
+          onClick={ toggleMobile }
           aria-hidden="true"
         />
       )}
 
       {/* Sidebar Aside */}
       <aside
-        ref={sidebarRef}
-        className={`
+        ref={ sidebarRef }
+        className={ `
           fixed inset-y-0 left-0 z-50 bg-[var(--bg-secondary)] border-r border-[var(--border)]
           flex flex-col
           /* Mobile Logic: Fixed width, slide in/out */
-          ${isMobileOpen ? 'translate-x-0 w-[85vw] max-w-xs shadow-2xl' : '-translate-x-full md:translate-x-0'}
+          ${ isMobileOpen ? 'translate-x-0 w-[85vw] max-w-xs shadow-2xl' : '-translate-x-full md:translate-x-0' }
           /* Desktop Logic: Dynamic width or fixed collapsed width */
-          ${isCollapsed ? 'md:w-20' : ''}
+          ${ isCollapsed ? 'md:w-20' : '' }
         `}
         style={{
           // Only apply dynamic width on Desktop when Expanded
@@ -95,13 +95,13 @@ export const Sidebar = ({
         aria-label="Sidebar Navigation"
       >
         {/* Resize Handle (Desktop Only, Expanded Only) */}
-        {!isCollapsed && !isMobileOpen && (
+        { !isCollapsed && !isMobileOpen && (
           <div
-            onMouseDown={startResizing}
-            className={`
+            onMouseDown={ startResizing }
+            className={ `
               absolute top-0 right-[-4px] w-2 h-full cursor-col-resize z-50 transition-colors
-              ${isResizing ? 'bg-[var(--accent)]' : 'hover:bg-[var(--accent)]/50'}
-            `}
+              ${ isResizing ? 'bg-[var(--accent)]' : 'hover:bg-[var(--accent)]/50' }
+            ` }
             title="Drag to resize"
           />
         )}
@@ -109,7 +109,7 @@ export const Sidebar = ({
         {/* Top Section */}
         <div className="p-4 flex flex-col gap-6 flex-shrink-0">
           <div className={ `flex items-center ${ isCollapsed ? 'justify-center' : 'justify-between' }` }>
-            {!isCollapsed && (
+            { !isCollapsed && (
               <div className="flex items-center gap-3 pl-1 animate-in fade-in duration-200 overflow-hidden">
                 <div className="w-8 h-8 flex-shrink-0 bg-[var(--accent)] rounded-lg flex items-center justify-center text-white font-serif font-bold shadow-sm">
                   M
@@ -121,16 +121,16 @@ export const Sidebar = ({
             )}
             <div className="flex items-center">
               <button
-                onClick={toggleCollapse}
+                onClick={ toggleCollapse }
                 className="p-2 rounded-full hover:bg-[var(--bg-primary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors hidden md:block"
                 title={ isCollapsed ? "Expand menu" : "Collapse menu" }
               >
                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </button>
               <button
-                onClick={toggleMobile}
+                onClick={ toggleMobile }
                 className="md:hidden p-2 text-[var(--text-secondary)] hover:bg-[var(--bg-primary)] rounded-full"
               >
                 ✕
@@ -139,52 +139,52 @@ export const Sidebar = ({
           </div>
 
           <button
-            onClick={handleNewChat}
-            className={`
+            onClick={ handleNewChat }
+            className={ `
               flex items-center gap-3 transition-all duration-200 group
-              ${isCollapsed
+              ${ isCollapsed
                 ? 'w-10 h-10 justify-center rounded-full bg-[var(--bg-primary)] hover:text-[var(--accent)] mx-auto'
                 : 'px-4 py-3 rounded-xl bg-[var(--bg-primary)] hover:shadow-md text-[var(--text-secondary)] hover:text-[var(--accent)]'
               }
-            `}
+            ` }
             title="New Chat"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M12 4v16m8-8H4" />
             </svg>
-            {!isCollapsed && <span className="font-medium text-sm whitespace-nowrap">New Chat</span>}
+            { !isCollapsed && <span className="font-medium text-sm whitespace-nowrap">New Chat</span> }
           </button>
         </div>
 
         {/* Scrollable Conversation List */}
         <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar px-3 py-2">
-          {!isCollapsed && (
+          { !isCollapsed && (
             <div className="mb-4 animate-in fade-in duration-200">
-              <SidebarSearch searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+              <SidebarSearch searchTerm={ searchTerm } onSearchChange={ setSearchTerm } />
             </div>
           )}
 
-          {!isCollapsed && <div className="border-t border-[var(--border)] mx-2 mb-4" role="presentation" />}
+          { !isCollapsed && <div className="border-t border-[var(--border)] mx-2 mb-4" role="presentation" /> }
 
-          {!isCollapsed ? (
+          { !isCollapsed ? (
             <div className="space-y-1 animate-in fade-in slide-in-from-left-4 duration-300">
               <div className="flex items-center justify-between px-3 mb-2">
                 <div className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-widest">
-                  {debouncedSearchTerm ? 'Results' : 'Recent'}
+                  { debouncedSearchTerm ? 'Results' : 'Recent' }
                 </div>
                 <span className="text-[10px] text-[var(--text-secondary)] bg-[var(--bg-primary)] px-1.5 py-0.5 rounded border border-[var(--border)]">
-                  {filteredConversations.length}
+                  { filteredConversations.length }
                 </span>
               </div>
 
-              {filteredConversations.length === 0 && (
+              { filteredConversations.length === 0 && (
                 <p className="px-3 text-xs text-[var(--text-secondary)] opacity-60">No history found.</p>
               )}
 
-              {filteredConversations.map(conv => (
+              { filteredConversations.map(conv => (
                 <div
-                  key={conv.id}
-                  onClick={() => setActiveConversationId(conv.id)}
+                  key={ conv.id }
+                  onClick={ () => setActiveConversationId(conv.id) }
                   className={ `
                     group relative flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-all duration-200 border border-transparent
                     ${ activeConversationId === conv.id
@@ -194,7 +194,7 @@ export const Sidebar = ({
                   `}
                 >
                   <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                   </svg>
                   <span className="truncate flex-1 text-sm">{ conv.title || 'New Chat' }</span>
                   <button
@@ -206,7 +206,7 @@ export const Sidebar = ({
                     title="Delete Conversation"
                   >
                     <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
                 </div>

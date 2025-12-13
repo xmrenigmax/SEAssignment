@@ -187,7 +187,7 @@ export const ChatPanel = () => {
             { (attachedFile || audioData) && (
               <div className="flex items-center gap-2 mb-2 text-xs text-[var(--accent)] bg-[var(--bg-primary)] w-fit px-2 py-1 rounded">
                 <span>{ attachedFile ? attachedFile.name : 'Voice Message Ready' }</span>
-                <button onClick={ () => { setAttachedFile(null); setAudioData(null); } } className="hover:text-red-500">×</button>
+                <button onClick={ () => { setAttachedFile(null); setAudioData(null); }} className="hover:text-red-500">×</button>
               </div>
             )}
             <textarea
@@ -203,11 +203,11 @@ export const ChatPanel = () => {
           </div>
           <VoiceInputButton
             isRecording={ isRecording }
-            onRecordingStart={ () => { setIsRecording(true); setTranscribedText(''); } }
+            onRecordingStart={ () => { setIsRecording(true); setTranscribedText(''); }}
             onRecordingStop={ handleRecordingComplete }
             disabled={ isLoading }
           />
-          <button onClick={ handleSend } disabled={ ( !input.trim() && !transcribedText && !attachedFile && !audioData) || isLoading } className="p-2 rounded-xl bg-[var(--accent)] text-white hover:opacity-90 shadow-sm disabled:opacity-50">
+          <button onClick={ handleSend } disabled={( !input.trim() && !transcribedText && !attachedFile && !audioData) || isLoading } className="p-2 rounded-xl bg-[var(--accent)] text-white hover:opacity-90 shadow-sm disabled:opacity-50">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M5 12h14M12 5l7 7-7 7" />
             </svg>
