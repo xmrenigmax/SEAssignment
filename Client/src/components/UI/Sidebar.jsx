@@ -65,7 +65,6 @@ export const Sidebar = ({
   return (
     <>
       <MuseumGuideModal isOpen={ showMuseumModal } onClose={() => setShowMuseumModal(false)} />
-
       { isMobileOpen && (
         <div
           className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300"
@@ -73,7 +72,6 @@ export const Sidebar = ({
           aria-hidden="true"
         />
       )}
-
       <aside
         ref={ sidebarRef }
         className={`
@@ -103,7 +101,6 @@ export const Sidebar = ({
             title="Drag to resize"
           />
         )}
-
         {/* Top Section */}
         <div className="p-4 flex flex-col gap-6 flex-shrink-0">
           <div className={ `flex items-center ${ isCollapsed ? 'justify-center' : 'justify-between' }` }>
@@ -135,7 +132,6 @@ export const Sidebar = ({
               </button>
             </div>
           </div>
-
           <button
             onClick={ handleNewChat }
             className={`
@@ -153,16 +149,13 @@ export const Sidebar = ({
             { !isCollapsed && <span className="font-medium text-sm whitespace-nowrap">New Chat</span> }
           </button>
         </div>
-
         <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar px-3 py-2">
           { !isCollapsed && (
             <div className="mb-4 animate-in fade-in duration-200">
               <SidebarSearch searchTerm={ searchTerm } onSearchChange={ setSearchTerm } />
             </div>
           )}
-
           { !isCollapsed && <div className="border-t border-[var(--border)] mx-2 mb-4" role="presentation" /> }
-
           { !isCollapsed ? (
             <div className="space-y-1 animate-in fade-in slide-in-from-left-4 duration-300">
               <div className="flex items-center justify-between px-3 mb-2">
@@ -173,9 +166,7 @@ export const Sidebar = ({
                   { filteredConversations.length }
                 </span>
               </div>
-
               { filteredConversations.length === 0 && (<p className="px-3 text-xs text-[var(--text-secondary)] opacity-60">No history found.</p>) }
-
               { filteredConversations.map(conversation => (
                 <div
                   key={ conversation.id }
@@ -213,7 +204,6 @@ export const Sidebar = ({
             </div>
           )}
         </div>
-
         <div className="p-4 border-t border-[var(--border)] flex flex-col gap-3">
           <button
             onClick={ () => setShowMuseumModal(true) }
@@ -228,7 +218,6 @@ export const Sidebar = ({
             </svg>
             { !isCollapsed && <span className="text-sm font-medium">Exhibit Guide</span> }
           </button>
-
           <div className={ `flex items-center ${ isCollapsed ? 'flex-col gap-4' : 'justify-between border-t border-[var(--border)] pt-3' }` }>
             <ThemeToggle isCollapsed={ isCollapsed } />
             { !isCollapsed && <div className="h-4 w-px bg-[var(--border)]" role="presentation" /> }

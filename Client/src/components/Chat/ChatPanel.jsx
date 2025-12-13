@@ -163,7 +163,6 @@ export const ChatPanel = () => {
                     <audio controls src={ msg.audio } className="h-8 w-full max-w-[200px]" />
                   </div>
                 )}
-
                 <div className="whitespace-pre-wrap">{ msg.text }</div>
               </div>
             </div>
