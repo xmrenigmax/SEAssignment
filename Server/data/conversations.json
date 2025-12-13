@@ -230,5 +230,26 @@
     ],
     "createdAt": "2025-12-13T17:20:27.091Z",
     "updatedAt": "2025-12-13T17:20:28.674Z"
+  },
+  "0f1eb552-1434-425c-88d3-40d60d8eac37": {
+    "id": "0f1eb552-1434-425c-88d3-40d60d8eac37",
+    "title": "A New Reflection",
+    "messages": [
+      {
+        "id": "33065771-d9db-47d2-8e4b-6bb93c67b54d",
+        "text": "I am angry at a colleague's incompetence. How should I react?",
+        "isUser": true,
+        "timestamp": "2025-12-13T18:43:55.031Z",
+        "attachment": null
+      },
+      {
+        "id": "73f9e902-2a5a-45ee-913d-5d617f105a37",
+        "text": "I hear your question, citizen. But consider: does this concern the ruling faculty of your mind?",
+        "isUser": false,
+        "timestamp": "2025-12-13T18:43:55.035Z"
+      }
+    ],
+    "createdAt": "2025-12-13T18:43:53.465Z",
+    "updatedAt": "2025-12-13T18:43:55.035Z"
   }
 }

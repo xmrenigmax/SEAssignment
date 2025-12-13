@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useChatContext } from '../../context/ChatContext';
 
 /**
@@ -7,19 +7,21 @@ import { useChatContext } from '../../context/ChatContext';
  */
 export const MuseumGuideModal = ({ isOpen, onClose }) => {
   const { startConversationWithPrompt } = useChatContext();
+  const [suggestedPrompts, setSuggestedPrompts] = useState([]);
 
-  const suggestedPrompts = [
-    "I am angry at a colleague's incompetence. How should I react?",
-    "I feel anxious about the uncertainty of the future.",
-    "What is the best way to start my morning?"
-  ];
+  useEffect(() => {
+    fetch('/data/suggestedPrompts.json')
+      .then(response => response.json())
+      .then(data => setSuggestedPrompts(data))
+      .catch(error => console.error('Failed to load suggested prompts:', error));
+  }, []);
 
   const handlePromptClick = async (text) => {
     try {
       onClose?.();
       await startConversationWithPrompt(text);
-    } catch (e) {
-      console.error('Failed to start conversation from prompt:', e);
+    } catch (error) {
+      console.error('Failed to start conversation from prompt:', error);
     }
   };
   if (!isOpen) return null;
@@ -77,7 +79,7 @@ export const MuseumGuideModal = ({ isOpen, onClose }) => {
               { suggestedPrompts.map((prompt, index) => (
                 <button
                   key={ index }
-                  onClick={() => handlePromptClick(prompt)}
+                  onClick={ () => handlePromptClick(prompt) }
                   className="w-full text-left p-2 rounded hover:bg-[var(--bg-primary)] text-sm text-[var(--accent)] transition-colors border border-transparent hover:border-[var(--border)]"
                 >
                   "{ prompt }"

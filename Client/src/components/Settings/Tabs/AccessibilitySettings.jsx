@@ -40,7 +40,7 @@ export const AccessibilitySettings = () => {
 
   //  Apply the selected font size to the document's root element.
   useEffect(() => {
-    document.documentElement.style.fontSize = `${fontSize}px`;
+    document.documentElement.style.fontSize = `${ fontSize }px`;
   }, [fontSize]);
 
   // Apply High Contrast
@@ -104,7 +104,7 @@ export const AccessibilitySettings = () => {
             max="24"
             step="1"
             value={ fontSize }
-            onChange={(event) => setFontSize(Number(event.target.value))}
+            onChange={ (event) => setFontSize(Number(event.target.value) )}
             className="flex-1 h-2 bg-[var(--border)] rounded-lg appearance-none cursor-pointer accent-[var(--accent)]"
             aria-label="Adjust font size"
           />
@@ -123,19 +123,19 @@ export const AccessibilitySettings = () => {
           label="High Contrast"
           description="Increases visual distinction."
           active={ highContrast }
-          onToggle={() => setHighContrast(!highContrast)}
+          onToggle={ () => setHighContrast(!highContrast) }
         />
         <ToggleCard
           label="Dyslexia Friendly"
           description="Uses accessible fonts and spacing."
           active={ dyslexicFont }
-          onToggle={() => setDyslexicFont(!dyslexicFont)}
+          onToggle={ () => setDyslexicFont(!dyslexicFont) }
         />
         <ToggleCard
           label="Reduced Motion"
           description="Disables animations and transitions."
           active={ reducedMotion }
-          onToggle={() => setReducedMotion(!reducedMotion)}
+          onToggle={ () => setReducedMotion(!reducedMotion) }
         />
       </div>
     </div>

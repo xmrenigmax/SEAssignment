@@ -49,9 +49,9 @@ export const Sidebar = ({
   }, [activeConversationId, loadConversation]);
 
   // Filtering
-  const filteredConversations = conversations.filter(conv =>
-    conv.title?.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
-    (conv.messages?.[0]?.text || '').toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+  const filteredConversations = conversations.filter(conversation =>
+    conversation.title?.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
+    (conversation.messages?.[0]?.text || '').toLowerCase().includes(debouncedSearchTerm.toLowerCase())
   );
 
   // Handlers
@@ -66,7 +66,6 @@ export const Sidebar = ({
     <>
       <MuseumGuideModal isOpen={ showMuseumModal } onClose={() => setShowMuseumModal(false)} />
 
-      {/* Mobile Overlay */}
       { isMobileOpen && (
         <div
           className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300"
@@ -75,7 +74,6 @@ export const Sidebar = ({
         />
       )}
 
-      {/* Sidebar Aside */}
       <aside
         ref={ sidebarRef }
         className={`
@@ -156,7 +154,6 @@ export const Sidebar = ({
           </button>
         </div>
 
-        {/* Scrollable Conversation List */}
         <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar px-3 py-2">
           { !isCollapsed && (
             <div className="mb-4 animate-in fade-in duration-200">
@@ -177,17 +174,15 @@ export const Sidebar = ({
                 </span>
               </div>
 
-              { filteredConversations.length === 0 && (
-                <p className="px-3 text-xs text-[var(--text-secondary)] opacity-60">No history found.</p>
-              )}
+              { filteredConversations.length === 0 && (<p className="px-3 text-xs text-[var(--text-secondary)] opacity-60">No history found.</p>) }
 
-              { filteredConversations.map(conv => (
+              { filteredConversations.map(conversation => (
                 <div
-                  key={ conv.id }
-                  onClick={ () => setActiveConversationId(conv.id) }
+                  key={ conversation.id }
+                  onClick={ () => setActiveConversationId(conversation.id) }
                   className={`
                     group relative flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-all duration-200 border border-transparent
-                    ${ activeConversationId === conv.id
+                    ${ activeConversationId === conversation.id
                       ? 'bg-[var(--accent)]/10 text-[var(--accent)] font-medium'
                       : 'text-[var(--text-primary)] hover:bg-[var(--bg-primary)] hover:border-[var(--border)]'
                     }
@@ -196,11 +191,11 @@ export const Sidebar = ({
                   <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                   </svg>
-                  <span className="truncate flex-1 text-sm">{ conv.title || 'New Chat' }</span>
+                  <span className="truncate flex-1 text-sm">{ conversation.title || 'New Chat' }</span>
                   <button
                     onClick={ (e) => {
                       e.stopPropagation();
-                      if(window.confirm('Delete this conversation?')) deleteConversation(conv.id);
+                      if(window.confirm('Delete this conversation?')) deleteConversation(conversation.id);
                     }}
                     className="opacity-0 group-hover:opacity-100 p-1.5 text-[var(--text-secondary)] hover:text-red-500 rounded-md transition-all"
                     title="Delete Conversation"
@@ -221,7 +216,7 @@ export const Sidebar = ({
 
         <div className="p-4 border-t border-[var(--border)] flex flex-col gap-3">
           <button
-            onClick={() => setShowMuseumModal(true)}
+            onClick={ () => setShowMuseumModal(true) }
             className={`
               flex items-center gap-3 px-3 py-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--accent)] hover:bg-[var(--bg-primary)] transition-all
               ${ isCollapsed ? 'justify-center w-full' : 'w-full' }
@@ -234,7 +229,6 @@ export const Sidebar = ({
             { !isCollapsed && <span className="text-sm font-medium">Exhibit Guide</span> }
           </button>
 
-          {/* Settings & Theme Row */}
           <div className={ `flex items-center ${ isCollapsed ? 'flex-col gap-4' : 'justify-between border-t border-[var(--border)] pt-3' }` }>
             <ThemeToggle isCollapsed={ isCollapsed } />
             { !isCollapsed && <div className="h-4 w-px bg-[var(--border)]" role="presentation" /> }
