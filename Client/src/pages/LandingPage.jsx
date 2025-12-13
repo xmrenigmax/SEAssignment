@@ -52,9 +52,12 @@ const Landing = () => {
           </button>
           <span className="font-serif font-bold text-lg">Marcus Aurelius</span>
         </div>
-        <div className="flex-1 flex flex-col h-full overflow-hidden">
+        <div 
+          className="flex-1 flex flex-col h-full overflow-hidden bg-cover bg-center bg-no-repeat"
+        >
           <ChatPanel />
         </div>
+        
         {isSettingsOpen && (
           <SettingsPanel onClose={() => { setIsSettingsOpen(false); setActiveView('chat'); }} />
         )}
