@@ -2,24 +2,32 @@ import React, { useRef, useState } from 'react';
 import { useChatContext } from '../../../context/ChatContext';
 
 /**
- * Data Management Tab.
- * Styled to match the Accessibility UI.
- * Addresses FR9 (Clear), FR10 (Export), and Import functionality.
- * * @component
+ * Data Management Tab Component.
+ * @component
+ * @returns {JSX.Element} The DataManagement component.
  */
 export const DataManagement = () => {
-  const {
-    conversations,
-    clearAllConversations,
-    importConversations
-  } = useChatContext();
+  /**
+   * Destructures necessary functions and data from the chat context.
+   * @type {{conversations: Array<Object>, clearAllConversations: function(): void, importConversations: function(Array<Object>): void}}
+   */
+  const { conversations, clearAllConversations, importConversations } = useChatContext();
 
+  /**
+   * Ref for accessing the hidden file input element.
+   * @type {React.RefObject<HTMLInputElement>}
+   */
   const fileInputRef = useRef(null);
+
+  /**
+   * State for managing the import operation status (e.g., 'success', 'error', or '').
+   * @type {[string, function(string): void]}
+   */
   const [importStatus, setImportStatus] = useState('');
 
   /**
-   * TriggerExport
    * Serializes current conversations to JSON and triggers browser download.
+   * @returns {void}
    */
   const handleExport = () => {
     const dataStr = JSON.stringify(conversations, null, 2);
@@ -36,8 +44,8 @@ export const DataManagement = () => {
   };
 
   /**
-   * triggerImportClick
-   * Proxies the click to the hidden file input.
+   * Proxies the click to the hidden file input element to open the file selection dialog.
+   * @returns {void}
    */
   const triggerImportClick = () => {
     fileInputRef.current?.click();
@@ -45,7 +53,9 @@ export const DataManagement = () => {
 
   /**
    * handleFileChange
-   * Reads the selected JSON file and attempts to merge into context.
+   * Reads the selected JSON file and attempts to merge into the chat context.
+   * @param {React.ChangeEvent<HTMLInputElement>} event - The file change event.
+   * @returns {void}
    */
   const handleFileChange = async (event) => {
     const file = event.target.files?.[0];
@@ -53,15 +63,16 @@ export const DataManagement = () => {
 
     const reader = new FileReader();
 
-    reader.onload = (e) => {
+    reader.onload = (fileReaderEvent) => {
       try {
-        const json = JSON.parse(e.target.result);
+        const json = JSON.parse(fileReaderEvent.target.result);
         importConversations(json);
         setImportStatus('success');
 
         // Reset success message after 3s
         setTimeout(() => setImportStatus(''), 3000);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Import failed:", error);
         setImportStatus('error');
         setTimeout(() => setImportStatus(''), 3000);
@@ -73,6 +84,7 @@ export const DataManagement = () => {
     event.target.value = '';
   };
 
+
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
       <div>
@@ -82,12 +94,12 @@ export const DataManagement = () => {
       <div className="grid gap-4">
         <div className="p-6 bg-[var(--bg-primary)] rounded-xl border border-[var(--border)] flex items-center justify-between">
           <div>
-            <h3 className="font-semibold text-lg text-[var(--text-primary)]">Export History (FR10)</h3>
+            <h3 className="font-semibold text-lg text-[var(--text-primary)]">Export History</h3>
             <p className="text-sm text-[var(--text-secondary)] mt-1">Download JSON backup.</p>
           </div>
           <button
-            onClick={handleExport}
-            disabled={conversations.length === 0}
+            onClick={ handleExport }
+            disabled={ conversations.length === 0 }
             className="px-4 py-2 bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors disabled:opacity-50 text-[var(--text-primary)]"
           >
             Download
@@ -97,8 +109,8 @@ export const DataManagement = () => {
           <div>
             <div className="flex items-center gap-2">
               <h3 className="font-semibold text-lg text-[var(--text-primary)]">Import History</h3>
-              {importStatus === 'success' && <span className="text-xs text-green-500 font-medium">Success!</span>}
-              {importStatus === 'error' && <span className="text-xs text-red-500 font-medium">Invalid JSON</span>}
+              { importStatus === 'success' && <span className="text-xs text-green-500 font-medium">Success!</span> }
+              { importStatus === 'error' && <span className="text-xs text-red-500 font-medium">Invalid JSON</span> }
             </div>
             <p className="text-sm text-[var(--text-secondary)] mt-1">Restore conversations from backup.</p>
           </div>
@@ -118,11 +130,11 @@ export const DataManagement = () => {
         </div>
         <div className="p-6 bg-red-50/50 dark:bg-red-900/10 rounded-xl border border-red-100 dark:border-red-900/30 flex items-center justify-between">
           <div>
-            <h3 className="font-semibold text-lg text-red-600 dark:text-red-400">Clear Data (FR9)</h3>
+            <h3 className="font-semibold text-lg text-red-600 dark:text-red-400">Clear Data </h3>
             <p className="text-sm text-red-600/70 dark:text-red-400/70 mt-1">Permanently delete all chats from server & local.</p>
           </div>
           <button
-            onClick={clearAllConversations}
+            onClick={ clearAllConversations }
             className="px-4 py-2 bg-white dark:bg-red-950/30 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-50 transition-colors"
           >
             Delete All

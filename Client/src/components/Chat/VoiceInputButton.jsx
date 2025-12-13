@@ -2,8 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 
 /**
  * Voice Input Component.
- * Handles Speech-to-Text functionality using the Web Speech API.
- * Falls back to simulation if API is unavailable (Robustness).
  * * @component
  * @param {Object} props
  * @param {boolean} props.isRecording - External recording state
@@ -14,8 +12,10 @@ import React, { useState, useRef, useEffect } from 'react';
 export const VoiceInputButton = ({ isRecording, onRecordingStart, onRecordingStop, disabled }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const recognitionRef = useRef(null);
+  const mediaRecorderRef = useRef(null);
+  const audioChunksRef = useRef([]);
 
-  // Initialize Web Speech API
+  // Initialize Web Speech API (for Text)
   useEffect(() => {
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -24,84 +24,104 @@ export const VoiceInputButton = ({ isRecording, onRecordingStart, onRecordingSto
       recognitionRef.current.interimResults = true;
 
       recognitionRef.current.onresult = (event) => {
-        const transcript = Array.from(event.results)
-          .map(result => result[0])
-          .map(result => result.transcript)
-          .join('');
-        // We don't auto-stop here, we wait for user click
-      };
-
-      recognitionRef.current.onerror = (event) => {
-        console.warn('Speech recognition error', event.error);
-        onRecordingStop(); // Safety stop
       };
     }
-  }, [onRecordingStop]);
+  }, []);
+
+  const startRecording = async () => {
+    onRecordingStart();
+    audioChunksRef.current = [];
+
+    try {
+      // Start Audio Recording (For Storage/Playback)
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorderRef.current = new MediaRecorder(stream);
+
+      mediaRecorderRef.current.ondataavailable = (event) => {
+        if (event.data.size > 0) audioChunksRef.current.push(event.data);
+      };
+
+      mediaRecorderRef.current.start();
+
+      // Start Speech Recognition (For Text)
+      if (recognitionRef.current) {
+        recognitionRef.current.start();
+      }
+
+    } catch (err) {
+      console.error("Microphone access denied:", err);
+      onRecordingStop(null);
+    }
+  };
+
+  const stopRecording = () => {
+    // Stop Audio Recorder
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+      mediaRecorderRef.current.stop();
+
+      // Wait a moment for the final "dataavailable" event
+      mediaRecorderRef.current.onstop = () => {
+        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+
+        // Convert Blob to Base64 String
+        const reader = new FileReader();
+        reader.readAsDataURL(audioBlob);
+        reader.onloadend = () => {
+          const base64Audio = reader.result;
+
+          // Stop Speech Recognition
+          if (recognitionRef.current) recognitionRef.current.stop();
+
+          // Wait slightly for recognition to finalize
+          setTimeout(() => {
+            // We can pass back an object with both Text and Audio
+            onRecordingStop({ audioData: base64Audio });
+          }, 500);
+        };
+      };
+    } else {
+      onRecordingStop(null);
+    }
+
+    // Stop all tracks to release mic
+    if (mediaRecorderRef.current?.stream) {
+      mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
+    }
+  };
 
   const toggleRecording = () => {
     if (disabled) return;
 
     if (!isRecording) {
-      // START RECORDING
-      onRecordingStart();
-
-      if (recognitionRef.current) {
-        // Use Real API
-        try {
-          recognitionRef.current.start();
-        } catch (e) {
-          console.error("Mic start failed", e);
-          onRecordingStop();
-        }
-      } else {
-        // Fallback Simulation (for browsers without API)
-        console.log("Using Voice Simulation Fallback");
-        setTimeout(() => {
-          const sampleTranscriptions = [
-            "What is the Stoic perspective on anxiety?",
-            "How do I remain calm in chaos?",
-            "Tell me about the Meditations.",
-          ];
-          const randomText = sampleTranscriptions[Math.floor(Math.random() * sampleTranscriptions.length)];
-          onRecordingStop(randomText);
-        }, 3000);
-      }
+      startRecording();
     } else {
-      // STOP RECORDING
-      if (recognitionRef.current) {
-        recognitionRef.current.stop();
-        // We define a short delay to allow the final result to process
-        setTimeout(() => onRecordingStop(undefined), 500);
-      } else {
-        onRecordingStop();
-      }
+      stopRecording();
     }
   };
 
   return (
     <div className="relative">
       <button
-        onClick={toggleRecording}
-        onMouseEnter={() => setIsMenuOpen(true)}
-        onMouseLeave={() => setIsMenuOpen(false)}
-        disabled={disabled}
+        onClick={ toggleRecording}
+        onMouseEnter={ () => setIsMenuOpen(true) }
+        onMouseLeave={ () => setIsMenuOpen(false) }
+        disabled={ disabled }
         className={`
           p-2 rounded-xl transition-all duration-300 relative
-          ${isRecording
+          ${ isRecording
             ? 'bg-red-500 text-white shadow-lg shadow-red-500/30'
             : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--accent)]'
           }
-          ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
+          ${ disabled ? 'opacity-50 cursor-not-allowed' : '' }
         `}
-        aria-label={isRecording ? "Stop recording" : "Start voice input"}
       >
-        {isRecording && (
+        { isRecording && (
           <span className="absolute -top-1 -right-1 flex h-3 w-3">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
           </span>
         )}
-        {isRecording ? (
+        { isRecording ? (
           <svg className="w-5 h-5 animate-pulse" fill="currentColor" viewBox="0 0 24 24">
             <rect x="7" y="7" width="10" height="10" rx="2" />
           </svg>
@@ -111,7 +131,7 @@ export const VoiceInputButton = ({ isRecording, onRecordingStart, onRecordingSto
           </svg>
         )}
       </button>
-      {isMenuOpen && !isRecording && (
+      { isMenuOpen && !isRecording && (
         <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-[var(--text-primary)] text-[var(--bg-primary)] text-xs rounded whitespace-nowrap shadow-lg z-10">
           Voice Input
         </div>

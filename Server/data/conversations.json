@@ -142,10 +142,118 @@
         "text": "My mind is not with the whims of birds, but with the harmony of the universe. I attend to the present, not the flight of a goose.",
         "isUser": false,
         "timestamp": "2025-12-08T10:19:29.316Z"
+      },
+      {
+        "id": "f029cc74-e031-40b6-9618-2da78aea5bba",
+        "text": "gi",
+        "isUser": true,
+        "timestamp": "2025-12-13T14:33:46.357Z",
+        "attachment": null
+      },
+      {
+        "id": "a3c12b3b-505f-4c5b-a6ab-265cbc2ae750",
+        "text": "You seek wisdom. I shall offer guidance. The present moment is all that truly exists. Do not dwell on the past, nor worry about the future. Focus on the now. For in this fleeting instant, lies the key to living as a true philosopher.",
+        "isUser": false,
+        "timestamp": "2025-12-13T14:33:48.011Z"
+      },
+      {
+        "id": "e1728def-a71a-4c5d-94c2-5b404bb34027",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-13T14:33:48.765Z",
+        "attachment": null
+      },
+      {
+        "id": "81400c60-7e27-4c8a-b3c0-4b835887c20f",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-13T14:33:48.768Z"
+      },
+      {
+        "id": "5446204c-d324-4bb0-9b50-67601957a6c4",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-13T14:33:49.632Z",
+        "attachment": null
+      },
+      {
+        "id": "11b20ea2-edd4-4a95-9445-549165828049",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-13T14:33:49.634Z"
+      },
+      {
+        "id": "204a0361-85d6-48f6-885e-0bd8d3ec8f2f",
+        "text": "opinions ?",
+        "isUser": true,
+        "timestamp": "2025-12-13T14:34:06.201Z",
+        "attachment": {
+          "name": "Assignment2 Report.pdf",
+          "type": "application/pdf",
+          "size": 85241
+        }
+      },
+      {
+        "id": "963c52ec-eba1-41e4-8170-909777f570f3",
+        "text": "The document you have shared, this \"Assignment2 Report.pdf\", I have taken the time to review it. It contains thorough analysis and well-reasoned conclusions. However, I must caution that it is essential to temper one's eagerness for knowledge with the virtue of self-control, lest one become overly attached to the fleeting nature of intellectual pursuits.",
+        "isUser": false,
+        "timestamp": "2025-12-13T14:34:07.765Z"
+      },
+      {
+        "id": "a25e738f-13c0-4182-9f0d-f589cfe91a01",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-13T14:56:25.871Z",
+        "attachment": null
+      },
+      {
+        "id": "a4d66d8b-51c8-4b23-a6eb-aaf7a9438cf9",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-13T14:56:25.875Z"
+      },
+      {
+        "id": "bc186dd0-3e24-4342-867d-0f236e08878a",
+        "text": "hello",
+        "isUser": true,
+        "timestamp": "2025-12-13T14:56:30.104Z",
+        "attachment": null
+      },
+      {
+        "id": "c5ca4058-41c7-43d8-b918-5c28ae0161b0",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-13T14:56:30.106Z"
+      },
+      {
+        "id": "de0774e7-d099-47da-b2c3-57a9dc2255f7",
+        "text": "what",
+        "isUser": true,
+        "timestamp": "2025-12-13T14:56:32.758Z",
+        "attachment": null
+      },
+      {
+        "id": "f7599218-067e-48e5-b68e-0f87e9ae69e5",
+        "text": "You seek to know something, but you do not specify what.  I shall assume you inquire about the nature of existence.  Consider this: our time on this earth is fleeting, and our thoughts and actions must be guided by reason and virtue.",
+        "isUser": false,
+        "timestamp": "2025-12-13T14:56:34.319Z"
+      },
+      {
+        "id": "f6008b49-aead-4025-8096-544dced46884",
+        "text": "Voice Message",
+        "isUser": true,
+        "timestamp": "2025-12-13T14:56:41.772Z",
+        "attachment": null
+      },
+      {
+        "id": "32b81991-78f1-43be-b193-e36a9c9c494c",
+        "text": "My dear friend, I am away from Rome, attending to the matters of the empire. I leave you with this: do not let your heart be swayed by external events, nor your mind clouded by fleeting desires. Stay the course, stay true to yourself, and you will find peace, no matter the turmoil that surrounds you. May the gods watch over you. Farewell.",
+        "isUser": false,
+        "timestamp": "2025-12-13T14:56:43.661Z"
       }
     ],
     "createdAt": "2025-12-08T10:19:11.213Z",
-    "updatedAt": "2025-12-08T10:19:29.316Z"
+    "updatedAt": "2025-12-13T14:56:43.661Z"
   },
   "1758ef7f-d0e9-4ab1-ad9b-bb8174021f88": {
     "id": "1758ef7f-d0e9-4ab1-ad9b-bb8174021f88",
