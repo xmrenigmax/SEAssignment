@@ -4,6 +4,8 @@ import { useBackendHealth } from '../../hooks/useBackendHealth';
 import { AttachmentButton } from './AttachmentButton';
 import { VoiceInputButton } from './VoiceInputButton';
 
+const BACKGROUND_IMAGE_URL = '/icons/Background/roman-pillars.png';
+
 /**
  * ChatPanel Component
  * * The main interface for the chat interaction. Handles message display, 
@@ -114,7 +116,7 @@ export const ChatPanel = () => {
   return (
     <div className="flex flex-col h-full w-full bg-[var(--bg-primary)] relative">
       {/* Header Section */}
-      <div className="flex-none h-16 border-b border-[var(--border)] bg-[var(--bg-secondary)]/80 backdrop-blur-md flex items-center px-6 justify-between z-10">
+      <div className="flex-none h-16 border-b border-[var(--border)] bg-[var(--bg-secondary)]/80 backdrop-blur-md flex items-center px-6 justify-between z-20">
         <div className="flex flex-col">
           <h2 className="font-semibold text-[var(--text-primary)]">
             {activeConversation?.title || 'New Conversation'}
@@ -127,17 +129,18 @@ export const ChatPanel = () => {
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-4 md:p-8 space-y-6 scroll-smooth">
-        {messages.length === 0 ? (
-          <div className="h-full flex flex-col items-center justify-center text-center opacity-60">
-            <div className="w-20 h-20 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center mb-6 shadow-sm border border-[var(--border)]">
-              <span className="text-4xl font-serif">M</span>
-            </div>
-            <h1 className="text-2xl font-serif font-bold text-[var(--text-primary)] mb-2">Marcus Aurelius</h1>
-            <p className="text-[var(--text-secondary)] max-w-sm">
+      <div className="absolute inset-0 bg-center bg-no-repeat opacity-15" style= { { backgroundImage: `url('${BACKGROUND_IMAGE_URL}')`,backgroundSize: '100% 100%' } } />
+        <div className="flex-1 overflow-y-auto p-4 md:p-8 space-y-6 scroll-smooth">
+          {messages.length === 0 ? (
+            <div className="h-full flex flex-col items-center justify-center text-center opacity-60">
+              <div className="w-20 h-20 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center mb-6 shadow-sm border border-[var(--border)]">
+                <span className="text-4xl font-serif">M</span>
+              </div>
+              <h1 className="text-2xl font-serif font-bold text-[var(--text-primary)] mb-2">Marcus Aurelius</h1>
+              <p className="text-[var(--text-secondary)] max-w-sm">
               "The happiness of your life depends upon the quality of your thoughts."
-            </p>
-          </div>
+              </p>
+            </div>
         ) : (
           messages.map((msg, idx) => (
             <div key={msg.id || idx} className={`flex ${msg.isUser ? 'justify-end' : 'justify-start'}`}>
