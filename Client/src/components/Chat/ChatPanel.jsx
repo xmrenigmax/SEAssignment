@@ -141,6 +141,9 @@ export const ChatPanel = () => {
               <span className="text-4xl font-serif">M</span>
             </div>
             <h1 className="text-2xl font-serif font-bold text-[var(--text-primary)] mb-2">Marcus Aurelius</h1>
+            <p className="text-sm text-[var(--text-secondary)] max-w-sm leading-relaxed">
+              Emperor of Rome (161–180 AD) and Stoic philosopher. His <em>Meditations</em> offer timeless wisdom on duty, resilience, and the nature of the human mind.
+            </p>
           </div>
         ) : (
           messages.map((msg, idx) => (

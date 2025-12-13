@@ -558,5 +558,47 @@
     ],
     "createdAt": "2025-12-13T20:07:18.695Z",
     "updatedAt": "2025-12-13T20:07:22.990Z"
+  },
+  "c17193fe-379c-4f9b-aed6-e341b8704a88": {
+    "id": "c17193fe-379c-4f9b-aed6-e341b8704a88",
+    "title": "Calmly Accepting the Inevitable Human Flaws",
+    "messages": [
+      {
+        "id": "342a52c9-2cb8-4be1-9ab4-44ac7f46a48a",
+        "text": "I am angry at a colleague's incompetence. How should I react?",
+        "isUser": true,
+        "timestamp": "2025-12-13T20:31:20.272Z",
+        "attachment": null
+      },
+      {
+        "id": "0bd93b9e-fd13-40e5-ae29-f48db8d19758",
+        "text": "My young friend, it is natural to feel frustration when faced with incompetence. Yet, as a philosopher king, I have come to understand that anger is a fleeting emotion that often clouds our judgment. \n\nInstead, I would counsel you to take a step back, breathe deeply, and remind yourself that the incompetence of another is not a personal affront. It is a reflection of their own struggles and limitations, not yours. \n\nWhen you are calm, address the issue directly and clearly, without emotion or recrimination. Focus on the specific behavior or task at hand, and offer guidance and support to help your colleague improve. Remember, it is not your duty to fix their incompetence, but to uphold the standards of your own character.",
+        "isUser": false,
+        "timestamp": "2025-12-13T20:31:22.834Z"
+      }
+    ],
+    "createdAt": "2025-12-13T20:31:19.342Z",
+    "updatedAt": "2025-12-13T20:31:22.834Z"
+  },
+  "789bb158-c793-4425-aafd-f2bbeb0a0666": {
+    "id": "789bb158-c793-4425-aafd-f2bbeb0a0666",
+    "title": "Calmly Accepting the Inevitable Human Flaws",
+    "messages": [
+      {
+        "id": "bb674f54-e73a-4a50-b83d-6f37d749383e",
+        "text": "I am angry at a colleague's incompetence. How should I react?",
+        "isUser": true,
+        "timestamp": "2025-12-13T20:40:46.349Z",
+        "attachment": null
+      },
+      {
+        "id": "0e9a313e-2c21-4ba4-87ff-11258670a7cc",
+        "text": "My friend, let us not be swayed by fleeting emotions. Anger clouds the mind and leads to rash decisions. Instead, recall that your colleague's actions, though perhaps unhelpful, are still a part of the greater tapestry of our shared endeavor. Approach the situation with calm consideration, examining the root causes of their mistakes. Offer guidance, not rebuke, that they may learn and grow from their errors. And, as for yourself, cultivate self-awareness, that you may not be swayed by the whims of anger, but remain steadfast in wisdom.",
+        "isUser": false,
+        "timestamp": "2025-12-13T20:40:48.601Z"
+      }
+    ],
+    "createdAt": "2025-12-13T20:40:45.259Z",
+    "updatedAt": "2025-12-13T20:40:48.601Z"
   }
 }

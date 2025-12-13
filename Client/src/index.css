@@ -14,10 +14,10 @@
   --bg-secondary: #ffffff;
   --text-primary: #1e293b;
   --text-secondary: #64748b;
-  --accent: #2F67D0;  
+  --accent: #2F67D0;
   --accent-hover: #1e40af;
   --border: #e2e8f0;
-  
+
   /* Chat Specific Colors (Contrast compliant) */
   --message-user: #2F67D0;
   --message-bot: #f1f5f9;
@@ -29,17 +29,13 @@
   --bg-secondary: #1e293b;
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
-  --accent: #38bdf8; 
+  --accent: #38bdf8;
   --accent-hover: #0ea5e9;
   --border: #334155;
-  
+
   /* Chat Specific Colors */
   --message-user: #0ea5e9;
   --message-bot: #334155;
-}
-
-* {
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 body {
