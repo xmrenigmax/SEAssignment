@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ThemeToggle } from './ThemeToggle';
 import { SettingsButton } from './SettingsButton';
 import { SidebarSearch } from './SidebarSearch';
-import { MuseumGuideModal } from '../History/MusuemGuideModal';
+import { MuseumGuideModal } from '../History/MuseumGuideModal';
 import { useChatContext } from '../../context/ChatContext';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useSidebarResizer } from '../../hooks/UseSidebarResizer';
@@ -37,7 +37,7 @@ export const Sidebar = ({
   // Custom hook for resizing logic
   const { sidebarWidth, startResizing, isResizing, sidebarRef } = useSidebarResizer(288);
 
-  // --- Effects ---
+  // Effects
   useEffect(() => {
     syncConversations();
   }, [syncConversations]);

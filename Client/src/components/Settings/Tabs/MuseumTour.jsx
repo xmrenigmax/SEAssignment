@@ -9,47 +9,42 @@ export const MuseumTour = ({ isOpen, onClose }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [position, setPosition] = useState({ top: 0, left: 0, width: 0, height: 0 });
   const [isVisible, setIsVisible] = useState(false);
-  const TOOLTIP_WIDTH = 320;
 
+  // State to hold the steps fetched from JSON
+  const [steps, setSteps] = useState([]);
+
+  const TOOLTIP_WIDTH = 320;
   const observerRef = useRef(null);
 
-  const steps = [
-    {
-      id: 'welcome',
-      isWelcome: true,
-      title: "Welcome"
-    },
-    {
-      target: 'aside',
-      title: "The Archives",
-      description: "This sidebar is your gateway. Access your conversation history, start new chats, and manage your sessions here.",
-      placement: 'right'
-    },
-    {
-      target: '.flex-1.overflow-y-auto',
-      title: "The Historic Chats",
-      description: "This is where discourse happens. Your conversations with Marcus Aurelius will appear here in real-time.",
-      placement: 'center'
-    },
-    {
-      target: 'textarea',
-      title: "The Discussion Chamber",
-      description: "Type your questions here, or use the microphone for voice input. You can even attach documents for analysis.",
-      placement: 'top'
-    },
-    {
-      target: 'button[title="Settings"]',
-      title: "Configurations",
-      description: "Adjust themes, manage data, and configure accessibility options to suit your needs.",
-      placement: 'right'
-    }
-  ];
+  // Fetch steps on mount
+  useEffect(() => {
+    const fetchSteps = async () => {
+      try {
+        const response = await fetch('/data/tour-steps.json');
+        if (response.ok) {
+          const data = await response.json();
+          setSteps(data);
+        } else {
+          console.error("Failed to load TourSteps.json");
+        }
+      } catch (error) {
+        console.error("Error fetching tour steps:", error);
+      }
+    };
+    fetchSteps();
+  }, []);
 
-  const currentStepData = steps[currentStep];
+  // Safe access to data
+  const currentStepData = steps[currentStep] || {};
   const isWelcomeStep = currentStepData.isWelcome;
   const isLastStep = currentStep === steps.length - 1;
 
+  // Callback
   const updatePosition = useCallback(() => {
+
+    // Safety check inside the hook
+    if (steps.length === 0) return;
+
     if (!isOpen || isWelcomeStep) {
       setIsVisible(true);
       return;
@@ -101,9 +96,11 @@ export const MuseumTour = ({ isOpen, onClose }) => {
       setPosition({ top: window.innerHeight / 2 - 100, left: window.innerWidth / 2 - 150, width: 300, height: 200 });
       setIsVisible(true);
     }
-  }, [isOpen, isWelcomeStep, currentStepData]);
+  }, [isOpen, isWelcomeStep, currentStepData, steps.length]);
 
   useEffect(() => {
+    if (steps.length === 0) return;
+
     if (isOpen) {
       updatePosition();
       observerRef.current = new ResizeObserver(() => requestAnimationFrame(updatePosition));
@@ -118,7 +115,7 @@ export const MuseumTour = ({ isOpen, onClose }) => {
         window.removeEventListener('scroll', updatePosition, { capture: true });
       };
     }
-  }, [isOpen, currentStep, updatePosition]);
+  }, [isOpen, currentStep, updatePosition, steps.length]);
 
   const handleNext = () => {
     if (currentStep < steps.length - 1) {
@@ -133,6 +130,8 @@ export const MuseumTour = ({ isOpen, onClose }) => {
     if (currentStep > 0) setCurrentStep(prev => prev - 1);
   };
 
+  // RENDER LOGIC
+  if (steps.length === 0) return null;
   if (!isOpen) return null;
 
   if (isWelcomeStep) {
@@ -147,26 +146,10 @@ export const MuseumTour = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-[100] overflow-hidden pointer-events-auto">
-      <div
-        className="absolute transition-all duration-300 ease-out rounded-xl border-2 border-[var(--accent)] shadow-[0_0_0_9999px_rgba(0,0,0,0.75)]"
-        style={{
-          top: position.top,
-          left: position.left,
-          width: position.width,
-          height: position.height,
-          opacity: isVisible ? 1 : 0
-        }}
-      />
-
+      <div className="absolute transition-all duration-300 ease-out rounded-xl border-2 border-[var(--accent)] shadow-[0_0_0_9999px_rgba(0,0,0,0.75)]" style={{ top: position.top, left: position.left, width: position.width, height: position.height, opacity: isVisible ? 1 : 0 }}/>
       <div
         className="absolute transition-all duration-300 ease-out z-[101]"
-        style={{
-          top: position.tooltipTop,
-          left: position.tooltipLeft,
-          opacity: isVisible ? 1 : 0,
-          transform: isVisible ? 'translateY(0)' : 'translateY(10px)',
-          width: TOOLTIP_WIDTH
-        }}
+        style={{ top: position.tooltipTop, left: position.tooltipLeft, opacity: isVisible ? 1 : 0, transform: isVisible ? 'translateY(0)' : 'translateY(10px)', width: TOOLTIP_WIDTH }}
         role="dialog"
       >
         <div className="bg-[var(--bg-secondary)] border border-[var(--border)] w-full p-6 rounded-2xl shadow-2xl relative">
