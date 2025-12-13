@@ -90,7 +90,6 @@ export const Sidebar = ({
         }}
         aria-label="Sidebar Navigation"
       >
-        {/* Resize Handle (Desktop Only, Expanded Only) */}
         { !isCollapsed && !isMobileOpen && (
           <div
             onMouseDown={ startResizing }
@@ -101,7 +100,6 @@ export const Sidebar = ({
             title="Drag to resize"
           />
         )}
-        {/* Top Section */}
         <div className="p-4 flex flex-col gap-6 flex-shrink-0">
           <div className={ `flex items-center ${ isCollapsed ? 'justify-center' : 'justify-between' }` }>
             { !isCollapsed && (
