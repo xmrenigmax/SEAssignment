@@ -52,7 +52,7 @@ export const ChatPanel = () => {
    * 4. Dispatches message to context/backend.
    */
   const handleSend = async () => {
-    const messageText = transcribedText || input.trim();
+  const messageText = transcribedText || input.trim();
     
     // Guard clause: Do nothing if empty and no file
     if (!messageText && !attachedFile) return;
@@ -113,7 +113,8 @@ export const ChatPanel = () => {
 
   return (
     <div className="flex flex-col h-full w-full bg-[var(--bg-primary)] relative">
-      {/* Header Section */}
+      
+      
       <div className="flex-none h-16 border-b border-[var(--border)] bg-[var(--bg-secondary)]/80 backdrop-blur-md flex items-center px-6 justify-between z-10">
         <div className="flex flex-col">
           <h2 className="font-semibold text-[var(--text-primary)]">
@@ -126,8 +127,7 @@ export const ChatPanel = () => {
         </div>
       </div>
 
-      {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-4 md:p-8 space-y-6 scroll-smooth">
+      <div className="flex-1 overflow-y-auto p-4 md:p-8 space-y-4 scroll-smooth">
         {messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-center opacity-60">
             <div className="w-20 h-20 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center mb-6 shadow-sm border border-[var(--border)]">
@@ -138,21 +138,19 @@ export const ChatPanel = () => {
               "The happiness of your life depends upon the quality of your thoughts."
             </p>
           </div>
-        ) : (
+        ) : 
+        (
           messages.map((msg, idx) => (
             <div key={msg.id || idx} className={`flex ${msg.isUser ? 'justify-end' : 'justify-start'}`}>
-             
-             {/* --- START MARCUS ICON --- */}
               {!msg.isUser && (
                <div className="relative w-8 h-8 mr-3 rounded-full overflow-hidden border border-[var(--border)] bg-[var(--bg-secondary)] flex items-center justify-center text-xs font-serif">
                 <img 
-                  src="/icons/Marcus_Aurelius_icon.png"
+                  src="/icons/Marcus_Aurelius.png"
                   alt="Marcus Aurelius"
                   className="w-full h-full object-cover"
                 />
               </div>
               )}
-              {/* --- END MARCUS ICON --- */}
               
               <div className={`max-w-[85%] md:max-w-[75%] px-5 py-3.5 rounded-2xl text-sm md:text-base leading-relaxed shadow-sm ${
                 msg.isUser 
@@ -170,7 +168,6 @@ export const ChatPanel = () => {
           ))
         )}
         
-        {/* Loading Indicator */}
         {isLoading && (
           <div className="flex justify-start ml-11">
             <div className="bg-[var(--bg-secondary)] px-4 py-3 rounded-2xl border border-[var(--border)] flex gap-1.5">
@@ -180,24 +177,13 @@ export const ChatPanel = () => {
             </div>
           </div>
         )}
+
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input Area */}
-      <div className="flex-none p-4 bg-[var(--bg-primary)]">
+      <div className="flex-none p-2 bg-[var(--bg-primary)]">
         <div className="max-w-3xl mx-auto bg-[var(--bg-secondary)] border border-[var(--border)] rounded-2xl shadow-sm p-2 flex items-end gap-2 focus-within:ring-2 focus-within:ring-[var(--accent)] transition-all">
-          {/* --- START MARCUS ICON --- */}
-          <div className="pb-2 pl-2 select-none">
-            <img 
-              src="/icons/Marcus_Aurelius_icon.png"
-              alt="Marcus Aurelius"
-              className={`w-8 h-8 rounded-full object-cover border border-[var(--accent)] ${isLoading ? "animate-pulse opacity-80" : ""}`}
-            />
-          </div>
-          {/* --- END MARCUS ICON --- */}
-
           <AttachmentButton onFileAttach={setAttachedFile} />
-          
           <div className="flex-1 min-w-0 py-1.5">
             {attachedFile && (
               <div className="flex items-center gap-2 mb-2 text-xs text-[var(--accent)] bg-[var(--bg-primary)] w-fit px-2 py-1 rounded">
@@ -205,6 +191,7 @@ export const ChatPanel = () => {
                 <button onClick={() => setAttachedFile(null)} className="hover:text-red-500">×</button>
               </div>
             )}
+
             <textarea 
               ref={textareaRef} 
               value={transcribedText || input} 

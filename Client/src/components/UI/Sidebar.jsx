@@ -111,8 +111,12 @@ export const Sidebar = ({
           <div className={`flex items-center ${isCollapsed ? 'justify-center' : 'justify-between'}`}>
             {!isCollapsed && (
               <div className="flex items-center gap-3 pl-1 animate-in fade-in duration-200 overflow-hidden">
-                <div className="w-8 h-8 flex-shrink-0 bg-[var(--accent)] rounded-lg flex items-center justify-center text-white font-serif font-bold shadow-sm">
-                  M
+                <div className="w-10 h-10 mr-3 rounded-full object-cover border border-white/20">
+                  <img 
+                    src="/icons/Marcus_Aurelius.png"
+                    alt="Marcus Aurelius"
+                    className="w-10 h-10 mr-3 rounded-full object-cover border border-white/20"
+                  />
                 </div>
                 <h1 className="text-lg font-serif font-bold text-[var(--text-primary)] tracking-tight whitespace-nowrap">
                   Marcus Aurelius
