@@ -142,11 +142,14 @@ export const ChatPanel = () => {
             </div>
             <h1 className="text-2xl font-serif font-bold text-[var(--text-primary)] mb-2">Marcus Aurelius</h1>
           </div>
-        ) : (
+        ) : 
+        (
           messages.map((msg, idx) => (
             <div key={ msg.id || idx } className={ `flex ${ msg.isUser ? 'justify-end' : 'justify-start' }` }>
               { !msg.isUser && (
-                <div className="w-8 h-8 mr-3 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center border border-[var(--border)] text-xs font-serif">M</div>
+                <div className="relative w-8 h-8 mr-3 rounded-full overflow-hidden border border-[var(--border)] bg-[var(--bg-secondary)] flex items-center justify-center text-xs font-serif">
+                  <img src="/icons/Marcus_Aurelius.png" alt="Marcus Aurelius" className="w-full h-full object-cover"/>
+                </div>
               )}
               <div className={ `max-w-[85%] md:max-w-[75%] px-5 py-3.5 rounded-2xl text-sm md:text-base leading-relaxed shadow-sm ${
                 msg.isUser
@@ -178,11 +181,12 @@ export const ChatPanel = () => {
             </div>
           </div>
         )}
+
         <div ref={messagesEndRef} />
       </div>
-      <div className="flex-none p-4 bg-[var(--bg-primary)]">
-        <div className="max-w-3xl mx-auto bg-[var(--bg-secondary)] border border-[var(--border)] rounded-2xl shadow-sm p-2 flex items-end gap-2">
-          <AttachmentButton onFileAttach={ setAttachedFile } />
+      <div className="flex-none p-2 bg-[var(--bg-primary)]">
+        <div className="max-w-3xl mx-auto bg-[var(--bg-secondary)] border border-[var(--border)] rounded-2xl shadow-sm p-2 flex items-end gap-2 focus-within:ring-2 focus-within:ring-[var(--accent)] transition-all">
+          AttachmentButton onFileAttach={ setAttachedFile } />
           <div className="flex-1 min-w-0 py-1.5">
             { (attachedFile || audioData) && (
               <div className="flex items-center gap-2 mb-2 text-xs text-[var(--accent)] bg-[var(--bg-primary)] w-fit px-2 py-1 rounded">
