@@ -78,7 +78,7 @@ export const Sidebar = ({
       {/* Sidebar Aside */}
       <aside
         ref={ sidebarRef }
-        className={ `
+        className={`
           fixed inset-y-0 left-0 z-50 bg-[var(--bg-secondary)] border-r border-[var(--border)]
           flex flex-col
           /* Mobile Logic: Fixed width, slide in/out */
@@ -98,10 +98,10 @@ export const Sidebar = ({
         { !isCollapsed && !isMobileOpen && (
           <div
             onMouseDown={ startResizing }
-            className={ `
+            className={`
               absolute top-0 right-[-4px] w-2 h-full cursor-col-resize z-50 transition-colors
               ${ isResizing ? 'bg-[var(--accent)]' : 'hover:bg-[var(--accent)]/50' }
-            ` }
+            `}
             title="Drag to resize"
           />
         )}
@@ -140,13 +140,13 @@ export const Sidebar = ({
 
           <button
             onClick={ handleNewChat }
-            className={ `
+            className={`
               flex items-center gap-3 transition-all duration-200 group
               ${ isCollapsed
                 ? 'w-10 h-10 justify-center rounded-full bg-[var(--bg-primary)] hover:text-[var(--accent)] mx-auto'
                 : 'px-4 py-3 rounded-xl bg-[var(--bg-primary)] hover:shadow-md text-[var(--text-secondary)] hover:text-[var(--accent)]'
               }
-            ` }
+            `}
             title="New Chat"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -185,7 +185,7 @@ export const Sidebar = ({
                 <div
                   key={ conv.id }
                   onClick={ () => setActiveConversationId(conv.id) }
-                  className={ `
+                  className={`
                     group relative flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-all duration-200 border border-transparent
                     ${ activeConversationId === conv.id
                       ? 'bg-[var(--accent)]/10 text-[var(--accent)] font-medium'
@@ -219,15 +219,13 @@ export const Sidebar = ({
           )}
         </div>
 
-        {/* Footer Section */}
         <div className="p-4 border-t border-[var(--border)] flex flex-col gap-3">
-          {/* Museum Button: Full width block above settings */}
           <button
-            onClick={ () => setShowMuseumModal(true) }
-            className={ `
+            onClick={() => setShowMuseumModal(true)}
+            className={`
               flex items-center gap-3 px-3 py-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--accent)] hover:bg-[var(--bg-primary)] transition-all
               ${ isCollapsed ? 'justify-center w-full' : 'w-full' }
-            ` }
+            `}
             title="About Marcus Aurelius"
           >
             <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
