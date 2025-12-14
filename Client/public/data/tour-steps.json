@@ -1,0 +1,31 @@
+[
+  {
+    "id": "welcome",
+    "isWelcome": true,
+    "title": "Welcome"
+  },
+  {
+    "target": "aside",
+    "title": "The Archives",
+    "description": "This sidebar is your gateway. Access your conversation history, start new chats, and manage your sessions here.",
+    "placement": "right"
+  },
+  {
+    "target": ".flex-1.overflow-y-auto",
+    "title": "The Historic Chats",
+    "description": "This is where discourse happens. Your conversations with Marcus Aurelius will appear here in real-time.",
+    "placement": "center"
+  },
+  {
+    "target": "textarea",
+    "title": "The Discussion Chamber",
+    "description": "Type your questions here, or use the microphone for voice input. You can even attach documents for analysis.",
+    "placement": "top"
+  },
+  {
+    "target": "button[title=\"Settings\"]",
+    "title": "Configurations",
+    "description": "Adjust themes, manage data, and configure accessibility options to suit your needs.",
+    "placement": "right"
+  }
+]

@@ -1,9 +1,10 @@
-import React from 'react';
 
 /**
- * Legal Information Tab.
- * Styled to match the card layout.
- * * @component
+ * Legal Information Tab Component.
+ * Displays software licensing, model attribution, and essential disclaimers.
+ * Styled to match the unified card layout of other settings tabs.
+ * @component
+ * @returns {JSX.Element} The LegalSettings component.
  */
 export const LegalSettings = () => {
   return (
