@@ -11,7 +11,7 @@ const tokenizer = new natural.WordTokenizer();
 const stemmer = natural.PorterStemmer;
 const IGNORED_WORDS = new Set(['the', 'is', 'at', 'which', 'on', 'a', 'an', 'and', 'or', 'to', 'of', 'in', 'it', 'you', 'i']);
 const MIN_FUZZY_LENGTH = 3;
-const FUZZY_THRESHOLD = 0.85; // Added missing threshold constant
+const FUZZY_THRESHOLD = 0.85;
 
 // Cache the script in memory so we don't hit the DB on every single message
 let cachedScript = null;
@@ -43,7 +43,7 @@ export async function loadScript() {
  */
 function robustRandomSelect(pool) {
   if (!pool || pool.length === 0) return null;
-  const totalWeight = pool.reduce((sum, item) => sum + (item.probability || 0), 0);
+  const totalWeight = pool.reduce((sum, item) => sum + (item.probability*4 || 0), 0);
   let randomPoint = Math.random() * totalWeight;
 
   for (const option of pool) {
