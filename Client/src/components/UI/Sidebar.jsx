@@ -3,6 +3,7 @@ import { ThemeToggle } from './ThemeToggle';
 import { SettingsButton } from './SettingsButton';
 import { SidebarSearch } from './SidebarSearch';
 import { MuseumGuideModal } from '../History/MuseumGuideModal';
+import { DeleteConfirmationModal } from './DeleteConfirmationModal';
 import { useChatContext } from '../../context/ChatContext';
 import { useDebounce } from '../../hooks/useDebounce';
 
@@ -14,6 +15,7 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
 
   const [searchTerm, setSearchTerm] = useState('');
   const [showMuseumModal, setShowMuseumModal] = useState(false);
+  const [deleteModalState, setDeleteModalState] = useState({ isOpen: false, conversationId: null, conversationTitle: '' });
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
   // Effects
@@ -41,9 +43,31 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
     if (window.innerWidth < 768) toggleMobile();
   };
 
+  const handleDeleteClick = (event, conversationId, conversationTitle) => {
+    event.stopPropagation();
+    setDeleteModalState({ isOpen: true, conversationId, conversationTitle });
+  };
+
+  const handleDeleteConfirm = () => {
+    if (deleteModalState.conversationId) {
+      deleteConversation(deleteModalState.conversationId);
+    }
+    setDeleteModalState({ isOpen: false, conversationId: null, conversationTitle: '' });
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteModalState({ isOpen: false, conversationId: null, conversationTitle: '' });
+  };
+
   return (
     <>
       <MuseumGuideModal isOpen={ showMuseumModal } onClose={ () => setShowMuseumModal(false) } />
+      <DeleteConfirmationModal
+        isOpen={ deleteModalState.isOpen }
+        onClose={ handleDeleteCancel }
+        onConfirm={ handleDeleteConfirm }
+        conversationTitle={ deleteModalState.conversationTitle }
+      />
       { isMobileOpen && (
         <div
           className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300"
@@ -149,7 +173,7 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
                   </svg>
                   <span className="truncate flex-1 text-sm">{ conversation.title || 'New Chat' }</span>
                   <button
-                    onClick={ (event) => { event.stopPropagation(); if(window.confirm('Delete this conversation?')) deleteConversation(conversation.id); }}
+                    onClick={ (event) => handleDeleteClick(event, conversation.id, conversation.title) }
                     className="opacity-0 group-hover:opacity-100 p-1.5 text-[var(--text-secondary)] hover:text-red-500 rounded-md transition-all"
                     title="Delete Conversation"
                   >
