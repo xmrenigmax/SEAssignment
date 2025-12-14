@@ -51,7 +51,7 @@ const Landing = () => {
 
  return (
    <div className="min-h-screen flex bg-[var(--bg-primary)] text-[var(--text-primary)] overflow-hidden transition-colors duration-200" style={{ '--sidebar-width': currentSidebarWidth, transition: isResizing ? 'none' : undefined }}>
-     <MuseumTour isOpen={isTourOpen} onClose={handleTourClose} />
+     <MuseumTour isOpen={isTourOpen} onClose={handleTourClose} isMobileOpen={isMobileOpen} setIsMobileOpen={setIsMobileOpen} />
      <Sidebar
        activeView={ activeView }
        setActiveView={ handleViewChange }

@@ -7,10 +7,11 @@ import clsx from 'clsx';
  * MuseumTour Component.
  * Uses the MuseumGuideModal as the Welcome Slide.
  */
-export const MuseumTour = ({ isOpen, onClose }) => {
+export const MuseumTour = ({ isOpen, onClose, isMobileOpen, setIsMobileOpen }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [position, setPosition] = useState({ top: 0, left: 0, width: 0, height: 0 });
   const [isVisible, setIsVisible] = useState(false);
+  const [isSidebarAnimating, setIsSidebarAnimating] = useState(false);
 
   // State to hold the steps fetched from JSON
   const [steps, setSteps] = useState([]);
@@ -51,7 +52,7 @@ export const MuseumTour = ({ isOpen, onClose }) => {
     // Safety check inside the hook
     if (steps.length === 0) return;
 
-    if (!isOpen || isWelcomeStep) {
+    if (!isOpen || isWelcomeStep || isSidebarAnimating) {
       setIsVisible(true);
       return;
     }
@@ -74,18 +75,24 @@ export const MuseumTour = ({ isOpen, onClose }) => {
       let tooltipLeft = 0;
       const placement = get(currentStepData, 'placement', 'bottom');
 
+      const isMobile = window.innerWidth < 768;
+      
       if (placement === 'right') {
         tooltipLeft = highlight.left + highlight.width + 20;
         tooltipTop = highlight.top + 20;
       } else if (placement === 'top') {
-        tooltipLeft = highlight.left;
-        tooltipTop = highlight.top - 200;
+        if (isMobile) {
+          tooltipLeft = (window.innerWidth - TOOLTIP_WIDTH) / 2;
+          tooltipTop = Math.max(20, highlight.top - 280);
+        } else {
+          tooltipLeft = highlight.left;
+          tooltipTop = highlight.top - 200;
+        }
       } else {
         tooltipLeft = highlight.left;
-        tooltipTop = highlight.top + highlight.height + 20;
+        tooltipTop = highlight.top + highlight.height + 180; 
       }
 
-      // Viewport boundary checks
       if (tooltipTop < 20) tooltipTop = 20;
       if (tooltipTop + 250 > window.innerHeight) tooltipTop = window.innerHeight - 270;
 
@@ -101,11 +108,10 @@ export const MuseumTour = ({ isOpen, onClose }) => {
       setIsVisible(true);
 
     } else {
-      // Fallback center position if target not found
       setPosition({ top: window.innerHeight / 2 - 100, left: window.innerWidth / 2 - 150, width: 300, height: 200 });
       setIsVisible(true);
     }
-  }, [isOpen, isWelcomeStep, currentStepData, steps.length]);
+  }, [isOpen, isWelcomeStep, currentStepData, steps.length, isSidebarAnimating]);
 
   useEffect(() => {
     if (steps.length === 0) return;
@@ -126,10 +132,38 @@ export const MuseumTour = ({ isOpen, onClose }) => {
     }
   }, [isOpen, currentStep, updatePosition, steps.length]);
 
+  useEffect(() => {
+    if (!isOpen || !setIsMobileOpen || steps.length === 0) return;
+
+    const isMobile = window.innerWidth < 768;
+    if (!isMobile) return;
+
+    const targetSelector = get(currentStepData, 'target');
+    
+    if (targetSelector && (targetSelector === 'aside' || targetSelector.startsWith('aside '))) {
+      setIsSidebarAnimating(true);
+      setIsMobileOpen(true);
+      setTimeout(() => {
+        setIsSidebarAnimating(false);
+        updatePosition();
+      }, 350); 
+    } else if (!isWelcomeStep && targetSelector) {
+      setIsSidebarAnimating(true);
+      setIsMobileOpen(false);
+      setTimeout(() => {
+        setIsSidebarAnimating(false);
+        updatePosition();
+      }, 350);
+    }
+  }, [isOpen, currentStep, currentStepData, isWelcomeStep, setIsMobileOpen, steps.length, updatePosition]);
+
   const handleNext = () => {
     if (currentStep < steps.length - 1) {
       setCurrentStep(prev => prev + 1);
     } else {
+      if (setIsMobileOpen && window.innerWidth < 768) {
+        setIsMobileOpen(false);
+      }
       onClose();
       setTimeout(() => setCurrentStep(0), 300);
     }
@@ -144,11 +178,17 @@ export const MuseumTour = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   if (isWelcomeStep) {
+    const handleWelcomeClose = () => {
+      if (setIsMobileOpen && window.innerWidth < 768) {
+        setIsMobileOpen(false);
+      }
+      onClose();
+    };
+
     return (
-      <MuseumGuideModal isOpen={ true } onClose={ onClose } onStartTour={ handleNext }/>
+      <MuseumGuideModal isOpen={ true } onClose={ handleWelcomeClose } onStartTour={ handleNext }/>
     );
   }
-
   return (
     <div className="fixed inset-0 z-[100] overflow-hidden pointer-events-auto">
       <div className="absolute transition-all duration-300 ease-out rounded-xl border-2 border-[var(--accent)] shadow-[0_0_0_9999px_rgba(0,0,0,0.75)]" style={{ top: position.top, left: position.left, width: position.width, height: position.height, opacity: isVisible ? 1 : 0 }}/>
@@ -170,7 +210,12 @@ export const MuseumTour = ({ isOpen, onClose }) => {
             { get(currentStepData, 'description', '') }
           </p>
           <div className="flex justify-between items-center pt-4 border-t border-[var(--border)]">
-            <button onClick={ onClose } className="text-xs text-[var(--text-secondary)] hover:text-red-500 transition-colors">
+            <button onClick={ () => {
+              if (setIsMobileOpen && window.innerWidth < 768) {
+                setIsMobileOpen(false);
+              }
+              onClose();
+            }} className="text-xs text-[var(--text-secondary)] hover:text-red-500 transition-colors">
               Skip
             </button>
             <div className="flex gap-2">
