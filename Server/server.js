@@ -35,7 +35,7 @@ app.use(helmet());
 
 // Cors
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:5173', 'https://marcusaurelius-client.vercel.app/'],
+  origin: ['http://localhost:3000', 'http://localhost:5173', 'https://marcusaurelius-client.vercel.app'],
   credentials: true
 }));
 
