@@ -4,10 +4,11 @@ import { useBackendHealth } from '../../hooks/useBackendHealth';
 import { AttachmentButton } from './AttachmentButton';
 import { VoiceInputButton } from './VoiceInputButton';
 
+
 /**
- * ChatPanel Component
- * Handles Text, Files, and embedded Audio (Base64).
- */
+* ChatPanel Component
+* Handles Text, Files, and embedded Audio (Base64).
+*/
 export const ChatPanel = () => {
   const {
     activeConversationId,
