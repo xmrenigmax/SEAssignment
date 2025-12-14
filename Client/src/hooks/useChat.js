@@ -52,7 +52,39 @@ export const useChat = () => {
       console.warn('Sync failed (Server Offline?)');
     }
   }, [apiCall, setConversations]);
+  
+   /**
+   * Imports a conversation history.
+   */
+  const importConversations = useCallback(async (fileData) => {
+    if (!Array.isArray(fileData)) {
+      alert("Invalid import format: Expected an array.");
+      return;
+    }
 
+    try {
+      // Send Data to Backend
+      const response = await fetch(`${API_BASE_URL}/conversations/import`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(fileData)
+      });
+
+      if (!response.ok) throw new Error("Failed to save backup to server.");
+
+      // Refresh State from Backend
+      const refreshRes = await fetch(`${API_BASE_URL}/conversations`);
+      const freshData = await refreshRes.json();
+
+      setConversations(freshData);
+      alert("Backup restored successfully!");
+
+    } catch (error) {
+      console.error("Import Failed:", error);
+      alert("Error restoring backup. Check console details.");
+    }
+  }, [setConversations]);
+  
   // Send Function (Handles New & Existing Chats)
   const addMessageToConversation = async (conversationId, message) => {
     setIsLoading(true);
@@ -69,7 +101,6 @@ export const useChat = () => {
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
       };
-
       // Show the chat immediately with Temp ID
       setConversations(prev => [optimisticConv, ...prev]);
       setActiveConversationId(tempConvId);
@@ -152,7 +183,7 @@ export const useChat = () => {
         body: body
       });
 
-      // Update with server response
+      // Update with real server response
       setConversations(prev => prev.map(conversation => {
         if (conversation.id === conversationId) {
           // Avoid crash
@@ -171,9 +202,9 @@ export const useChat = () => {
    * Deletes a specific conversation.
    */
   const deleteConversation = async (id) => {
-    setConversations(prev => prev.filter(c => c.id !== id));
+    setConversations(prev => prev.filter(conversation => conversation.id !== id));
     if (activeConversationId === id) setActiveConversationId(null);
-    try { await apiCall(`/conversations/${ id }`, { method: 'DELETE' }); } catch (error) { console.warn(error); }
+    try { await apiCall(`/conversations/${ id }`, { method: 'DELETE' }); } catch (error) { console.warn(error) }
   };
 
   /**
@@ -182,7 +213,7 @@ export const useChat = () => {
   const clearAllConversations = async () => {
     setConversations([]);
     setActiveConversationId(null);
-    try { await apiCall('/conversations', { method: 'DELETE' }); } catch (error) { console.warn("Failed to clear"); }
+    try { await apiCall('/conversations', { method: 'DELETE' }); } catch (error) { console.warn("Failed to clear on server"); }
   };
 
   /**
