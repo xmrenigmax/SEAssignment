@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { clamp } from 'lodash';
 
 /**
  * Manages the dynamic resizing of the sidebar with performance optimizations.
@@ -7,7 +8,6 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 export const useSidebarResizer = (defaultWidth = 288, minWidth = 240, maxWidth = 480) => {
   const [sidebarWidth, setSidebarWidth] = useState(defaultWidth);
   const [isResizing, setIsResizing] = useState(false);
-  const sidebarRef = useRef(null);
   const requestRef = useRef(null);
 
   const startResizing = useCallback(() => {
@@ -22,15 +22,13 @@ export const useSidebarResizer = (defaultWidth = 288, minWidth = 240, maxWidth =
   const resize = useCallback(
     (mouseEvent) => {
       if (isResizing) {
-
         // Throttle updates using requestAnimationFrame
         if (requestRef.current) cancelAnimationFrame(requestRef.current);
 
         requestRef.current = requestAnimationFrame(() => {
-          const newWidth = mouseEvent.clientX;
-          if (newWidth >= minWidth && newWidth <= maxWidth) {
-            setSidebarWidth(newWidth);
-          }
+          // Lodash clamp replaces Math.max(min, Math.min(val, max))
+          const newWidth = clamp(mouseEvent.clientX, minWidth, maxWidth);
+          setSidebarWidth(newWidth);
         });
       }
     },
@@ -39,8 +37,6 @@ export const useSidebarResizer = (defaultWidth = 288, minWidth = 240, maxWidth =
 
   useEffect(() => {
     if (isResizing) {
-
-      // Add listeners to window to handle dragging even if mouse leaves sidebar area
       window.addEventListener('mousemove', resize);
       window.addEventListener('mouseup', stopResizing);
 
@@ -61,5 +57,5 @@ export const useSidebarResizer = (defaultWidth = 288, minWidth = 240, maxWidth =
     };
   }, [isResizing, resize, stopResizing]);
 
-  return { sidebarWidth, startResizing, isResizing, sidebarRef };
+  return { sidebarWidth, startResizing, isResizing };
 };

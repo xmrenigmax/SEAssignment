@@ -1,5 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useChatContext } from '../../../context/ChatContext';
+import clsx from 'clsx';
+import { get } from 'lodash';
 
 /**
  * Data Management Tab Component.
@@ -36,7 +38,7 @@ export const DataManagement = () => {
 
     const link = document.createElement('a');
     link.href = url;
-    link.download = `marcus-aurelius-history-${new Date().toISOString().split('T')[0]}.json`;
+    link.download = `marcus-aurelius-history-${ new Date().toISOString().split('T')[0] }.json`;
     link.click();
 
     // Cleanup
@@ -58,7 +60,9 @@ export const DataManagement = () => {
    * @returns {void}
    */
   const handleFileChange = async (event) => {
-    const file = event.target.files?.[0];
+
+    // Safe access even if event structure is unexpected
+    const file = get(event, 'target.files.0');
     if (!file) return;
 
     const reader = new FileReader();
@@ -72,18 +76,16 @@ export const DataManagement = () => {
         // Reset success message after 3s
         setTimeout(() => setImportStatus(''), 3000);
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.error("Import failed:", error);
         setImportStatus('error');
         setTimeout(() => setImportStatus(''), 3000);
+      } finally {
+        event.target.value = '';
       }
     };
 
     reader.readAsText(file);
-    // Reset input so same file can be selected again if needed
-    event.target.value = '';
   };
-
 
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
@@ -100,8 +102,7 @@ export const DataManagement = () => {
           <button
             onClick={ handleExport }
             disabled={ conversations.length === 0 }
-            className="px-4 py-2 bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors disabled:opacity-50 text-[var(--text-primary)]"
-          >
+            className={ clsx( "px-4 py-2 border rounded-lg transition-colors", "bg-[var(--bg-secondary)] border-[var(--border)] text-[var(--text-primary)]", "hover:border-[var(--accent)] hover:text-[var(--accent)]", "disabled:opacity-50 disabled:cursor-not-allowed" )}>
             Download
           </button>
         </div>
@@ -109,22 +110,16 @@ export const DataManagement = () => {
           <div>
             <div className="flex items-center gap-2">
               <h3 className="font-semibold text-lg text-[var(--text-primary)]">Import History</h3>
-              { importStatus === 'success' && <span className="text-xs text-green-500 font-medium">Success!</span> }
-              { importStatus === 'error' && <span className="text-xs text-red-500 font-medium">Invalid JSON</span> }
+              { importStatus && (
+                <span className={ clsx("text-xs font-medium", importStatus === 'success' ? "text-green-500" : "text-red-500") }>
+                  { importStatus === 'success' ? "Success!" : "Invalid JSON" }
+                </span>
+              )}
             </div>
             <p className="text-sm text-[var(--text-secondary)] mt-1">Restore conversations from backup.</p>
           </div>
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleFileChange}
-            accept=".json"
-            className="hidden"
-          />
-          <button
-            onClick={triggerImportClick}
-            className="px-4 py-2 bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors text-[var(--text-primary)]"
-          >
+          <input type="file" ref={ fileInputRef } onChange={ handleFileChange } accept=".json" className="hidden"/>
+          <button onClick={ triggerImportClick } className={ clsx( "px-4 py-2 border rounded-lg transition-colors", "bg-[var(--bg-secondary)] border-[var(--border)] text-[var(--text-primary)]", "hover:border-[var(--accent)] hover:text-[var(--accent)]" )}>
             Import JSON
           </button>
         </div>
@@ -133,10 +128,7 @@ export const DataManagement = () => {
             <h3 className="font-semibold text-lg text-red-600 dark:text-red-400">Clear Data </h3>
             <p className="text-sm text-red-600/70 dark:text-red-400/70 mt-1">Permanently delete all chats from server & local.</p>
           </div>
-          <button
-            onClick={ clearAllConversations }
-            className="px-4 py-2 bg-white dark:bg-red-950/30 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-50 transition-colors"
-          >
+          <button onClick={ clearAllConversations } className={ clsx("px-4 py-2 border rounded-lg transition-colors", "bg-white dark:bg-red-950/30 border-red-200 dark:border-red-800", "text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20") }>
             Delete All
           </button>
         </div>

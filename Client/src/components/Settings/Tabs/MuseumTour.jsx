@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { MuseumGuideModal } from '../../History/MuseumGuideModal';
+import { get } from 'lodash';
+import clsx from 'clsx';
 
 /**
  * MuseumTour Component.
@@ -18,9 +20,11 @@ export const MuseumTour = ({ isOpen, onClose }) => {
 
   // Fetch steps on mount
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchSteps = async () => {
       try {
-        const response = await fetch('/data/tour-steps.json');
+        const response = await fetch('/data/tour-steps.json', { signal: controller.signal });
         if (response.ok) {
           const data = await response.json();
           setSteps(data);
@@ -28,20 +32,22 @@ export const MuseumTour = ({ isOpen, onClose }) => {
           console.error("Failed to load TourSteps.json");
         }
       } catch (error) {
-        console.error("Error fetching tour steps:", error);
+        if (error.name !== 'AbortError') {
+          console.error("Error fetching tour steps:", error);
+        }
       }
     };
     fetchSteps();
+    return () => controller.abort();
   }, []);
 
-  // Safe access to data
-  const currentStepData = steps[currentStep] || {};
-  const isWelcomeStep = currentStepData.isWelcome;
+  // Safe access to data using Lodash
+  const currentStepData = get(steps, `[${currentStep}]`, {});
+  const isWelcomeStep = get(currentStepData, 'isWelcome', false);
   const isLastStep = currentStep === steps.length - 1;
 
   // Callback
   const updatePosition = useCallback(() => {
-
     // Safety check inside the hook
     if (steps.length === 0) return;
 
@@ -50,7 +56,8 @@ export const MuseumTour = ({ isOpen, onClose }) => {
       return;
     }
 
-    const element = document.querySelector(currentStepData.target);
+    const targetSelector = get(currentStepData, 'target');
+    const element = targetSelector ? document.querySelector(targetSelector) : null;
 
     if (element) {
       const rect = element.getBoundingClientRect();
@@ -65,7 +72,7 @@ export const MuseumTour = ({ isOpen, onClose }) => {
 
       let tooltipTop = 0;
       let tooltipLeft = 0;
-      const placement = currentStepData.placement || 'bottom';
+      const placement = get(currentStepData, 'placement', 'bottom');
 
       if (placement === 'right') {
         tooltipLeft = highlight.left + highlight.width + 20;
@@ -78,6 +85,7 @@ export const MuseumTour = ({ isOpen, onClose }) => {
         tooltipTop = highlight.top + highlight.height + 20;
       }
 
+      // Viewport boundary checks
       if (tooltipTop < 20) tooltipTop = 20;
       if (tooltipTop + 250 > window.innerHeight) tooltipTop = window.innerHeight - 270;
 
@@ -93,6 +101,7 @@ export const MuseumTour = ({ isOpen, onClose }) => {
       setIsVisible(true);
 
     } else {
+      // Fallback center position if target not found
       setPosition({ top: window.innerHeight / 2 - 100, left: window.innerWidth / 2 - 150, width: 300, height: 200 });
       setIsVisible(true);
     }
@@ -136,11 +145,7 @@ export const MuseumTour = ({ isOpen, onClose }) => {
 
   if (isWelcomeStep) {
     return (
-      <MuseumGuideModal
-        isOpen={ true }
-        onClose={ onClose }
-        onStartTour={ handleNext }
-      />
+      <MuseumGuideModal isOpen={ true } onClose={ onClose } onStartTour={ handleNext }/>
     );
   }
 
@@ -155,14 +160,14 @@ export const MuseumTour = ({ isOpen, onClose }) => {
         <div className="bg-[var(--bg-secondary)] border border-[var(--border)] w-full p-6 rounded-2xl shadow-2xl relative">
           <div className="flex justify-between items-center mb-3">
             <h3 className="font-serif font-bold text-lg text-[var(--text-primary)]">
-              { currentStepData.title }
+              { get(currentStepData, 'title', 'Tour') }
             </h3>
             <span className="text-xs font-mono text-[var(--text-secondary)] bg-[var(--bg-primary)] px-2 py-1 rounded border border-[var(--border)]">
               { currentStep + 1 } / { steps.length }
             </span>
           </div>
           <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-6">
-            { currentStepData.description }
+            { get(currentStepData, 'description', '') }
           </p>
           <div className="flex justify-between items-center pt-4 border-t border-[var(--border)]">
             <button onClick={ onClose } className="text-xs text-[var(--text-secondary)] hover:text-red-500 transition-colors">
@@ -172,7 +177,7 @@ export const MuseumTour = ({ isOpen, onClose }) => {
               <button onClick={ handlePrev } className="px-3 py-1.5 text-xs rounded-lg border border-[var(--border)] hover:bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors">
                 Back
               </button>
-              <button onClick={ handleNext } className="px-4 py-1.5 text-xs font-medium rounded-lg bg-[var(--accent)] text-white hover:opacity-90 shadow-sm transition-transform active:scale-95">
+              <button onClick={ handleNext } className={ clsx("px-4 py-1.5 text-xs font-medium rounded-lg text-white shadow-sm transition-transform active:scale-95", "bg-[var(--accent)] hover:opacity-90") }>
                 { isLastStep ? 'Finish' : 'Next' }
               </button>
             </div>

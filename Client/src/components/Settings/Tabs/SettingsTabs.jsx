@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import clsx from 'clsx';
 
 /**
  * Navigation Sidebar for Settings Modal Component.
@@ -24,8 +25,7 @@ export const SettingsTabs = ({ activeTab, setActiveTab, onStartTour }) => {
 
   // useEffect hook to fetch tab data from the public JSON file when the component mounts.
   useEffect(() => {
-
-    // The file path, corrected to ensure it resolves from the public root.
+    const controller = new AbortController();
     const settingsPath = '/data/settings-tabs.json';
 
     /**
@@ -37,27 +37,27 @@ export const SettingsTabs = ({ activeTab, setActiveTab, onStartTour }) => {
       try {
         setStatus('loading');
 
-        const response = await fetch(settingsPath);
+        const response = await fetch(settingsPath, { signal: controller.signal });
 
-        // Check if the file was found and is not the default HTML fallback.
         if (!response.ok) {
-          // Log specific HTTP error for debugging the path resolution.
           console.error(`Fetch failed for path: ${ settingsPath }. HTTP Status: ${ response.status }`);
           throw new Error(`Failed to load settings data. HTTP Status: ${ response.status }`);
         };
 
-        // Try to parse the response as JSON.
         const data = await response.json();
         setTabs(data);
         setStatus('success');
       } catch (error) {
-        // Log generic error (e.g., network error, JSON parse error)
-        console.error("Critical error fetching settings tabs. Please verify the path in public/data/settings-tabs.json is correct.", error);
-        setStatus('error');
+        if (error.name !== 'AbortError') {
+          console.error("Critical error fetching settings tabs.", error);
+          setStatus('error');
+        }
       };
     };
 
     fetchTabs();
+
+    return () => controller.abort();
   }, []);
 
   return (
@@ -66,13 +66,14 @@ export const SettingsTabs = ({ activeTab, setActiveTab, onStartTour }) => {
         <button
           key={ tab.id }
           onClick={ () => setActiveTab(tab.id) }
-          className={ `w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 font-medium ${
+          className={ clsx(
+            "w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 font-medium",
             activeTab === tab.id
               ? 'bg-[var(--accent)]/10 text-[var(--accent)] shadow-sm'
               : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)]'
-          }`}
+          )}
         >
-          <svg className={ `w-5 h-5 ${ activeTab === tab.id ? 'animate-pulse' : '' }` } fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className={ clsx("w-5 h-5", activeTab === tab.id && "animate-pulse") } fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d={ tab.icon } />
           </svg>
           <span>{ tab.label }</span>
@@ -82,8 +83,8 @@ export const SettingsTabs = ({ activeTab, setActiveTab, onStartTour }) => {
       <div className="pt-4 mt-2 border-t border-[var(--border)]">
         <button onClick={ onStartTour } className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)] transition-all duration-200 font-medium">
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" > </path>
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
           <span>Take a Tour</span>
         </button>

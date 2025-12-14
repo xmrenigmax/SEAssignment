@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
 import { useChat } from '../hooks/useChat';
 
 /**
@@ -19,9 +19,12 @@ export const ChatProvider = ({ children }) => {
   // Initialize the hook ONCE here
   const chatState = useChat();
 
+  // Memoize state to prevent unnecessary re-renders in consumers
+  const value = useMemo(() => chatState, [chatState]);
+
   return (
-    <ChatContext.Provider value={chatState}>
-      {children}
+    <ChatContext.Provider value={ value }>
+      { children }
     </ChatContext.Provider>
   );
 };
