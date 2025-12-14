@@ -33,14 +33,15 @@ const app = express();
 // Secure HTTP Headers
 app.use(helmet());
 
-// Rate Limiting
-const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100, message: { error: "Too many requests, please contemplate in silence for a while." }});
-app.use('/api/', limiter);
-
+// --- MOVED CORS TO TOP ---
 app.use(cors({
   origin: ['http://localhost:3000', 'http://localhost:5173'],
   credentials: true
 }));
+
+// Rate Limiting - INCREASED LIMIT to prevent 429 Errors
+const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 3000, message: { error: "Too many requests, please contemplate in silence for a while." }});
+app.use('/api/', limiter);
 
 app.use(express.json({ limit: '10mb' }));
 
