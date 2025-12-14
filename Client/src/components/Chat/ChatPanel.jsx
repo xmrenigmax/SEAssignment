@@ -3,6 +3,8 @@ import { useChatContext } from '../../context/ChatContext';
 import { useBackendHealth } from '../../hooks/useBackendHealth';
 import { AttachmentButton } from './AttachmentButton';
 import { VoiceInputButton } from './VoiceInputButton';
+import clsx from 'clsx';
+import { get } from 'lodash';
 
 /**
  * ChatPanel Component
@@ -13,7 +15,6 @@ export const ChatPanel = () => {
     activeConversationId,
     getActiveConversation,
     addMessageToConversation,
-    createNewConversation,
     isLoading
   } = useChatContext();
 
@@ -32,8 +33,9 @@ export const ChatPanel = () => {
   const textareaRef = useRef(null);
   const messagesEndRef = useRef(null);
 
+  // Safe access using Lodash to prevent crashes if context is initializing
   const activeConversation = getActiveConversation();
-  const messages = activeConversation?.messages || [];
+  const messages = get(activeConversation, 'messages', []);
 
   /**
    * Effect: Auto-scroll to bottom
@@ -68,11 +70,7 @@ export const ChatPanel = () => {
     // Guard clause
     if (!messageText && !attachedFile && !audioData) return;
 
-    let conversationId = activeConversationId;
-    if (!conversationId) {
-      conversationId = await createNewConversation();
-    }
-
+    // Capture UI state BEFORE clearing
     const userMessage = {
       text: messageText,
       isUser: true,
@@ -87,11 +85,13 @@ export const ChatPanel = () => {
     setTranscribedText('');
     setAudioData(null);
     setIsRecording(false);
+
+    // Reset textarea height
     if (textareaRef.current) textareaRef.current.style.height = 'auto';
 
     // Send to Context/Backend
     try {
-      await addMessageToConversation(conversationId, userMessage);
+      await addMessageToConversation(activeConversationId, userMessage);
     } catch (error) {
       console.error("Failed to send message:", error);
     }
@@ -121,15 +121,17 @@ export const ChatPanel = () => {
     }
   };
 
+  const isSendDisabled = (!input.trim() && !transcribedText && !attachedFile && !audioData) || isLoading;
+
   return (
     <div className="flex flex-col h-full w-full bg-[var(--bg-primary)] relative">
       <div className="flex-none h-16 border-b border-[var(--border)] bg-[var(--bg-secondary)]/80 backdrop-blur-md flex items-center px-6 justify-between z-10">
         <div className="flex flex-col">
           <h2 className="font-semibold text-[var(--text-primary)]">
-            { activeConversation?.title || 'New Conversation' }
+            { get(activeConversation, 'title', 'New Conversation') }
           </h2>
           <span className="text-xs text-[var(--text-secondary)] flex items-center gap-1.5">
-            <span className={ `w-1.5 h-1.5 rounded-full ${ isConnected ? 'bg-green-500' : 'bg-red-500' }` }></span>
+            <span className={ clsx('w-1.5 h-1.5 rounded-full', isConnected ? 'bg-green-500' : 'bg-red-500') }></span>
             { isLoading ? 'Thinking...' : 'Marcus Aurelius' }
           </span>
         </div>
@@ -147,18 +149,19 @@ export const ChatPanel = () => {
           </div>
         ) : (
           messages.map((msg, idx) => (
-            <div key={ msg.id || idx } className={ `flex ${ msg.isUser ? 'justify-end' : 'justify-start' }` }>
+            <div key={ msg.id || idx } className={ clsx('flex', msg.isUser ? 'justify-end' : 'justify-start') }>
               { !msg.isUser && (
                 <div className="w-8 h-8 mr-3 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center border border-[var(--border)] text-xs font-serif">M</div>
               )}
-              <div className={ `max-w-[85%] md:max-w-[75%] px-5 py-3.5 rounded-2xl text-sm md:text-base leading-relaxed shadow-sm ${
+              <div className={ clsx(
+                'max-w-[85%] md:max-w-[75%] px-5 py-3.5 rounded-2xl text-sm md:text-base leading-relaxed shadow-sm',
                 msg.isUser
                   ? 'bg-[var(--accent)] text-white rounded-br-sm'
                   : 'bg-[var(--bg-secondary)] text-[var(--text-primary)] border border-[var(--border)] rounded-bl-sm'
-              }`}>
+              )}>
                 { msg.attachment && (
                   <div className="mb-3 p-2 bg-black/10 rounded-lg flex gap-2 text-xs">
-                    <span className="truncate">{ msg.attachment.name }</span>
+                    <span className="truncate">{ get(msg, 'attachment.name', 'Attachment') }</span>
                   </div>
                 )}
                 { msg.audio && (
@@ -209,7 +212,7 @@ export const ChatPanel = () => {
             onRecordingStop={ handleRecordingComplete }
             disabled={ isLoading }
           />
-          <button onClick={ handleSend } disabled={( !input.trim() && !transcribedText && !attachedFile && !audioData) || isLoading } className="p-2 rounded-xl bg-[var(--accent)] text-white hover:opacity-90 shadow-sm disabled:opacity-50">
+          <button onClick={ handleSend } disabled={ isSendDisabled } className="p-2 rounded-xl bg-[var(--accent)] text-white hover:opacity-90 shadow-sm disabled:opacity-50">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M5 12h14M12 5l7 7-7 7" />
             </svg>
