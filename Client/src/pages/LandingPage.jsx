@@ -4,7 +4,8 @@ import { Sidebar } from '../components/UI/Sidebar';
 import { ChatPanel } from '../components/Chat/ChatPanel';
 import { SettingsPanel } from '../components/Settings/SettingsPanel';
 import { MuseumTour } from '../components/Settings/Tabs/MuseumTour';
-import { useSidebarResizer } from '../hooks/UseSidebarResizer';
+import { useSidebarResizer } from '../hooks/useSidebarResizer';
+import clsx from 'clsx';
 
 
 /**
@@ -45,7 +46,7 @@ const Landing = () => {
 
 
  // Calculates dynamic width for the CSS variable
- const currentSidebarWidth = isCollapsed ? '5rem' : `${sidebarWidth}px`;
+ const currentSidebarWidth = isCollapsed ? '5rem' : `${ sidebarWidth }px`;
 
 
  return (
@@ -63,13 +64,15 @@ const Landing = () => {
        isResizing={ isResizing }
        sidebarRef={ sidebarRef }
      />
-     <main
-       className={`flex-1 flex flex-col min-w-0 h-screen md:ml-[var(--sidebar-width)] transition-all duration-300 ease-in-out` } style={{ transition: isResizing ? 'none' : 'margin-left 300ms cubic-bezier(0.4, 0, 0.2, 1)' }}>
+         
+       
+
+     <main className={ clsx( "flex-1 flex flex-col min-w-0 h-screen transition-all duration-300 ease-in-out", "md:ml-[var(--sidebar-width)]") } style={{ transition: isResizing ? 'none' : 'margin-left 300ms cubic-bezier(0.4, 0, 0.2, 1)' }}>
        <div className="md:hidden p-4 border-b border-[var(--border)] bg-[var(--bg-primary)] flex items-center">
          <button onClick={ () => setIsMobileOpen(true) } className="p-2 mr-3 bg-[var(--bg-secondary)] rounded-lg border border-[var(--border)]">
-           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M4 6h16M4 12h16M4 18h16" />
-           </svg>
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
          </button>
          <span className="font-serif font-bold text-lg">Marcus Aurelius</span>
        </div>
@@ -77,9 +80,9 @@ const Landing = () => {
          <ChatPanel />
        </div>
        { isSettingsOpen && ( <SettingsPanel onClose={ () => { setIsSettingsOpen(false); setActiveView('chat'); }} onStartTour={ () => setIsTourOpen(true) }/> )}
-     </main>
-   </div>
- );
+      </main>
+    </div>
+  );
 };
 
 export default Landing;

@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLocalStorage } from '../../../hooks/useLocalStorage';
 import { useTheme } from '../../../context/ThemeContext';
+import clsx from 'clsx';
 
 /**
  * Enhanced Accessibility Controls Component.
@@ -63,7 +64,7 @@ export const AccessibilitySettings = () => {
 
   // Apply Reduced Motion
   useEffect(() => {
-    /** @type {HTMLElement} */
+
     const root = document.documentElement;
 
     if (reducedMotion) {
@@ -90,8 +91,8 @@ export const AccessibilitySettings = () => {
       </div>
       <div className="p-6 bg-[var(--bg-primary)] rounded-xl border border-[var(--border)]">
         <div className="flex justify-between items-center mb-4">
-          <label htmlFor="font-slider" className="font-semibold">Text Size</label>
-          <span className="text-sm font-mono bg-[var(--bg-secondary)] px-2 py-1 rounded border border-[var(--border)]">
+          <label htmlFor="font-slider" className="font-semibold text-[var(--text-primary)]">Text Size</label>
+          <span className="text-sm font-mono bg-[var(--bg-secondary)] text-[var(--text-primary)] px-2 py-1 rounded border border-[var(--border)]">
             { fontSize }px
           </span>
         </div>
@@ -104,7 +105,7 @@ export const AccessibilitySettings = () => {
             max="24"
             step="1"
             value={ fontSize }
-            onChange={ (event) => setFontSize(Number(event.target.value) )}
+            onChange={ (event) => setFontSize(Number(event.target.value)) }
             className="flex-1 h-2 bg-[var(--border)] rounded-lg appearance-none cursor-pointer accent-[var(--accent)]"
             aria-label="Adjust font size"
           />

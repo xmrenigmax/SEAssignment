@@ -1,3 +1,5 @@
+import React from 'react';
+import clsx from 'clsx';
 
 /**
  * Legal Information Tab Component.
@@ -14,17 +16,17 @@ export const LegalSettings = () => {
         <p className="text-[var(--text-secondary)]">Attributions and licenses.</p>
       </div>
 
-      <div className="p-6 bg-[var(--bg-primary)] rounded-xl border border-[var(--border)] space-y-4">
+      <div className={ clsx( "p-6 rounded-xl border space-y-4", "bg-[var(--bg-primary)] border-[var(--border)]" )}>
         <div className="flex justify-between items-center pb-4 border-b border-[var(--border)]">
-          <span className="font-semibold">Software License</span>
-          <span className="text-sm bg-[var(--bg-secondary)] px-2 py-1 rounded border border-[var(--border)]">MIT</span>
+          <span className="font-semibold text-[var(--text-primary)]">Software License</span>
+          <span className="text-sm bg-[var(--bg-secondary)] px-2 py-1 rounded border border-[var(--border)] text-[var(--text-primary)]">
+            MIT
+          </span>
         </div>
-
         <div className="flex justify-between items-center pb-4 border-b border-[var(--border)]">
-          <span className="font-semibold">AI Model</span>
-          <span className="text-sm text-[var(--accent)]">Gemini-Gemma</span>
+          <span className="font-semibold text-[var(--text-primary)]">AI Model</span>
+          <span className="text-sm text-[var(--accent)] font-medium">Gemini-Gemma</span>
         </div>
-
         <div className="text-sm text-[var(--text-secondary)] leading-relaxed pt-2">
           This application connects to the Hugging Face Inference API.
           Conversations are processed by third-party AI models.

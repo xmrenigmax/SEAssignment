@@ -4,6 +4,7 @@ import { AccessibilitySettings } from './Tabs/AccessibilitySettings';
 import { DataManagement } from './Tabs/DataManagement';
 import { LegalSettings } from './Tabs/LegalSettings';
 import { AboutSettings } from './Tabs/AboutSettings';
+import clsx from 'clsx';
 
 /**
  * Main Settings Modal Component.
@@ -41,13 +42,16 @@ export const SettingsPanel = ({ onClose, onStartTour }) => {
       aria-modal="true"
       aria-label="Settings"
     >
-      <div className="bg-[var(--bg-secondary)] w-full max-w-4xl max-h-[85vh] min-h-[600px] rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row border border-[var(--border)] animate-in zoom-in-95 duration-200" onClick={ ( event ) => event.stopPropagation() }>
+      <div
+        className={ clsx("w-full max-w-4xl max-h-[85vh] min-h-[600px] rounded-2xl shadow-2xl overflow-hidden", "flex flex-col md:flex-row border border-[var(--border)]", "bg-[var(--bg-secondary)] animate-in zoom-in-95 duration-200") }
+        onClick={ (event) => event.stopPropagation() }
+      >
         <div className="md:hidden p-4 border-b border-[var(--border)] flex justify-between items-center">
-          <h2 className="font-bold text-lg">Settings</h2>
-          <button onClick={ onClose } className="p-2 hover:bg-[var(--bg-primary)] rounded-full">✕</button>
+          <h2 className="font-bold text-lg text-[var(--text-primary)]">Settings</h2>
+          <button onClick={ onClose } className="p-2 hover:bg-[var(--bg-primary)] rounded-full text-[var(--text-primary)]">✕</button>
         </div>
         <div className="w-full md:w-64 bg-[var(--bg-primary)] p-4 border-r border-[var(--border)] flex flex-col">
-          <h2 className="hidden md:block text-2xl font-bold mb-6 px-2">Settings</h2>
+          <h2 className="hidden md:block text-2xl font-bold mb-6 px-2 text-[var(--text-primary)]">Settings</h2>
           <SettingsTabs activeTab={ activeTab } setActiveTab={ setActiveTab } onStartTour={ handleTourStart }/>
           <div className="mt-auto hidden md:block pt-6 border-t border-[var(--border)]">
             <button
@@ -66,7 +70,7 @@ export const SettingsPanel = ({ onClose, onStartTour }) => {
         </div>
         <button
           onClick={ onClose }
-          className="hidden md:flex absolute top-4 right-4 w-8 h-8 items-center justify-center rounded-full bg-[var(--bg-primary)] text-[var(--text-secondary)] hover:text-red-500 hover:bg-red-50 transition-all shadow-sm border border-[var(--border)]"
+          className={ clsx("hidden md:flex absolute top-4 right-4 w-8 h-8 items-center justify-center rounded-full transition-all shadow-sm", "bg-[var(--bg-primary)] text-[var(--text-secondary)] border border-[var(--border)]", "hover:text-red-500 hover:bg-red-50") }
           aria-label="Close settings"
         >
           ✕
