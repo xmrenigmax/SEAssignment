@@ -16,6 +16,7 @@ export const ChatPanel = () => {
     getActiveConversation,
     addMessageToConversation,
     createNewConversation,
+    loadConversation,
     focusTrigger,
     isLoading
   } = useChatContext();
@@ -35,13 +36,25 @@ export const ChatPanel = () => {
   const textareaRef = useRef(null);
   const messagesEndRef = useRef(null);
 
+  // Flag to prevent fetching history while we are locally creating a chat
+  const isCreatingConversation = useRef(false);
   // Safe access using Lodash to prevent crashes if context is initializing
   const activeConversation = getActiveConversation();
   const messages = get(activeConversation, 'messages', []);
 
+  // When the ID changes, fetch history UNLESS we are in the middle of creating it
+  useEffect(() => {
+    if (activeConversationId) {
+
+      if (isCreatingConversation.current) {
+        return;
+      }
+      loadConversation(activeConversationId);
+    }
+  }, [activeConversationId, loadConversation]);
+
   /**
    * Effect: Auto-scroll to bottom
-   * Triggers when messages change, recording status changes, or loading state changes.
    */
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -56,7 +69,6 @@ export const ChatPanel = () => {
       textareaRef.current.focus();
     }
   }, [activeConversationId, focusTrigger]);
-
   /**
    * Handles Recording Completion.
    * Receives { audioData, text }
@@ -64,10 +76,7 @@ export const ChatPanel = () => {
   const handleRecordingComplete = (result) => {
     setIsRecording(false);
     if (result) {
-      // Save the Audio Blob (Base64) for the player
       if (result.audioData) setAudioData(result.audioData);
-
-      // Save the Text for the LLM
       if (result.text && result.text.trim().length > 0) {
         setTranscribedText(result.text);
       } else if (!transcribedText) {
@@ -78,42 +87,45 @@ export const ChatPanel = () => {
 
   const handleSend = async () => {
     const messageText = transcribedText || input.trim();
-
-    // Guard clause
     if (!messageText && !attachedFile && !audioData) return;
+    let conversationId = activeConversationId;
 
-    // Capture UI state BEFORE clearing
-    const userMessage = {
-      text: messageText,
-      isUser: true,
-      timestamp: new Date().toISOString(),
-      attachment: attachedFile,
-      audio: audioData
-    };
-
-    // CLEAR UI
-    setInput('');
-    setAttachedFile(null);
-    setTranscribedText('');
-    setAudioData(null);
-    setIsRecording(false);
-
-    // Reset textarea height
-    if (textareaRef.current) textareaRef.current.style.height = 'auto';
-
-    // Send to Context/Backend
     try {
-      await addMessageToConversation(activeConversationId, userMessage);
-    } catch (error) {
-      console.error("Failed to send message:", error);
-    }
+      if (!conversationId) {
+        isCreatingConversation.current = true;
+        conversationId = await createNewConversation();
+      }
+      
+      // Capture UI state BEFORE clearing
+      const userMessage = {
+        text: messageText,
+        isUser: true,
+        timestamp: new Date().toISOString(),
+        attachment: attachedFile,
+        audio: audioData
+      };
+
+      // CLEAR UI
+      setInput('');
+      setAttachedFile(null);
+      setTranscribedText('');
+      setAudioData(null);
+      setIsRecording(false);
+
+      // Reset textarea height
+      if (textareaRef.current) textareaRef.current.style.height = 'auto';
+
+      // Send to Context/Backend
+      try {
+        await addMessageToConversation(activeConversationId, userMessage);
+      } catch (error) {
+        console.error("Failed to send message:", error);
+      } finally {
+        // reset the flag once the entire process is complete.
+        isCreatingConversation.current = false;
+      }
   };
 
-  /**
-   * Handles key press events in the textarea.
-   * Submits on Enter (without Shift).
-   * * @param {React.KeyboardEvent} event - The keyboard event.
-   */
   const handleKeyDown = (event) => {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
@@ -121,10 +133,6 @@ export const ChatPanel = () => {
     }
   };
 
-  /**
-   * Manages textarea auto-resize based on content.
-   * * @param {React.ChangeEvent<HTMLTextAreaElement>} event - The change event.
-   */
   const handleInputChange = (event) => {
     setInput(event.target.value);
     if (textareaRef.current) {
