@@ -144,57 +144,60 @@ export const ChatPanel = () => {
           </span>
         </div>
       </div>
-      <div className="flex-1 relative overflow-hidden">
-        <div className="absolute inset-0 bg-contain bg-center bg-no-repeat opacity-15"  style={{ backgroundImage: `url('${BackgroundImage}')` }} />
-        { messages.length === 0 ? (
-          <div className="h-full flex flex-col items-center justify-center text-center opacity-60">
-            <div className="w-20 h-20 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center mb-6 shadow-sm border border-[var(--border)] overflow-hidden">
-              <img src="/icons/marcus-aurelius.png" alt="Marcus Aurelius Bust" className="w-full h-full object-cover rounded-full"/>
+      <div className="flex-1 relative">
+        <div className="absolute inset-0 bg-contain bg-center bg-no-repeat opacity-30 z-0 pointer-events-none" style={{ backgroundImage: `url('${BackgroundImage}')` }} />
+        <div className="absolute inset-0 z-10 overflow-y-auto p-4 md:p-8 space-y-6 scroll-smooth">
+          { messages.length === 0 ? (
+            <div className="h-full flex flex-col items-center justify-center text-center opacity-60">
+              <div className="w-20 h-20 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center mb-6 shadow-sm border border-[var(--border)] overflow-hidden">
+                <img src="/icons/marcus-aurelius.png" alt="Marcus Aurelius Bust" className="w-full h-full object-cover rounded-full"/>
+              </div>
+              <h1 className="text-2xl font-serif font-bold text-[var(--text-primary)] mb-2">Marcus Aurelius</h1>
+              <p className="text-sm text-[var(--text-secondary)] max-w-sm leading-relaxed">
+                Emperor of Rome (161–180 AD) and Stoic philosopher. His <em>Meditations</em> offer timeless wisdom on duty, resilience, and the nature of the human mind.
+              </p>
             </div>
-            <h1 className="text-2xl font-serif font-bold text-[var(--text-primary)] mb-2">Marcus Aurelius</h1>
-            <p className="text-sm text-[var(--text-secondary)] max-w-sm leading-relaxed">
-              Emperor of Rome (161–180 AD) and Stoic philosopher. His <em>Meditations</em> offer timeless wisdom on duty, resilience, and the nature of the human mind.
-            </p>
-          </div>
-        ) : (
-          messages.map((msg, idx) => (
-            <div key={ msg.id || idx } className={ `flex ${ msg.isUser ? 'justify-end' : 'justify-start' }` }>
-              { !msg.isUser && (
-                <div className="w-10 h-10 mr-3 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center border mb-6  shadow-sm">
-                  <img src="/icons/marcus-aurelius.png" alt="Marcus Aurelius Bust" className="w-full h-full object-cover rounded-full"/>
+          ) : (
+            messages.map((msg, idx) => (
+              <div key={ msg.id || idx } className={ `flex ${ msg.isUser ? 'justify-end' : 'justify-start' }` }>
+                { !msg.isUser && (
+                  <div className="w-10 h-10 mr-3 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center border mb-6  shadow-sm">
+                    <img src="/icons/marcus-aurelius.png" alt="Marcus Aurelius Bust" className="w-full h-full object-cover rounded-full"/>
+                  </div>
+                )}
+                <div className={ `max-w-[85%] md:max-w-[75%] px-5 py-3.5 rounded-2xl text-sm md:text-base leading-relaxed shadow-sm ${
+                  msg.isUser
+                    ? 'bg-[var(--accent)] text-white rounded-br-sm'
+                    : 'bg-[var(--bg-secondary)] text-[var(--text-primary)] border border-[var(--border)] rounded-bl-sm'
+                }`}>
+                  { msg.attachment && (
+                    <div className="mb-3 p-2 bg-black/10 rounded-lg flex gap-2 text-xs">
+                      <span className="truncate">{ msg.attachment.name }</span>
+                    </div>
+                  )}
+                  { msg.audio && (
+                    <div className="mb-2">
+                      <audio controls src={ msg.audio } className="h-8 w-full max-w-[200px]" />
+                    </div>
+                  )}
+                  <div className="whitespace-pre-wrap">{ msg.text }</div>
                 </div>
-              )}
-              <div className={ `max-w-[85%] md:max-w-[75%] px-5 py-3.5 rounded-2xl text-sm md:text-base leading-relaxed shadow-sm ${
-                msg.isUser
-                  ? 'bg-[var(--accent)] text-white rounded-br-sm'
-                  : 'bg-[var(--bg-secondary)] text-[var(--text-primary)] border border-[var(--border)] rounded-bl-sm'
-              }`}>
-                { msg.attachment && (
-                  <div className="mb-3 p-2 bg-black/10 rounded-lg flex gap-2 text-xs">
-                    <span className="truncate">{ msg.attachment.name }</span>
-                  </div>
-                )}
-                { msg.audio && (
-                  <div className="mb-2">
-                    <audio controls src={ msg.audio } className="h-8 w-full max-w-[200px]" />
-                  </div>
-                )}
-                <div className="whitespace-pre-wrap">{ msg.text }</div>
+              </div>
+            ))
+          )}
+          { isLoading && (
+            <div className="flex justify-start ml-11">
+              <div className="bg-[var(--bg-secondary)] px-4 py-3 rounded-2xl border border-[var(--border)] flex gap-1.5">
+                <div className="w-2 h-2 bg-[var(--text-secondary)] rounded-full animate-bounce" />
+                <div className="w-2 h-2 bg-[var(--text-secondary)] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                <div className="w-2 h-2 bg-[var(--text-secondary)] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
               </div>
             </div>
-          ))
-        )}
-        { isLoading && (
-          <div className="flex justify-start ml-11">
-            <div className="bg-[var(--bg-secondary)] px-4 py-3 rounded-2xl border border-[var(--border)] flex gap-1.5">
-              <div className="w-2 h-2 bg-[var(--text-secondary)] rounded-full animate-bounce" />
-              <div className="w-2 h-2 bg-[var(--text-secondary)] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-              <div className="w-2 h-2 bg-[var(--text-secondary)] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-            </div>
-          </div>
-        )}
-        <div ref={ messagesEndRef } />
+          )}
+          <div ref={ messagesEndRef } />
+        </div>
       </div>
+
       <div className="flex-none p-4 bg-[var(--bg-primary)]">
         <div className="max-w-3xl mx-auto bg-[var(--bg-secondary)] border border-[var(--border)] rounded-2xl shadow-sm p-2 flex items-end gap-2 focus-within:ring-2 focus-within:ring-[var(--accent)] transition-all">
           <AttachmentButton onFileAttach={ setAttachedFile } />
