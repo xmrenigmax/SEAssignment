@@ -143,8 +143,8 @@ export const ChatPanel = () => {
       <div className="flex-1 overflow-y-auto p-4 md:p-8 space-y-6 scroll-smooth">
         { messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-center opacity-60">
-            <div className="w-20 h-20 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center mb-6 shadow-sm border border-[var(--border)]">
-              <span className="text-4xl font-serif">M</span>
+            <div className="w-20 h-20 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center mb-6 shadow-sm border border-[var(--border)] overflow-hidden">
+              <img src="/icons/marcus-aurelius.png" alt="Marcus Aurelius Bust" className="w-full h-full object-cover rounded-full"/>
             </div>
             <h1 className="text-2xl font-serif font-bold text-[var(--text-primary)] mb-2">Marcus Aurelius</h1>
             <p className="text-sm text-[var(--text-secondary)] max-w-sm leading-relaxed">
@@ -155,7 +155,9 @@ export const ChatPanel = () => {
           messages.map((msg, idx) => (
             <div key={ msg.id || idx } className={ `flex ${ msg.isUser ? 'justify-end' : 'justify-start' }` }>
               { !msg.isUser && (
-                <div className="w-8 h-8 mr-3 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center border border-[var(--border)] text-xs font-serif">M</div>
+                <div className="w-10 h-10 mr-3 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center border mb-6  shadow-sm">
+                  <img src="/icons/marcus-aurelius.png" alt="Marcus Aurelius Bust" className="w-full h-full object-cover rounded-full"/>
+                </div>
               )}
               <div className={ `max-w-[85%] md:max-w-[75%] px-5 py-3.5 rounded-2xl text-sm md:text-base leading-relaxed shadow-sm ${
                 msg.isUser

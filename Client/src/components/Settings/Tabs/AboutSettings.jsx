@@ -17,8 +17,8 @@ export const AboutSettings = () => {
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
       <div className="flex items-center gap-4">
-        <div className="w-16 h-16 bg-[var(--accent)] rounded-2xl flex items-center justify-center text-white text-3xl font-serif shadow-lg">
-          M
+        <div className="w-12 h-12 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center border shadow-sm">
+          <img src="/icons/marcus-aurelius.png" alt="Marcus Aurelius Bust" className="w-full h-full object-cover rounded-full"/>
         </div>
         <div>
           <h2 className="text-2xl font-bold text-[var(--text-primary)]">Marcus Aurelius</h2>
