@@ -4,7 +4,7 @@ import { useBackendHealth } from '../../hooks/useBackendHealth';
 import { AttachmentButton } from './AttachmentButton';
 import { VoiceInputButton } from './VoiceInputButton';
 
-const BACKGROUND_IMAGE_URL = '/icons/BackgroundImage/roman-pillars.png';
+const BackgroundImage = '/icons/BackgroundImage/roman-pillars.png';
 
 /**
  * ChatPanel Component
@@ -145,7 +145,7 @@ export const ChatPanel = () => {
         </div>
       </div>
       <div className="flex-1 relative overflow-hidden">
-        <div className="absolute inset-0 bg-contain bg-center bg-no-repeat opacity-15"  style={{ backgroundImage: `url('${BACKGROUND_IMAGE_URL}')` }} />
+        <div className="absolute inset-0 bg-contain bg-center bg-no-repeat opacity-15"  style={{ backgroundImage: `url('${BackgroundImage}')` }} />
         { messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-center opacity-60">
             <div className="w-20 h-20 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center mb-6 shadow-sm border border-[var(--border)] overflow-hidden">
