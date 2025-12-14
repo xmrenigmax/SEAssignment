@@ -104,8 +104,8 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
           <div className={ clsx("flex items-center", isCollapsed ? "justify-center" : "justify-between") }>
             { !isCollapsed && (
               <div className="flex items-center gap-3 pl-1 animate-in fade-in duration-200 overflow-hidden">
-                <div className="w-8 h-8 flex-shrink-0 bg-[var(--accent)] rounded-lg flex items-center justify-center text-white font-serif font-bold shadow-sm">
-                  M
+                <div className="w-12 h-12 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center border shadow-sm">
+                  <img src="/icons/marcus-aurelius.png" alt="Marcus Aurelius Bust" className="w-full h-full object-cover rounded-full"/>
                 </div>
                 <h1 className="text-lg font-serif font-bold text-[var(--text-primary)] tracking-tight whitespace-nowrap">
                   Marcus Aurelius
@@ -208,7 +208,7 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
             </svg>
             { !isCollapsed && <span className="text-sm font-medium">Exhibit Guide</span> }
           </button>
-          <div className={ clsx("flex items-center", isCollapsed ? "flex-col gap-4" : "justify-between border-t border-[var(--border)] pt-3") }>
+          <div className={ clsx("flex items-center", isCollapsed ? "flex-col gap-4" : "justify-between border-t border-[var(--border)] pt-3 gap-1") }>
             <ThemeToggle isCollapsed={ isCollapsed } />
             { !isCollapsed && <div className="h-4 w-px bg-[var(--border)]" role="presentation" /> }
             <SettingsButton activeView={ activeView } setActiveView={ setActiveView } isCollapsed={ isCollapsed } />
