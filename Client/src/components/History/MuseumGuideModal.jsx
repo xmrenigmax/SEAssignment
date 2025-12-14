@@ -43,7 +43,7 @@ export const MuseumGuideModal = ({ isOpen, onClose, onStartTour }) => {
           <div className="absolute top-0 left-0 w-full h-1 bg-[var(--accent)] opacity-50"></div>
           { !isTourMode && (
             <button
-              onClick={onClose}
+              onClick={ onClose }
               className="absolute top-4 right-4 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
               aria-label="Close"
             >
