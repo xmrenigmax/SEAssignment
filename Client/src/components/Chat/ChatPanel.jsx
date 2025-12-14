@@ -14,6 +14,7 @@ export const ChatPanel = () => {
     getActiveConversation,
     addMessageToConversation,
     createNewConversation,
+    focusTrigger,
     isLoading
   } = useChatContext();
 
@@ -42,6 +43,16 @@ export const ChatPanel = () => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isRecording, isLoading]);
+
+  /**
+   * Effect: Auto-focus textarea when a new chat is opened
+   * Triggers when activeConversationId changes or when focus is explicitly requested
+   */
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, [activeConversationId, focusTrigger]);
 
   /**
    * Handles Recording Completion.
