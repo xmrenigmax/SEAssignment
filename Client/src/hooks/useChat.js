@@ -15,6 +15,7 @@ export const useChat = () => {
   const [conversations, setConversations] = useLocalStorage('chat-conversations', []);
   const [activeConversationId, setActiveConversationId] = useLocalStorage('active-conversation', null);
   const [isLoading, setIsLoading] = useState(false);
+  const [focusTrigger, setFocusTrigger] = useState(0);
 
   /**
    * Helper for API calls with standardized error handling.
@@ -218,8 +219,11 @@ export const useChat = () => {
     clearAllConversations,
     loadConversation,
     syncConversations,
-    getActiveConversation: () => conversations.find(c => c.id === activeConversationId),
-    startNewChat: () => setActiveConversationId(null),
+    importConversations,
+    startConversationWithPrompt,
+    getActiveConversation: () => conversations.find(conversation => conversation.id === activeConversationId),
+    startNewChat: () => { setActiveConversationId(null); setFocusTrigger(prev => prev + 1); },
+    focusTrigger,
     isLoading
   };
 };
