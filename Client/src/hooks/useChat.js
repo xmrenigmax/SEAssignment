@@ -75,13 +75,15 @@ export const useChat = () => {
    * Creates a new conversation session.
    */
   const createNewConversation = async () => {
-    setIsLoading(true);
     try {
       const data = await apiCall('/conversations', { method: 'POST' });
+      // Use a single state update to avoid race conditions
+      const newId = data.id;
       setConversations(prev => [data, ...prev]);
-      setActiveConversationId(data.id);
-      setIsLoading(false);
-      return data.id;
+      setActiveConversationId(newId);
+      // Small delay to let React process the state updates
+      await new Promise(resolve => setTimeout(resolve, 10));
+      return newId;
     } catch (error) {
 
       // Offline fallback
@@ -91,10 +93,12 @@ export const useChat = () => {
         messages: [],
         createdAt: new Date().toISOString()
       };
+      const newId = newConv.id;
       setConversations(prev => [newConv, ...prev]);
-      setActiveConversationId(newConv.id);
-      setIsLoading(false);
-      return newConv.id;
+      setActiveConversationId(newId);
+      // Small delay to let React process the state updates
+      await new Promise(resolve => setTimeout(resolve, 10));
+      return newId;
     }
   };
 
@@ -160,7 +164,8 @@ export const useChat = () => {
         body: body
       });
 
-      // Confirms the user message was saved and adds the AI's response.
+      // Replace the entire conversation with the server's version
+      // This includes both the confirmed user message (with real ID) and the AI response
       setConversations(prev => prev.map(conversation => {
         if (conversation.id === conversationId) {
           return data.conversation;
@@ -257,7 +262,6 @@ export const useChat = () => {
     syncConversations,
     importConversations,
     startConversationWithPrompt,
-    getActiveConversation: () => conversations.find(conversation => conversation.id === activeConversationId),
     startNewChat: () => { setActiveConversationId(null); setFocusTrigger(prev => prev + 1); },
     focusTrigger,
     isLoading
