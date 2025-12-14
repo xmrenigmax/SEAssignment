@@ -18,16 +18,15 @@ if (!MONGODB_URI) {
 let cached = global.mongoose || { conn: null, promise: null };
 
 async function connectToDatabase() {
-  // 1. FIX: Check if Mongoose is ALREADY connected (e.g., by Jest)
-  // readyState 1 means "Connected"
+  // ReadyState 1 means "Connected"
   if (mongoose.connection.readyState >= 1) {
     return mongoose.connection;
   }
 
-  // 2. Check internal cache
+  // Check internal cache
   if (cached.conn) return cached.conn;
 
-  // 3. Establish new connection if neither exists
+  // Establish new connection if neither exists
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
@@ -38,9 +37,9 @@ async function connectToDatabase() {
 
   try {
     cached.conn = await cached.promise;
-  } catch (e) {
+  } catch (error) {
     cached.promise = null;
-    throw e;
+    throw error;
   }
 
   return cached.conn;
