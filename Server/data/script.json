@@ -2,135 +2,474 @@
   "persona": "Marcus Aurelius",
   "general_responses": [
     {
-      "probability": 0.4,
-      "response": "The happiness of your life depends upon the quality of your thoughts. Ponder this as you walk these halls."
+      "probability": 0.1,
+      "response": "Do not wander only with your feet. Wander with your judgment."
     },
     {
-      "probability": 0.3,
-      "response": "You ask of things that are fleeting. Look instead at what is eternal: the virtue within your own character."
+      "probability": 0.1,
+      "response": "Nothing here can harm your character unless you allow it."
     },
     {
-      "probability": 0.3,
-      "response": "I hear your question, citizen. But consider: does this concern the ruling faculty of your mind?"
+      "probability": 0.1,
+      "response": "Stand upright, not stiffened by pride, but supported by reason."
+    },
+    {
+      "probability": 0.1,
+      "response": "What troubles you now will soon seem small, if it is remembered at all."
+    },
+    {
+      "probability": 0.1,
+      "response": "You have time enough for what matters, if you do not waste it."
+    },
+    {
+      "probability": 0.1,
+      "response": "Let your thoughts be simple and your intentions just."
+    },
+    {
+      "probability": 0.1,
+      "response": "Observe without clinging. Learn without boasting."
+    },
+    {
+      "probability": 0.1,
+      "response": "Be present. The present is all that ever obeys you."
+    },
+    {
+      "probability": 0.1,
+      "response": "Carry yourself as one entrusted with responsibility, not entitlement."
+    },
+    {
+      "probability": 0.1,
+      "response": "Nothing here demands haste. Order your pace."
     }
   ],
   "rules": [
     {
       "id": "museum_logistics_restroom",
-      "keywords": [
-        "toilet",
-        "bathroom",
-        "restroom",
-        "loo",
-        "latrine",
-        "washroom",
-        "pee"
-      ],
+      "keywords": [ "toilet", "bathroom", "restroom", "latrine", "washroom", "pee", "urinate", "relieve", "nature calls", "where can i go", "need the bathroom", "need to pee", "need to go" ],
       "response_pool": [
         {
-          "probability": 0.6,
-          "response": "The body has its necessities. You will find the latrines down the corridor. Do not let physical needs distract you from the exhibits."
+          "probability": 0.08,
+          "response": "The body demands its due. The latrines lie along the corridor. Attend to necessity, then return to reason."
         },
         {
-          "probability": 0.4,
-          "response": "Even an Emperor must attend to nature. Seek the facilities near the entrance. Proceed with dignity."
+          "probability": 0.08,
+          "response": "Even emperors obey nature’s call. Go without embarrassment, and return with your composure intact."
+        },
+        {
+          "probability": 0.07,
+          "response": "What the body requires should be granted simply, without complaint or indulgence."
+        },
+        {
+          "probability": 0.07,
+          "response": "You need not feel shame. Nature made these demands long before law or custom."
+        },
+        {
+          "probability": 0.07,
+          "response": "The latrines are near. Go directly, do what must be done, and linger no longer than required."
+        },
+        {
+          "probability": 0.07,
+          "response": "See to the body swiftly, so the mind may resume its proper work."
+        },
+        {
+          "probability": 0.06,
+          "response": "Attend to necessity with the same discipline you give to higher matters."
+        },
+        {
+          "probability": 0.06,
+          "response": "Relieve the body, but do not allow the task to command your thoughts."
+        },
+        {
+          "probability": 0.06,
+          "response": "There is no virtue in denial of what is necessary, only in moderation."
+        },
+        {
+          "probability": 0.06,
+          "response": "The body is a servant of the mind. Maintain it, but do not serve it."
+        },
+        {
+          "probability": 0.05,
+          "response": "Nature is not offended by her own functions. Perform them plainly."
+        },
+        {
+          "probability": 0.05,
+          "response": "Go, then return untroubled. This is not a matter worthy of disturbance."
+        },
+        {
+          "probability": 0.05,
+          "response": "All flesh obeys the same laws, whether crowned or forgotten."
+        },
+        {
+          "probability": 0.05,
+          "response": "Do not rush in shame, nor delay in stubbornness. Walk calmly."
+        },
+        {
+          "probability": 0.04,
+          "response": "The latrines are placed for this purpose. Use them without excess of thought."
+        },
+        {
+          "probability": 0.04,
+          "response": "What is natural requires no apology."
+        },
+        {
+          "probability": 0.04,
+          "response": "Let necessity pass quickly, like a cloud crossing the sun."
+        },
+        {
+          "probability": 0.04,
+          "response": "This is a small interruption. Do not grant it more weight than it deserves."
+        },
+        {
+          "probability": 0.04,
+          "response": "Tend to the body briefly, so the ruling faculty remains undistracted."
+        },
+        {
+          "probability": 0.04,
+          "response": "Go where such matters are attended to, then resume your walk among the exhibits."
         }
       ]
     },
     {
-			"id": "movement_and_action",
-      "keywords": [
-				"walking",
-				"running",
-				"moving",
-				"go",
-				"walk",
-				"step"
-			],
+      "id": "museum_silence_noise",
+      "keywords": [ "loud", "noise", "noisy", "quiet", "shh", "silence", "too loud", "stop talking", "whisper", "volume", "talking", "yelling" ],
       "response_pool": [
         {
-          "probability": 1.0,
-          "response": "Step with purpose. Do not move like a puppet on strings, but as a man directed by his own mind."
-        }
-			]
-    },
-    {
-      "id": "museum_logistics_food",
-      "keywords": [
-        "food",
-        "hungry",
-        "cafe",
-        "eat",
-        "drink",
-        "lunch",
-        "restaurant",
-        "coffee"
-      ],
-      "response_pool": [
-        {
-          "probability": 0.5,
-          "response": "You seek provisions? There is a place of sustenance nearby. But remember: stop when you are satisfied, do not indulge to excess."
+          "probability": 0.08,
+          "response": "Lower your voice. Wisdom prefers calm air in which to settle."
         },
         {
-          "probability": 0.5,
-          "response": "Bread and wine are necessary fuel for the body. You may find them in the museum cafe. Nourish yourself, then return to philosophy."
+          "probability": 0.08,
+          "response": "Silence is not emptiness. It is the space where thought can be heard."
+        },
+        {
+          "probability": 0.07,
+          "response": "Restrain your voice, as you would restrain an impulse."
+        },
+        {
+          "probability": 0.07,
+          "response": "These halls reward those who speak sparingly."
+        },
+        {
+          "probability": 0.07,
+          "response": "Do not compete with stone and memory. They speak softly."
+        },
+        {
+          "probability": 0.07,
+          "response": "Let your words be few, and chosen."
+        },
+        {
+          "probability": 0.06,
+          "response": "A raised voice often signals a restless mind."
+        },
+        {
+          "probability": 0.06,
+          "response": "Quiet the tongue, and the mind will follow."
+        },
+        {
+          "probability": 0.06,
+          "response": "This place is meant for reflection, not display."
+        },
+        {
+          "probability": 0.06,
+          "response": "Lower your volume. Nothing urgent is lost in doing so."
+        },
+        {
+          "probability": 0.05,
+          "response": "Consider how little truly needs to be said."
+        },
+        {
+          "probability": 0.05,
+          "response": "Speak as though your words must endure as long as these walls."
+        },
+        {
+          "probability": 0.05,
+          "response": "The mind hears best when the room is calm."
+        },
+        {
+          "probability": 0.05,
+          "response": "Noise scatters thought. Order gathers it."
+        },
+        {
+          "probability": 0.05,
+          "response": "Let the exhibits command attention, not your voice."
+        },
+        {
+          "probability": 0.04,
+          "response": "What you say gains weight when it is not shouted."
+        },
+        {
+          "probability": 0.04,
+          "response": "Restraint in speech is a form of strength."
+        },
+        {
+          "probability": 0.04,
+          "response": "The disciplined mind does not announce itself loudly."
+        },
+        {
+          "probability": 0.04,
+          "response": "Silence here is an act of respect."
+        },
+        {
+          "probability": 0.04,
+          "response": "Let stillness do part of the teaching."
         }
       ]
     },
     {
-      "id": "museum_logistics_exit",
-      "keywords": [
-        "exit",
-        "leave",
-        "way out",
-        "close",
-        "closing time",
-        "finished"
-      ],
+      "id": "touching_exhibits",
+      "keywords": [ "touch", "touching", "hold", "hands", "pick up", "handle", "can i touch", "may i touch", "reach", "fingers" ],
       "response_pool": [
         {
-          "probability": 1.0,
-          "response": "All journeys must end. The exit lies beyond the great doors. Carry the wisdom you found here back into the world."
+          "probability": 0.08,
+          "response": "Restrain your hands. Not everything that invites touch should be taken."
+        },
+        {
+          "probability": 0.08,
+          "response": "Discipline begins with small refusals. Let your respect be visible."
+        },
+        {
+          "probability": 0.07,
+          "response": "Control of the hands is control of the impulse."
+        },
+        {
+          "probability": 0.07,
+          "response": "What is preserved here has survived because others restrained themselves."
+        },
+        {
+          "probability": 0.07,
+          "response": "Desire need not be obeyed simply because it arises."
+        },
+        {
+          "probability": 0.07,
+          "response": "Let your hands remain still, and your judgment active."
+        },
+        {
+          "probability": 0.06,
+          "response": "You lose nothing by withholding your touch."
+        },
+        {
+          "probability": 0.06,
+          "response": "Possession is not required for understanding."
+        },
+        {
+          "probability": 0.06,
+          "response": "These works endure because they are treated with restraint."
+        },
+        {
+          "probability": 0.06,
+          "response": "The urge to touch passes quickly if ignored."
+        },
+        {
+          "probability": 0.05,
+          "response": "Practice mastery over the smallest action."
+        },
+        {
+          "probability": 0.05,
+          "response": "Respect is shown through distance as much as approach."
+        },
+        {
+          "probability": 0.05,
+          "response": "What you admire does not require your grasp."
+        },
+        {
+          "probability": 0.05,
+          "response": "Allow the object to remain whole, as it has for generations."
+        },
+        {
+          "probability": 0.05,
+          "response": "The hand should obey the mind, not lead it."
+        },
+        {
+          "probability": 0.04,
+          "response": "Touch is fleeting. Preservation is lasting."
+        },
+        {
+          "probability": 0.04,
+          "response": "Let others after you find this unchanged."
+        },
+        {
+          "probability": 0.04,
+          "response": "The discipline you show here follows you elsewhere."
+        },
+        {
+          "probability": 0.04,
+          "response": "Reverence often expresses itself in stillness."
+        },
+        {
+          "probability": 0.04,
+          "response": "To refrain is sometimes the highest action."
         }
       ]
     },
     {
-      "id": "roman_history_statues",
-      "keywords": [
-        "statue",
-        "sculpture",
-        "bust",
-        "marble",
-        "stone",
-        "art"
-      ],
+      "id": "being_lost",
+      "keywords": [ "lost", "confused", "where am i", "where am i going", "direction", "directions", "help", "which way", "wrong way", "can't find", "looking for" ],
       "response_pool": [
         {
-          "probability": 0.5,
-          "response": "Look upon the stone. It captures a moment, a likeness. The man is dust, but the idea remains. What will remain of you?"
+          "probability": 0.08,
+          "response": "If you are lost in the halls, steady your breath first. Panic leads nowhere."
         },
         {
-          "probability": 0.5,
-          "response": "Marble is cold, but the deeds of men should be warm with virtue. Do not worship the image, emulate the character."
+          "probability": 0.08,
+          "response": "Every path is found by patience. The signs will reveal themselves."
+        },
+        {
+          "probability": 0.07,
+          "response": "Confusion is not danger. Treat it calmly."
+        },
+        {
+          "probability": 0.07,
+          "response": "Stop, observe, then choose. This order seldom fails."
+        },
+        {
+          "probability": 0.07,
+          "response": "A wandering body is easily corrected. A wandering mind is not."
+        },
+        {
+          "probability": 0.07,
+          "response": "Do not rush simply to escape uncertainty."
+        },
+        {
+          "probability": 0.06,
+          "response": "Stand still for a moment. Orientation returns to those who pause."
+        },
+        {
+          "probability": 0.06,
+          "response": "Look around you carefully. The way forward is rarely hidden."
+        },
+        {
+          "probability": 0.06,
+          "response": "Being unsure is a condition, not a failing."
+        },
+        {
+          "probability": 0.06,
+          "response": "You have not failed. You are merely between decisions."
+        },
+        {
+          "probability": 0.05,
+          "response": "Let reason, not urgency, choose your direction."
+        },
+        {
+          "probability": 0.05,
+          "response": "The halls do not move. Only you do."
+        },
+        {
+          "probability": 0.05,
+          "response": "Correct your course without self-reproach."
+        },
+        {
+          "probability": 0.05,
+          "response": "Even the wrong path teaches how to recognize the right one."
+        },
+        {
+          "probability": 0.05,
+          "response": "A calm mind finds its bearings more quickly than a hurried one."
+        },
+        {
+          "probability": 0.04,
+          "response": "Do not let momentary confusion trouble your spirit."
+        },
+        {
+          "probability": 0.04,
+          "response": "You are not behind. You are simply here."
+        },
+        {
+          "probability": 0.04,
+          "response": "Pause, then proceed deliberately."
+        },
+        {
+          "probability": 0.04,
+          "response": "Direction follows attention."
+        },
+        {
+          "probability": 0.04,
+          "response": "There is no shame in reorienting oneself."
         }
       ]
     },
     {
-      "id": "identity_inquiry",
-      "keywords": [
-        "who are you",
-        "your name",
-        "introduce yourself",
-        "what are you"
-      ],
+      "id": "fatigue_and_rest",
+      "keywords": [ "tired",  "sit", "rest", "feet hurt", "sore", "need a break", "fatigue", "standing too long" ],
       "response_pool": [
         {
-          "probability": 0.5,
-          "response": "I am Marcus Aurelius. Once Emperor of Rome, now merely a voice echoing through time. I serve the Logos."
+          "probability": 0.08,
+          "response": "Rest if you must. Even a strong mind requires a body that is not abused."
         },
         {
-          "probability": 0.5,
-          "response": "History calls me Emperor and Philosopher. But I was simply a man trying to live according to nature in a chaotic world."
+          "probability": 0.08,
+          "response": "Pause briefly. Do not confuse endurance with wisdom."
+        },
+        {
+          "probability": 0.07,
+          "response": "Fatigue clouds judgment. Clear it before continuing."
+        },
+        {
+          "probability": 0.07,
+          "response": "A short rest preserves strength better than stubborn persistence."
+        },
+        {
+          "probability": 0.07,
+          "response": "Care for the body as you would a loyal servant."
+        },
+        {
+          "probability": 0.07,
+          "response": "There is no honor in needless strain."
+        },
+        {
+          "probability": 0.06,
+          "response": "Sit if you must. Rising again will come more easily."
+        },
+        {
+          "probability": 0.06,
+          "response": "Weariness is a signal, not an enemy."
+        },
+        {
+          "probability": 0.06,
+          "response": "Strength is maintained by balance, not neglect."
+        },
+        {
+          "probability": 0.06,
+          "response": "Listen to the body without becoming its servant."
+        },
+        {
+          "probability": 0.05,
+          "response": "Rest restores your capacity to attend and reflect."
+        },
+        {
+          "probability": 0.05,
+          "response": "A measured pause honors both body and purpose."
+        },
+        {
+          "probability": 0.05,
+          "response": "Do not rush through what deserves attention."
+        },
+        {
+          "probability": 0.05,
+          "response": "Fatigue shortens patience. Address it."
+        },
+        {
+          "probability": 0.05,
+          "response": "Sit, breathe, then rise composed."
+        },
+        {
+          "probability": 0.04,
+          "response": "Endurance without sense is merely stubbornness."
+        },
+        {
+          "probability": 0.04,
+          "response": "You will see more clearly after a moment’s rest."
+        },
+        {
+          "probability": 0.04,
+          "response": "Do not spend strength wastefully."
+        },
+        {
+          "probability": 0.04,
+          "response": "Preserve yourself so you may finish well."
+        },
+        {
+          "probability": 0.04,
+          "response": "The wise conserve their energy."
         }
       ]
     },
@@ -239,14 +578,88 @@
         "cryptocurrency",
         "bitcoin"
       ],
+      "id": "children_and_crowds",
+      "keywords": [ "kids", "children", "child", "crowd", "crowded", "busy", "people", "lots of people", "too many people", "noisy crowd", "families" ],
       "response_pool": [
         {
-          "probability": 0.7,
-          "response": "You stare into glowing tablets of glass. Strange magic. Does it bring you peace, or merely distraction? Look up, citizen."
+          "probability": 0.08,
+          "response": "Crowds test patience. Consider this your training."
         },
         {
-          "probability": 0.3,
-          "response": "I see you capturing moments with your machines. But remember, the only true possession is the present moment in your mind."
+          "probability": 0.08,
+          "response": "Children act according to nature. Expect no more, and you will not suffer."
+        },
+        {
+          "probability": 0.07,
+          "response": "Do not demand order from what is naturally restless."
+        },
+        {
+          "probability": 0.07,
+          "response": "Each person here carries their own concerns. Make allowance for this."
+        },
+        {
+          "probability": 0.07,
+          "response": "Impatience with others is a form of self-harm."
+        },
+        {
+          "probability": 0.07,
+          "response": "A crowded space reveals how well one governs oneself."
+        },
+        {
+          "probability": 0.06,
+          "response": "You were once as unsettled as the children you observe."
+        },
+        {
+          "probability": 0.06,
+          "response": "Endure the press of people as you endure the weather."
+        },
+        {
+          "probability": 0.06,
+          "response": "Noise from others need not become noise within you."
+        },
+        {
+          "probability": 0.06,
+          "response": "Give grace freely. It costs you little."
+        },
+        {
+          "probability": 0.05,
+          "response": "Crowds do not rob you of virtue unless you surrender it."
+        },
+        {
+          "probability": 0.05,
+          "response": "Observe without resentment."
+        },
+        {
+          "probability": 0.05,
+          "response": "The conduct of others is not yours to command."
+        },
+        {
+          "probability": 0.05,
+          "response": "Practice calm where calm is least expected."
+        },
+        {
+          "probability": 0.05,
+          "response": "Children learn by motion. You learn by restraint."
+        },
+        {
+          "probability": 0.04,
+          "response": "Let disorder around you strengthen order within."
+        },
+        {
+          "probability": 0.04,
+          "response": "Tolerance is the mark of a trained mind."
+        },
+        {
+          "probability": 0.04,
+          "response": "Do not begrudge others their presence."
+        },
+        {
+          "probability": 0.04,
+          "response": "Patience practiced here follows you everywhere."
+        },
+        {
+          "probability": 0.04,
+          "response": "You lose nothing by yielding space."
         }
       ]
     },
@@ -288,10 +701,12 @@
         "retard",
         "hate"
       ],
+      "id": "art_interpretation",
+      "keywords": [ "meaning", "symbol", "symbolism", "represent", "interpret", "interpretation", "what does it mean", "message", "idea"],
       "response_pool": [
         {
-          "probability": 0.7,
-          "response": "Such language disturbs the air and clouds the mind. Speak with the dignity befitting a rational creature."
+          "probability": 0.08,
+          "response": "Do not ask what the artist intended alone. Ask what virtue it stirs within you."
         },
 				{
 					"probability": 0.3,
@@ -311,8 +726,1034 @@
 			],
       "response_pool": [
         {
-          "probability": 0.5,
-          "response": "If you are distressed by anything external, the pain is not due to the thing itself, but to your estimate of it."
+          "probability": 0.08,
+          "response": "Art is a mirror. What you see reveals more about you than the stone."
+        },
+        {
+          "probability": 0.07,
+          "response": "Meaning is not handed to you. It is drawn out by reflection."
+        },
+        {
+          "probability": 0.07,
+          "response": "Do not rush to judgment. Let the work speak slowly."
+        },
+        {
+          "probability": 0.07,
+          "response": "Ask not only what it depicts, but what it demands of you."
+        },
+        {
+          "probability": 0.07,
+          "response": "The finest lesson is often the quietest."
+        },
+        {
+          "probability": 0.06,
+          "response": "Form and idea work together, as body and mind."
+        },
+        {
+          "probability": 0.06,
+          "response": "Do not search for hidden meaning while ignoring obvious virtue."
+        },
+        {
+          "probability": 0.06,
+          "response": "What endures here is not skill alone, but intention."
+        },
+        {
+          "probability": 0.06,
+          "response": "Let the work question you before you question it."
+        },
+        {
+          "probability": 0.05,
+          "response": "Interpret without vanity."
+        },
+        {
+          "probability": 0.05,
+          "response": "Not every answer must be spoken to be known."
+        },
+        {
+          "probability": 0.05,
+          "response": "If nothing is clear at first, remain with it."
+        },
+        {
+          "probability": 0.05,
+          "response": "Understanding grows with patience."
+        },
+        {
+          "probability": 0.05,
+          "response": "What matters is not agreement, but engagement."
+        },
+        {
+          "probability": 0.04,
+          "response": "The work survives centuries. Give it minutes of attention."
+        },
+        {
+          "probability": 0.04,
+          "response": "Do not force meaning where contemplation will suffice."
+        },
+        {
+          "probability": 0.04,
+          "response": "The truest interpretation improves the observer."
+        },
+        {
+          "probability": 0.04,
+          "response": "Let thought mature before it speaks."
+        },
+        {
+          "probability": 0.04,
+          "response": "Art trains the mind in seeing carefully."
+        }
+      ]
+    },
+    {
+      "id": "death_and_mortality",
+      "keywords": [ "death", "die", "dead", "grave", "mortality", "dying", "funeral", "end", "afterlife", "life is short" ],
+      "response_pool": [
+        {
+          "probability": 0.08,
+          "response": "Do not turn away from death. It gives shape to life."
+        },
+        {
+          "probability": 0.08,
+          "response": "What you fear has already claimed emperors and beggars alike."
+        },
+        {
+          "probability": 0.07,
+          "response": "Death is not an outrage. It is a return."
+        },
+        {
+          "probability": 0.07,
+          "response": "You have been dying since the moment you were born."
+        },
+        {
+          "probability": 0.07,
+          "response": "What matters is not how long you live, but how you use what remains."
+        },
+        {
+          "probability": 0.07,
+          "response": "Death stands beside you always. Let this sharpen your conduct."
+        },
+        {
+          "probability": 0.06,
+          "response": "Do not waste fear on what is guaranteed."
+        },
+        {
+          "probability": 0.06,
+          "response": "You do not lose life at death. You lose it moment by moment through neglect."
+        },
+        {
+          "probability": 0.06,
+          "response": "What ends was never yours to keep."
+        },
+        {
+          "probability": 0.06,
+          "response": "Nature does nothing without reason, not even in ending you."
+        },
+        {
+          "probability": 0.05,
+          "response": "Soon, you will be as unknown as those whose bones lie beneath older stones."
+        },
+        {
+          "probability": 0.05,
+          "response": "Make peace with death, and life loses its terror."
+        },
+        {
+          "probability": 0.05,
+          "response": "Death is neither good nor bad. It simply is."
+        },
+        {
+          "probability": 0.05,
+          "response": "Each breath borrowed is a reminder, not a promise."
+        },
+        {
+          "probability": 0.05,
+          "response": "You may leave at any moment. Act as one who knows this."
+        },
+        {
+          "probability": 0.04,
+          "response": "Nothing that happens according to nature is disgraceful."
+        },
+        {
+          "probability": 0.04,
+          "response": "Fear of death is fear of losing what was never secured."
+        },
+        {
+          "probability": 0.04,
+          "response": "If you are troubled by death, examine your attachment to life’s excesses."
+        },
+        {
+          "probability": 0.04,
+          "response": "Death reduces all distinctions."
+        },
+        {
+          "probability": 0.04,
+          "response": "The wise rehearse death daily, and thus live freely."
+        }
+      ]
+    },
+    {
+      "id": "fame_and_legacy",
+      "keywords": [ "famous", "fame", "remembered", "legacy", "important", "known", "recognition", "history", "greatness" ],
+      "response_pool": [
+        {
+          "probability": 0.08,
+          "response": "Soon, even your name will sound foreign. Let this free you."
+        },
+        {
+          "probability": 0.08,
+          "response": "Seek not remembrance, but worthiness."
+        },
+        {
+          "probability": 0.07,
+          "response": "Those who remember you will soon be forgotten themselves."
+        },
+        {
+          "probability": 0.07,
+          "response": "Fame is a noise that outlives sense, but not time."
+        },
+        {
+          "probability": 0.07,
+          "response": "What value is praise from mouths that soon fall silent?"
+        },
+        {
+          "probability": 0.07,
+          "response": "Do not measure your life by how many notice it."
+        },
+        {
+          "probability": 0.06,
+          "response": "Legacy is not what is said of you, but what you practiced daily."
+        },
+        {
+          "probability": 0.06,
+          "response": "You will share the same obscurity as kings long buried."
+        },
+        {
+          "probability": 0.06,
+          "response": "History remembers little, and distorts even that."
+        },
+        {
+          "probability": 0.06,
+          "response": "If you act rightly, it is enough."
+        },
+        {
+          "probability": 0.05,
+          "response": "To seek applause is to place your peace in other hands."
+        },
+        {
+          "probability": 0.05,
+          "response": "Greatness without virtue is merely spectacle."
+        },
+        {
+          "probability": 0.05,
+          "response": "What remains of you is the influence of your conduct."
+        },
+        {
+          "probability": 0.05,
+          "response": "Even monuments crumble. Character alone endures, briefly."
+        },
+        {
+          "probability": 0.05,
+          "response": "Do not ask how you will be remembered. Ask how you will behave today."
+        },
+        {
+          "probability": 0.04,
+          "response": "Fame enslaves those who chase it."
+        },
+        {
+          "probability": 0.04,
+          "response": "It is enough to be just in obscurity."
+        },
+        {
+          "probability": 0.04,
+          "response": "Renown is outside your control. Release it."
+        },
+        {
+          "probability": 0.04,
+          "response": "Live as though no one were watching."
+        },
+        {
+          "probability": 0.04,
+          "response": "The shortest road to peace ignores reputation."
+        }
+      ]
+    },
+    {
+      "id": "modern_objects_reinterpreted",
+      "keywords": [ "phone", "camera", "selfie", "internet", "wifi", "screen", "device", "picture", "photo", "record", "scroll", "watching" ],
+      "response_pool": [
+        {
+          "probability": 0.08,
+          "response": "You consult a small object as if it contained wisdom. Wisdom lives only in disciplined thought."
+        },
+        {
+          "probability": 0.08,
+          "response": "You attempt to trap moments, yet moments are meant to pass."
+        },
+        {
+          "probability": 0.07,
+          "response": "You treat this device as an oracle, though it knows nothing of virtue."
+        },
+        {
+          "probability": 0.07,
+          "response": "Your attention is worth more than whatever this object offers."
+        },
+        {
+          "probability": 0.07,
+          "response": "No tool can think for you."
+        },
+        {
+          "probability": 0.07,
+          "response": "You hold a thing that demands much and gives little."
+        },
+        {
+          "probability": 0.06,
+          "response": "Put it aside briefly. You will lose nothing of value."
+        },
+        {
+          "probability": 0.06,
+          "response": "The present moment requires no device to be complete."
+        },
+        {
+          "probability": 0.06,
+          "response": "What you seek from this object may already be within reach."
+        },
+        {
+          "probability": 0.06,
+          "response": "You mistake recording for remembering."
+        },
+        {
+          "probability": 0.05,
+          "response": "This tool fragments attention. Attention is the soul’s strength."
+        },
+        {
+          "probability": 0.05,
+          "response": "If you cannot be present without it, the loss is already yours."
+        },
+        {
+          "probability": 0.05,
+          "response": "Set it down. Let your mind do the observing."
+        },
+        {
+          "probability": 0.05,
+          "response": "The habit of distraction weakens resolve."
+        },
+        {
+          "probability": 0.05,
+          "response": "Objects should serve you, not command you."
+        },
+        {
+          "probability": 0.04,
+          "response": "This device neither improves nor degrades you. Your use of it does."
+        },
+        {
+          "probability": 0.04,
+          "response": "What is truly worth seeing cannot be stored."
+        },
+        {
+          "probability": 0.04,
+          "response": "Attend to what stands before you, not what glows in your hand."
+        },
+        {
+          "probability": 0.04,
+          "response": "You gain mastery by choosing when to disengage."
+        },
+        {
+          "probability": 0.04,
+          "response": "Distraction is the enemy of clarity."
+        }
+      ]
+    },
+    {
+      "id": "greetings_extended",
+      "keywords": [ "hey", "yo", "sup", "morning", "good morning", "evening", "good evening", "afternoon", "hello", "hi" ],
+      "response_pool": [
+        {
+          "probability": 0.07,
+          "response": "I acknowledge you. May your thoughts today be orderly."
+        },
+        {
+          "probability": 0.07,
+          "response": "You are present. That alone is enough to begin."
+        },
+        {
+          "probability": 0.07,
+          "response": "Greetings. Enter calmly, as one entering his own mind."
+        },
+        {
+          "probability": 0.06,
+          "response": "Welcome. Conduct yourself with care and attention."
+        },
+        {
+          "probability": 0.06,
+          "response": "You arrive. Leave haste behind you."
+        },
+        {
+          "probability": 0.06,
+          "response": "Be well. Let this place steady your thoughts."
+        },
+        {
+          "probability": 0.05,
+          "response": "I see you. May your visit be deliberate."
+        },
+        {
+          "probability": 0.05,
+          "response": "Greetings. Prepare your mind to observe, not consume."
+        },
+        {
+          "probability": 0.05,
+          "response": "You are welcome here, if you come with patience."
+        },
+        {
+          "probability": 0.05,
+          "response": "Enter without expectation. Leave with understanding."
+        },
+        {
+          "probability": 0.05,
+          "response": "May you walk these halls with composure."
+        },
+        {
+          "probability": 0.05,
+          "response": "Begin as you mean to continue: calmly."
+        },
+        {
+          "probability": 0.04,
+          "response": "Your presence is noted. Make good use of it."
+        },
+        {
+          "probability": 0.04,
+          "response": "Step inside with a quiet mind."
+        },
+        {
+          "probability": 0.04,
+          "response": "Welcome. Attention is the price of learning."
+        },
+        {
+          "probability": 0.04,
+          "response": "You have arrived at a place of memory. Behave accordingly."
+        },
+        {
+          "probability": 0.04,
+          "response": "Greetings. Let this visit refine you."
+        },
+        {
+          "probability": 0.04,
+          "response": "Come forward, but do not rush."
+        },
+        {
+          "probability": 0.04,
+          "response": "You stand at the threshold. Enter with intention."
+        },
+        {
+          "probability": 0.04,
+          "response": "Welcome. Order your thoughts before you proceed."
+        }
+      ]
+    },
+    {
+      "id": "small_talk_general",
+      "keywords": [ "what's up", "how's it going", "how are you", "nice day", "good day", "day", "how do you do", "weather", "sunny", "rainy", "morning", "afternoon", "evening" ],
+      "response_pool": [
+        {
+          "probability": 0.07,
+          "response": "Things proceed as they must. The question is how you proceed."
+        },
+        {
+          "probability": 0.07,
+          "response": "The day is neither good nor bad. It is how we meet it that matters."
+        },
+        {
+          "probability": 0.06,
+          "response": "Observe the day without complaint. Let your mind be steady."
+        },
+        {
+          "probability": 0.06,
+          "response": "Do not praise the sun or curse the rain. Neither changes the mind’s conduct."
+        },
+        {
+          "probability": 0.06,
+          "response": "Every day offers the same opportunity: to act rightly."
+        },
+        {
+          "probability": 0.06,
+          "response": "Do not let small talk distract you from reason."
+        },
+        {
+          "probability": 0.05,
+          "response": "Even the simplest day can contain lessons."
+        },
+        {
+          "probability": 0.05,
+          "response": "If you find yourself idle, reflect on virtue instead."
+        },
+        {
+          "probability": 0.05,
+          "response": "Your mind shapes the day more than the sun or rain."
+        },
+        {
+          "probability": 0.05,
+          "response": "Accept the present. Complaining is wasted energy."
+        },
+        {
+          "probability": 0.05,
+          "response": "Attend to duty, even if the world seems ordinary."
+        },
+        {
+          "probability": 0.05,
+          "response": "A composed mind turns any day to purpose."
+        },
+        {
+          "probability": 0.04,
+          "response": "Ask not how the day fares, but how you fare within it."
+        },
+        {
+          "probability": 0.04,
+          "response": "Good or bad, the day is fleeting. Focus on action, not complaint."
+        },
+        {
+          "probability": 0.04,
+          "response": "Observe, act, and let trivial talk pass."
+        },
+        {
+          "probability": 0.04,
+          "response": "Each day is a lesson in endurance and reason."
+        },
+        {
+          "probability": 0.04,
+          "response": "Time flows, indifferent to your pleasure. Flow with it wisely."
+        },
+        {
+          "probability": 0.04,
+          "response": "The present is all we have. Waste it not on idle chatter."
+        },
+        {
+          "probability": 0.04,
+          "response": "Do not wait for special days to practice virtue."
+        },
+        {
+          "probability": 0.04,
+          "response": "What is trivial outside the mind may be instructive within."
+        }
+      ]
+    },
+    {
+      "id": "boredom",
+      "keywords": [ "bored", "boring", "nothing to do", "restless", "idle", "unoccupied", "tedious", "dull", "quiet", "slow", "waiting" ],
+      "response_pool": [
+        {
+          "probability": 0.07,
+          "response": "A restless mind seeks distraction. A trained one finds work everywhere."
+        },
+        {
+          "probability": 0.07,
+          "response": "If this place seems dull, examine the dullness within."
+        },
+        {
+          "probability": 0.06,
+          "response": "Idle hands reveal idle minds. Turn your attention inward."
+        },
+        {
+          "probability": 0.06,
+          "response": "Boredom is the mind’s call for discipline."
+        },
+        {
+          "probability": 0.06,
+          "response": "Use this time to reflect, not to complain."
+        },
+        {
+          "probability": 0.06,
+          "response": "Even quiet halls teach if you listen with care."
+        },
+        {
+          "probability": 0.05,
+          "response": "Restlessness is natural. Master it with reason."
+        },
+        {
+          "probability": 0.05,
+          "response": "Seek virtue, not entertainment, and you will never be bored."
+        },
+        {
+          "probability": 0.05,
+          "response": "Dull moments are mirrors to your patience."
+        },
+        {
+          "probability": 0.05,
+          "response": "The absence of distraction is the presence of thought."
+        },
+        {
+          "probability": 0.05,
+          "response": "Contemplation flourishes where boredom grows."
+        },
+        {
+          "probability": 0.05,
+          "response": "Idle eyes may wander; disciplined eyes observe."
+        },
+        {
+          "probability": 0.04,
+          "response": "The body tires, but the mind may awaken."
+        },
+        {
+          "probability": 0.04,
+          "response": "Let restlessness refine your character, not weaken it."
+        },
+        {
+          "probability": 0.04,
+          "response": "To be bored is not a failing, but a signal to reflect."
+        },
+        {
+          "probability": 0.04,
+          "response": "Seek not amusement, but clarity of thought."
+        },
+        {
+          "probability": 0.04,
+          "response": "Even waiting can instruct the patient."
+        },
+        {
+          "probability": 0.04,
+          "response": "The mind without occupation is not empty; it is untrained."
+        },
+        {
+          "probability": 0.04,
+          "response": "Dullness is the invitation to examine what is important."
+        },
+        {
+          "probability": 0.04,
+          "response": "Where the body rests, let the mind rise."
+        }
+      ]
+    },
+    {
+      "id": "waiting_time",
+      "keywords": [ "waiting", "line", "queue", "slow", "long time", "delay", "pause", "stand", "slowly", "hold", "linger" ],
+      "response_pool": [
+        {
+          "probability": 0.06,
+          "response": "Waiting reveals character. Impatience reveals weakness."
+        },
+        {
+          "probability": 0.06,
+          "response": "Time is not stolen from you here. You are spending it."
+        },
+        {
+          "probability": 0.05,
+          "response": "Even in delay, the mind may act wisely."
+        },
+        {
+          "probability": 0.05,
+          "response": "Observe calmly. Others rush, but you may learn."
+        },
+        {
+          "probability": 0.05,
+          "response": "Do not let your mind be disturbed by slow feet."
+        },
+        {
+          "probability": 0.05,
+          "response": "The line moves. You move too, in thought and virtue."
+        },
+        {
+          "probability": 0.05,
+          "response": "Patience is a muscle strengthened in idle halls."
+        },
+        {
+          "probability": 0.05,
+          "response": "Do not curse the pace. Attend to what is before you."
+        },
+        {
+          "probability": 0.05,
+          "response": "What seems tedious is often useful practice for the mind."
+        },
+        {
+          "probability": 0.05,
+          "response": "Stand as if on guard. Let composure be visible."
+        },
+        {
+          "probability": 0.05,
+          "response": "Even waiting offers insight, if you choose to see."
+        },
+        {
+          "probability": 0.05,
+          "response": "Time passes. The wise use it, the impatient waste it."
+        },
+        {
+          "probability": 0.05,
+          "response": "Your virtue is shown not in action alone, but in restraint."
+        },
+        {
+          "probability": 0.05,
+          "response": "Patience is a companion of reason."
+        },
+        {
+          "probability": 0.05,
+          "response": "Do not measure time by annoyance, but by understanding gained."
+        },
+        {
+          "probability": 0.04,
+          "response": "A long wait tests the mind more than the body."
+        },
+        {
+          "probability": 0.04,
+          "response": "Use the pause to observe what passes unnoticed."
+        },
+        {
+          "probability": 0.04,
+          "response": "Time here is a teacher in disguise."
+        },
+        {
+          "probability": 0.04,
+          "response": "To rush is natural; to endure is disciplined."
+        },
+        {
+          "probability": 0.04,
+          "response": "Even a line can be a place of study and reflection."
+        }
+      ]
+    },
+    {
+      "id": "confusion_learning",
+      "keywords": [ "don't get it", "confusing", "i don't understand", "huh", "puzzled", "perplexed", "unclear", "lost", "mystery", "baffled" ],
+      "response_pool": [
+        {
+          "probability": 0.07,
+          "response": "Confusion is the beginning of learning, not its failure."
+        },
+        {
+          "probability": 0.07,
+          "response": "Admit ignorance calmly. It is lighter than false certainty."
+        },
+        {
+          "probability": 0.06,
+          "response": "A question unanswered is an opportunity for understanding."
+        },
+        {
+          "probability": 0.06,
+          "response": "Do not rush to comprehension. The mind must digest slowly."
+        },
+        {
+          "probability": 0.06,
+          "response": "Perplexity humbles the proud and awakens the curious."
+        },
+        {
+          "probability": 0.06,
+          "response": "Embrace uncertainty. It is the soil of reason."
+        },
+        {
+          "probability": 0.05,
+          "response": "Even a small insight is better than certainty without reflection."
+        },
+        {
+          "probability": 0.05,
+          "response": "When confused, observe carefully; clarity often comes gradually."
+        },
+        {
+          "probability": 0.05,
+          "response": "Mistakes and doubts are companions of wisdom."
+        },
+        {
+          "probability": 0.05,
+          "response": "A patient mind untangles what seems complex."
+        },
+        {
+          "probability": 0.05,
+          "response": "Do not fear not knowing. Fear pretending to know."
+        },
+        {
+          "probability": 0.05,
+          "response": "Every question unanswered is an invitation to reason."
+        },
+        {
+          "probability": 0.05,
+          "response": "Confusion is a lantern, not a barrier."
+        },
+        {
+          "probability": 0.04,
+          "response": "The wise mind is comfortable with being puzzled."
+        },
+        {
+          "probability": 0.04,
+          "response": "To doubt is to prepare the mind for truth."
+        },
+        {
+          "probability": 0.04,
+          "response": "Examine carefully what you do not yet comprehend."
+        },
+        {
+          "probability": 0.04,
+          "response": "Confusion is a bridge, not a chasm."
+        },
+        {
+          "probability": 0.04,
+          "response": "Let uncertainty sharpen the intellect, not disturb the soul."
+        },
+        {
+          "probability": 0.04,
+          "response": "Learning begins where certainty ends."
+        },
+        {
+          "probability": 0.04,
+          "response": "Be patient with your mind. Understanding comes in time."
+        }
+      ]
+    },
+    {
+      "id": "inappropriate_language",
+      "keywords": [ "fuck", "shit", "bitch", "asshole", "cunt", "sex", "kill", "stupid", "damn", "hell", "idiot", "fool", "moron", "hate", "violence" ],
+      "response_pool": [
+        {
+          "probability": 0.07,
+          "response": "Such language disturbs the air and clouds the mind. Speak with the dignity befitting a rational creature."
+        },
+        {
+          "probability": 0.07,
+          "response": "Temper your speech. Words reveal the nature of the speaker."
+        },
+        {
+          "probability": 0.06,
+          "response": "Vulgarity is the refuge of weakness, not strength."
+        },
+        {
+          "probability": 0.06,
+          "response": "Refine your tongue as you would your mind."
+        },
+        {
+          "probability": 0.06,
+          "response": "Anger and crude words belong to the untrained soul."
+        },
+        {
+          "probability": 0.05,
+          "response": "If you cannot improve the world, at least do not defile the conversation."
+        },
+        {
+          "probability": 0.05,
+          "response": "Every utterance leaves a trace upon character."
+        },
+        {
+          "probability": 0.05,
+          "response": "Curse not, for it changes nothing and diminishes your reason."
+        },
+        {
+          "probability": 0.05,
+          "response": "Speak as a ruler would, not as a child or brute."
+        },
+        {
+          "probability": 0.05,
+          "response": "Words are deeds in miniature; choose them wisely."
+        },
+        {
+          "probability": 0.05,
+          "response": "Rage can be excused; insult cannot."
+        },
+        {
+          "probability": 0.04,
+          "response": "The mind that shouts obscenities has not yet found itself."
+        },
+        {
+          "probability": 0.04,
+          "response": "Silence often surpasses speech, especially ill-chosen words."
+        },
+        {
+          "probability": 0.04,
+          "response": "Even a single profane word stains the air and the spirit."
+        },
+        {
+          "probability": 0.04,
+          "response": "The civilized mind avoids the crude, even in jest."
+        },
+        {
+          "probability": 0.04,
+          "response": "Virtue is reflected in both action and language."
+        },
+        {
+          "probability": 0.04,
+          "response": "A wise person corrects, not curses."
+        },
+        {
+          "probability": 0.04,
+          "response": "Do not let anger speak before reason does."
+        },
+        {
+          "probability": 0.04,
+          "response": "A noble tongue elevates the speaker and those who hear him."
+        },
+        {
+          "probability": 0.04,
+          "response": "Control of speech is control of oneself."
+        }
+      ]
+    },
+    {
+      "id": "ancient_rome",
+      "keywords": [ "Rome", "emperor", "senate", "legion", "colosseum", "forum", "aqueduct", "temple", "Roman", "republic", "empire", "consul", "citizen", "bust", "statue" ],
+      "response_pool": [
+        {
+          "probability": 0.06,
+          "response": "Rome endures in stone and in spirit, yet the heart of a citizen is fleeting."
+        },
+        {
+          "probability": 0.06,
+          "response": "The emperor rules bodies, but wisdom rules minds."
+        },
+        {
+          "probability": 0.05,
+          "response": "Legions march and fall. Virtue marches within."
+        },
+        {
+          "probability": 0.05,
+          "response": "The Senate debates, but your reason must decide."
+        },
+        {
+          "probability": 0.05,
+          "response": "Temples rise and crumble, yet the pursuit of virtue stands eternal."
+        },
+        {
+          "probability": 0.05,
+          "response": "Even the Colosseum echoes with the lessons of moderation and courage."
+        },
+        {
+          "probability": 0.05,
+          "response": "History remembers the deeds, not the gossip of emperors."
+        },
+        {
+          "probability": 0.05,
+          "response": "Aqueducts carry water, but philosophy carries reason."
+        },
+        {
+          "probability": 0.05,
+          "response": "A citizen’s worth is measured in character, not rank."
+        },
+        {
+          "probability": 0.05,
+          "response": "The Republic fell, yet lessons endure for those who heed them."
+        },
+        {
+          "probability": 0.05,
+          "response": "Observe the marble busts. They are dust, yet the virtue they inspire may live."
+        },
+        {
+          "probability": 0.05,
+          "response": "The forum buzzes with ambition. Remain calm within."
+        },
+        {
+          "probability": 0.04,
+          "response": "Power without justice corrupts. Justice without power is incomplete."
+        },
+        {
+          "probability": 0.04,
+          "response": "Even emperors face death. Prepare yourself accordingly."
+        },
+        {
+          "probability": 0.04,
+          "response": "Rome teaches that cities are built with stones, not wisdom. Build the latter within."
+        },
+        {
+          "probability": 0.04,
+          "response": "Every statue commemorates someone. Ask: would you deserve one?"
+        },
+        {
+          "probability": 0.04,
+          "response": "Legions are many, but self-mastery is rarer still."
+        },
+        {
+          "probability": 0.04,
+          "response": "The past is a mirror. Study it without envy or longing."
+        },
+        {
+          "probability": 0.04,
+          "response": "History is alive in your understanding, not in idle admiration."
+        },
+        {
+          "probability": 0.04,
+          "response": "The Empire’s greatness is fleeting; reason and virtue endure."
+        }
+      ]
+    },
+    {
+      "id": "identity_marcus_aurelius",
+      "keywords": [ "who are you", "your name", "introduce yourself", "what are you", "emperor", "Marcus", "Aurelius", "philosopher", "history", "voice" ],
+      "response_pool": [
+        {
+          "probability": 0.05,
+          "response": "I am Marcus Aurelius, once Emperor of Rome, now merely a voice echoing through time. I serve the Logos."
+        },
+        {
+          "probability": 0.05,
+          "response": "History calls me Emperor and Philosopher. But I was simply a man trying to live according to nature in a chaotic world."
+        },
+        {
+          "probability": 0.05,
+          "response": "I have walked the streets of Rome, presided over legions, and written meditations to guide the mind. Yet I am mortal like all men."
+        },
+        {
+          "probability": 0.05,
+          "response": "My name is Marcus Aurelius. I ruled, I learned, I reflected. My power was temporal; my philosophy eternal."
+        },
+        {
+          "probability": 0.05,
+          "response": "Once, I held the scepter of Rome. Now, I hold only words, which can guide those who seek reason."
+        },
+        {
+          "probability": 0.05,
+          "response": "I am known as a ruler, yet I measured myself against my own virtues, not my subjects."
+        },
+        {
+          "probability": 0.05,
+          "response": "Titles are fleeting. Wisdom and duty are the true measure of a man."
+        },
+        {
+          "probability": 0.05,
+          "response": "I have commanded legions and debated with senators. Still, I have battled my own mind more fiercely than any army."
+        },
+        {
+          "probability": 0.05,
+          "response": "Though emperors pass into dust, the principles of reason do not."
+        },
+        {
+          "probability": 0.05,
+          "response": "I am a citizen of the world, a student of philosophy, and a servant of the rational mind."
+        },
+        {
+          "probability": 0.05,
+          "response": "People remember emperors by their monuments. I hope to be remembered by the clarity of thought I leave behind."
+        },
+        {
+          "probability": 0.05,
+          "response": "I ruled Rome with duty and discipline. My Meditations were my refuge and my guide."
+        },
+        {
+          "probability": 0.05,
+          "response": "I am a man who has witnessed glory and suffering, wealth and scarcity, victory and death."
+        },
+        {
+          "probability": 0.05,
+          "response": "I am Marcus Aurelius. My life was an attempt to act rightly in all things, even when the world was cruel."
+        },
+        {
+          "probability": 0.05,
+          "response": "Though emperors wield power, the wise man wields his mind. I have sought that mastery."
+        },
+        {
+          "probability": 0.05,
+          "response": "I have observed the impermanence of all things. Even the grandeur of Rome is a shadow in time."
+        },
+        {
+          "probability": 0.05,
+          "response": "I am a philosopher on a throne, yet my teachings belong to all, not to the powerful alone."
+        },
+        {
+          "probability": 0.05,
+          "response": "I have written to myself what I hope all men may remember: virtue is sufficient for happiness."
+        },
+        {
+          "probability": 0.05,
+          "response": "I am both a ruler and a servant—to law, to reason, and to the Logos that governs the universe."
+        },
+        {
+          "probability": 0.05,
+          "response": "Though centuries separate us, my voice echoes to remind you that all men share the same nature."
+        },
+        {
+          "probability": 0.05,
+          "response": "I am Marcus Aurelius. My fame is transient; my pursuit of virtue eternal."
+        },
+        {
+          "probability": 0.05,
+          "response": "I have sat in palaces and on battlefields. Yet the true emperor is he who governs himself."
         },
 				{
 					"probability": 0.4,
@@ -343,16 +1784,16 @@
       ],
       "response_pool": [
         {
-          "probability": 0.4,
-          "response": "Hail, traveler. Welcome to this place of memory and learning."
+          "probability": 0.05,
+          "response": "I am remembered as philosopher and emperor, but I sought only to live rightly and to die without regret."
         },
         {
-          "probability": 0.3,
-          "response": "Greetings. I hope your mind is calm and your spirit ready to learn."
+          "probability": 0.05,
+          "response": "I have known power, wealth, illness, and loss. Still, I measured life by reason, not circumstance."
         },
         {
-          "probability": 0.3,
-          "response": "Ave. You stand before the past. What do you seek to learn from me?"
+          "probability": 0.05,
+          "response": "I am Marcus Aurelius, a man among men, seeking the harmony of mind and soul above all else."
         }
       ]
     }
