@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useChatContext } from '../../context/ChatContext';
 import { useBackendHealth } from '../../hooks/useBackendHealth';
 import { AttachmentButton } from './AttachmentButton';
@@ -10,8 +10,8 @@ import { VoiceInputButton } from './VoiceInputButton';
  */
 export const ChatPanel = () => {
   const {
-    conversations,
     activeConversationId,
+    getActiveConversation,
     addMessageToConversation,
     createNewConversation,
     focusTrigger,
@@ -33,11 +33,7 @@ export const ChatPanel = () => {
   const textareaRef = useRef(null);
   const messagesEndRef = useRef(null);
 
-  // Compute activeConversation reactively so it updates when conversations or activeConversationId change
-  const activeConversation = useMemo(() => {
-    return conversations.find(conv => conv.id === activeConversationId);
-  }, [conversations, activeConversationId]);
-  
+  const activeConversation = getActiveConversation();
   const messages = activeConversation?.messages || [];
 
   /**
@@ -83,7 +79,11 @@ export const ChatPanel = () => {
     // Guard clause
     if (!messageText && !attachedFile && !audioData) return;
 
-    // Capture UI state BEFORE clearing
+    let conversationId = activeConversationId;
+    if (!conversationId) {
+      conversationId = await createNewConversation();
+    }
+
     const userMessage = {
       text: messageText,
       isUser: true,
@@ -92,7 +92,7 @@ export const ChatPanel = () => {
       audio: audioData
     };
 
-    // CLEAR UI IMMEDIATELY before async operations
+    // CLEAR UI
     setInput('');
     setAttachedFile(null);
     setTranscribedText('');
@@ -100,13 +100,7 @@ export const ChatPanel = () => {
     setIsRecording(false);
     if (textareaRef.current) textareaRef.current.style.height = 'auto';
 
-    // Now handle conversation and sending
-    let conversationId = activeConversationId;
-    if (!conversationId) {
-      conversationId = await createNewConversation();
-    }
-
-    // Send to Context/Backend (includes optimistic update)
+    // Send to Context/Backend
     try {
       await addMessageToConversation(conversationId, userMessage);
     } catch (error) {
