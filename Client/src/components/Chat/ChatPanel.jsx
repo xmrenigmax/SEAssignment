@@ -15,7 +15,6 @@ export const ChatPanel = () => {
     activeConversationId,
     getActiveConversation,
     addMessageToConversation,
-    createNewConversation,
     isLoading
   } = useChatContext();
 
@@ -71,11 +70,7 @@ export const ChatPanel = () => {
     // Guard clause
     if (!messageText && !attachedFile && !audioData) return;
 
-    let conversationId = activeConversationId;
-    if (!conversationId) {
-      conversationId = await createNewConversation();
-    }
-
+    // Capture UI state BEFORE clearing
     const userMessage = {
       text: messageText,
       isUser: true,
@@ -96,7 +91,7 @@ export const ChatPanel = () => {
 
     // Send to Context/Backend
     try {
-      await addMessageToConversation(conversationId, userMessage);
+      await addMessageToConversation(activeConversationId, userMessage);
     } catch (error) {
       console.error("Failed to send message:", error);
     }
@@ -197,9 +192,7 @@ export const ChatPanel = () => {
             { (attachedFile || audioData) && (
               <div className="flex items-center gap-2 mb-2 text-xs text-[var(--accent)] bg-[var(--bg-primary)] w-fit px-2 py-1 rounded">
                 <span>{ attachedFile ? attachedFile.name : 'Voice Message Ready' }</span>
-                <button onClick={ () => { setAttachedFile(null); setAudioData(null); }} className="hover:text-red-500">
-                  ×
-                </button>
+                <button onClick={ () => { setAttachedFile(null); setAudioData(null); }} className="hover:text-red-500">×</button>
               </div>
             )}
             <textarea
