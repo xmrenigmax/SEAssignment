@@ -10,6 +10,7 @@ import { Script } from '../models/Conversations.js';
 const tokenizer = new natural.WordTokenizer();
 const stemmer = natural.PorterStemmer;
 const IGNORED_WORDS = new Set(['the', 'is', 'at', 'which', 'on', 'a', 'an', 'and', 'or', 'to', 'of', 'in', 'it', 'you', 'i']);
+const MIN_FUZZY_LENGTH = 3;
 
 // Cache the script in memory so we don't hit the DB on every single message
 let cachedScript = null;

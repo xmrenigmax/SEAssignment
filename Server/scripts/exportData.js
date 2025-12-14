@@ -1,40 +1,63 @@
 /**
- * @file exportData.js
- * @description Backs up your conversation database to a timestamped JSON file.
+ * @file scripts/exportData.js
+ * @description Backs up your LIVE MongoDB Atlas database to a local timestamped JSON file.
  * Usage: node scripts/exportData.js
  */
 
+import mongoose from 'mongoose';
 import fs from 'fs/promises';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
+import { Conversation } from '../models/Conversations.js';
+
+dotenv.config();
 
 // File paths
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const DATA_DIR = join(__dirname, '../data');
-const CONVERSATIONS_FILE = join(DATA_DIR, 'conversations.json');
 
 async function exportData() {
+  if (!process.env.MONGODB_URI) {
+    console.error('Error: MONGODB_URI is missing from .env');
+    process.exit(1);
+  }
+
   try {
-    // Check if DB exists
-    await fs.access(CONVERSATIONS_FILE);
+    console.log('Connecting to MongoDB Atlas...');
+    await mongoose.connect(process.env.MONGODB_URI);
 
-    const data = await fs.readFile(CONVERSATIONS_FILE, 'utf8');
+    console.log('Fetching live conversations...');
+    // Lean() makes it faster by returning plain JS objects instead of Mongoose documents
+    const conversations = await Conversation.find({}).lean();
 
-    // Create timestamp: YYYY-MM-DD_HH-MM-SS
-    const now = new Date();
-    const timestamp = now.toISOString().replace(/T/, '_').replace(/\..+/, '').replace(/:/g, '-');
-
-    const exportFile = join(DATA_DIR, `backup-${ timestamp }.json`);
-
-    await fs.writeFile(exportFile, data);
-    console.log(`Success: Database backed up to: \n   ${ exportFile }`);
-  } catch (error) {
-    if (error.code === 'ENOENT') {
-      console.error(`Error: No database found at ${ CONVERSATIONS_FILE }`);
+    if (conversations.length === 0) {
+      console.warn('Warning: Database is empty. Nothing to backup.');
     } else {
-      console.error('Export failed:', error.message);
+
+      // Create timestamp: YYYY-MM-DD_HH-MM-SS
+      const now = new Date();
+      const timestamp = now.toISOString().replace(/T/, '_').replace(/\..+/, '').replace(/:/g, '-');
+      const exportFile = join(DATA_DIR, `backup-${ timestamp }.json`);
+
+      // Ensure data directory exists
+      try {
+        await fs.access(DATA_DIR);
+      } catch {
+        await fs.mkdir(DATA_DIR, { recursive: true });
+      }
+
+      // Write to file
+      await fs.writeFile(exportFile, JSON.stringify(conversations, null, 2));
+      console.log(`Success: ${ conversations.length } conversations backed up to:\n   ${ exportFile }`);
     }
+
+  } catch (error) {
+    console.error('Export failed:', error.message);
+  } finally {
+    await mongoose.connection.close();
+    process.exit(0);
   }
 }
 

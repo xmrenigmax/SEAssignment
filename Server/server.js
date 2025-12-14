@@ -121,6 +121,42 @@ app.delete('/api/conversations', async (req, res) => {
   }
 });
 
+// Imports
+app.post('/api/conversations/import', async (req, res) => {
+  try {
+    await connectToDatabase();
+    const conversations = req.body;
+
+    // Validation
+    if (!Array.isArray(conversations) || conversations.length === 0) {
+      return res.status(400).json({ error: "Invalid data: Expected an array of conversations." });
+    }
+
+    console.log(`[Import] Processing ${conversations.length} conversations...`);
+
+    // Create Bulk Operations
+    const operations = conversations.map(convo => ({
+      updateOne: {
+        filter: { id: convo.id },
+        update: { $set: convo },
+        upsert: true
+      }
+    }));
+
+    // Execute Bulk Write
+    if (operations.length > 0) {
+      await Conversation.bulkWrite(operations);
+    }
+
+    console.log(`[Import] Success!`);
+    res.json({ message: `Successfully imported ${conversations.length} conversations.` });
+
+  } catch (error) {
+    console.error("Import Error:", error);
+    res.status(500).json({ error: "Server failed to import data." });
+  }
+});
+
 // Send Message
 app.post('/api/conversations/:id/messages', upload.single('attachment'), async (req, res) => {
   try {
