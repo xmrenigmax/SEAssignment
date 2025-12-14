@@ -1,25 +1,28 @@
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import { ChatProvider } from './context/ChatContext';
-import Landing from './pages/LandingPage';
-import Error404 from './pages/Error404';
 import { ThemeProvider } from './context/ThemeContext';
 import { useLocalStorage } from './hooks/useLocalStorage';
+import Landing from './pages/LandingPage';
+import Error404 from './pages/Error404';
 
-// Layout Context
-const LayoutContext = () => {
+/**
+ * Root Layout Component.
+ * Acts as a wrapper for routes that need shared access to the Tour state.
+ * @returns {JSX.Element} The outlet context provider.
+ */
+const RootLayout = () => {
   const [hasCompletedTour, setHasCompletedTour] = useLocalStorage('marcus-tour-complete', false);
 
-  // Verify context is being created
-  if (hasCompletedTour === undefined) console.warn("Warning: Tour state is undefined");
-
-  return <Outlet context={{ hasCompletedTour, setHasCompletedTour }} />;
+  return (
+    <Outlet context={{ hasCompletedTour, setHasCompletedTour }} />
+  );
 };
 
 // Router Configuration
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LayoutContext />,
+    element: <RootLayout />,
     errorElement: <Error404 />,
     children: [
       {
@@ -28,7 +31,7 @@ const router = createBrowserRouter([
       },
       {
         path: "*",
-        element: <Landing />,
+        element: <Error404 />,
       }
     ]
   }
@@ -39,11 +42,15 @@ const router = createBrowserRouter([
   }
 });
 
+/**
+ * Main Application Component.
+ * Wraps the router with global context providers (Theme, Chat).
+ */
 function App() {
   return (
     <ThemeProvider>
       <ChatProvider>
-        <RouterProvider router={router} />
+        <RouterProvider router={ router } />
       </ChatProvider>
     </ThemeProvider>
   );

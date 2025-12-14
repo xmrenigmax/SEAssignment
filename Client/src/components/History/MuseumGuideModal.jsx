@@ -15,20 +15,36 @@ export const MuseumGuideModal = ({ isOpen, onClose, onStartTour }) => {
   const [suggestedPrompts, setSuggestedPrompts] = useState([]);
 
   useEffect(() => {
-    fetch('/data/suggested-prompts.json')
+    const controller = new AbortController();
+
+    fetch('/data/suggested-prompts.json', { signal: controller.signal })
       .then(response => response.json())
       .then(data => setSuggestedPrompts(data))
-      .catch(error => console.error('Failed to load suggested prompts:', error));
+      .catch(error => {
+        if (error.name !== 'AbortError') {
+          console.error('Failed to load suggested prompts:', error);
+
+          // Fallback prompts if file missing
+          setSuggestedPrompts([
+            "How do I deal with difficult people?",
+            "I feel overwhelmed by the future.",
+            "What is the nature of the human mind?"
+          ]);
+        }
+      });
+
+    return () => controller.abort();
   }, []);
 
   const handlePromptClick = async (text) => {
     try {
-      onClose?.();
+      if (onClose) onClose();
       await startConversationWithPrompt(text);
     } catch (error) {
       console.error('Failed to start conversation from prompt:', error);
     }
   };
+
   if (!isOpen) return null;
 
   // Determine button behavior based on context
@@ -42,11 +58,7 @@ export const MuseumGuideModal = ({ isOpen, onClose, onStartTour }) => {
         <div className="bg-[var(--bg-primary)] p-6 border-b border-[var(--border)] relative flex-shrink-0">
           <div className="absolute top-0 left-0 w-full h-1 bg-[var(--accent)] opacity-50"></div>
           { !isTourMode && (
-            <button
-              onClick={ onClose }
-              className="absolute top-4 right-4 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
-              aria-label="Close"
-            >
+            <button onClick={ onClose } className="absolute top-4 right-4 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors" aria-label="Close" >
               ✕
             </button>
           )}
@@ -88,11 +100,11 @@ export const MuseumGuideModal = ({ isOpen, onClose, onStartTour }) => {
             </p>
             <div className="space-y-2">
               <p className="text-xs font-bold text-[var(--text-secondary)] uppercase">Suggested Inquiries</p>
-            { suggestedPrompts.map((prompt, index) => (
-              <button key={ index } onClick={ () => handlePromptClick(prompt) } className="w-full text-left p-2 rounded hover:bg-[var(--bg-primary)] text-sm text-[var(--accent)] transition-colors border border-transparent hover:border-[var(--border)]">
-              "{ prompt }"
-              </button>
-            ))}
+              { suggestedPrompts.map((prompt, index) => (
+                <button key={ index } onClick={ () => handlePromptClick(prompt) } className="w-full text-left p-2 rounded hover:bg-[var(--bg-primary)] text-sm text-[var(--accent)] transition-colors border border-transparent hover:border-[var(--border)]">
+                  "{ prompt }"
+                </button>
+              ))}
             </div>
           </section>
         </div>
