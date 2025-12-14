@@ -1,15 +1,12 @@
 import { useLocalStorage } from './useLocalStorage';
 import { useState, useCallback } from 'react';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+// ✅ UPDATE: Production-Ready URL Selector
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 /**
  * Main chat logic hook.
- * Features:
- * 1. Auto-Sync with Server
- * 2. Optimistic UI Updates
- * 3. File Upload Support
- * @returns {Object} Chat state and methods
+ * Features: Auto-Sync, Optimistic UI, File Uploads, Backup Restore.
  */
 export const useChat = () => {
   const [conversations, setConversations] = useLocalStorage('chat-conversations', []);
@@ -100,23 +97,33 @@ export const useChat = () => {
   /**
    * Imports a conversation history.
    */
-  const importConversations = useCallback((fileData) => {
+  const importConversations = useCallback(async (fileData) => {
     if (!Array.isArray(fileData)) {
-      throw new Error("Invalid import format: Expected an array.");
+      alert("Invalid import format: Expected an array.");
+      return;
     }
 
-    setConversations(prev => {
-      // Create a Map of existing IDs to prevent duplicates
-      const existingIds = new Set(prev.map(conversation => conversation.id));
-      const newConversations = fileData.filter(conversation => !existingIds.has(conversation.id));
+    try {
+      // Send Data to Backend
+      const response = await fetch(`${API_BASE_URL}/conversations/import`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(fileData)
+      });
 
-      // Combine and sort by newest
-      const combined = [...newConversations, ...prev].sort(
-        (a, b) => new Date(b.updatedAt || b.createdAt) - new Date(a.updatedAt || a.createdAt)
-      );
+      if (!response.ok) throw new Error("Failed to save backup to server.");
 
-      return combined;
-    });
+      // Refresh State from Backend
+      const refreshRes = await fetch(`${API_BASE_URL}/conversations`);
+      const freshData = await refreshRes.json();
+
+      setConversations(freshData);
+      alert("Backup restored successfully!");
+
+    } catch (error) {
+      console.error("Import Failed:", error);
+      alert("Error restoring backup. Check console details.");
+    }
   }, [setConversations]);
 
   /**
@@ -127,7 +134,7 @@ export const useChat = () => {
     const tempId = `temp-${Date.now()}`;
     const optimisticMessage = { ...message, id: tempId };
 
-    // Update UI immediately before network request
+    // Optimistic UI Update
     setConversations(prev => prev.map(conversation => {
       if (conversation.id === conversationId) {
         return {
@@ -159,7 +166,7 @@ export const useChat = () => {
         body: body
       });
 
-      // Confirms the user message was saved and adds the AI's response.
+      // Update with real server response
       setConversations(prev => prev.map(conversation => {
         if (conversation.id === conversationId) {
           return data.conversation;
@@ -182,10 +189,8 @@ export const useChat = () => {
    * Deletes a specific conversation.
    */
   const deleteConversation = async (id) => {
-    // Optimistic delete
-    setConversations(prev => prev.filter(conversation=> conversation.id !== id));
+    setConversations(prev => prev.filter(conversation => conversation.id !== id));
     if (activeConversationId === id) setActiveConversationId(null);
-
     try { await apiCall(`/conversations/${ id }`, { method: 'DELETE' }); } catch (error) { console.warn(error) }
   };
 
@@ -197,12 +202,7 @@ export const useChat = () => {
 
     setConversations([]);
     setActiveConversationId(null);
-
-    try {
-      await apiCall('/conversations', { method: 'DELETE' });
-    } catch (error) {
-      console.warn("Failed to clear on server");
-    }
+    try { await apiCall('/conversations', { method: 'DELETE' }); } catch (error) { console.warn("Failed to clear on server"); }
   };
 
   /**

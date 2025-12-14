@@ -1,89 +1,81 @@
 /**
- * @file logicEngine.js
- * @description Core logic for loading and matching script rules.
- * Added Stop-Word filtering and Phrase Matching to prevent false positives.
+ * @file utils/logicEngine.js
+ * @description Logic engine that fetches rules from MongoDB instead of a local JSON file.
  */
 
-import fs from 'fs/promises';
 import natural from 'natural';
+import { Script } from '../models/Conversations.js';
 
-// Initialize NLP tools
+// NLP Tools
 const tokenizer = new natural.WordTokenizer();
 const stemmer = natural.PorterStemmer;
+const IGNORED_WORDS = new Set(['the', 'is', 'at', 'which', 'on', 'a', 'an', 'and', 'or', 'to', 'of', 'in', 'it', 'you', 'i']);
+const MIN_FUZZY_LENGTH = 3;
+const FUZZY_THRESHOLD = 0.85;
 
-// This prevents "I like you" from triggering a rule just because it has "you"
-const IGNORED_WORDS = new Set([
-  'the', 'is', 'at', 'which', 'on', 'a', 'an', 'and', 'or', 'but',
-  'to', 'of', 'in', 'it', 'that', 'you', 'your', 'me', 'my', 'i', 'we'
-]);
+// Cache the script in memory so we don't hit the DB on every single message
+let cachedScript = null;
 
-// Prevents short words like "bat" matching "cat"
-const MIN_FUZZY_LENGTH = 4;
-
-// Similarity Threshold (0.85 is standard, 0.90 is stricter)
-const FUZZY_THRESHOLD = 0.90;
-let scriptData = null;
-
-// Loads JSON Script into memory
-export async function loadScript(filePath) {
+/**
+ * Loads the script from MongoDB into memory.
+ */
+export async function loadScript() {
   try {
-    const data = await fs.readFile(filePath, 'utf8');
-    scriptData = JSON.parse(data);
-    console.log('Logic Engine Loaded (Robust NLP Active)');
+    // Fetch the document with configId 'main_config'
+    const scriptDoc = await Script.findOne({ configId: 'main_config' });
+
+    if (scriptDoc) {
+      cachedScript = scriptDoc;
+      console.log('[Logic Engine] Rules loaded from MongoDB.');
+    } else {
+      console.warn('[Logic Engine] No script found in DB. Using defaults.');
+      cachedScript = { rules: [], general_responses: [] };
+    }
   } catch (error) {
-    console.error('Error loading JSON script:', error);
-    scriptData = { rules: [], general_responses: [] };
+    console.error('[Logic Engine] DB Error:', error);
+    cachedScript = { rules: [], general_responses: [] };
   }
 }
 
 /**
- * Normalizes probabilities to ensure they sum to 1, then picks based on weight.
+ * Normalizes probabilities and picks a response.
+ * @param {Array} pool - Array of response objects
  */
 function robustRandomSelect(pool) {
   if (!pool || pool.length === 0) return null;
-  const totalWeight = pool.reduce((sum, item) => sum + (item.probability || 0), 0);
+  const totalWeight = pool.reduce((sum, item) => sum + (item.probability*4 || 0), 0);
   let randomPoint = Math.random() * totalWeight;
 
   for (const option of pool) {
     const weight = option.probability || 0;
-    if (randomPoint < weight) {
-      return option.response;
-    }
+    if (randomPoint < weight) return option.response;
     randomPoint -= weight;
   }
   return pool[0].response;
 }
 
 /**
- * Checks if input matches rules using robust NLP.
- * Priority:
+ * Checks text against loaded rules.
+ * @param {string} input - User message
  */
 export function checkScriptedResponse(input) {
-  if (!scriptData || !scriptData.rules) return null;
+  if (!cachedScript || !cachedScript.rules) return null;
 
-  // Preprocess input
   const inputLower = input.toLowerCase().trim();
   const inputTokens = tokenizer.tokenize(inputLower);
-
-  // Filter out stop words from the input for keyword analysis
   const importantTokens = inputTokens.filter(t => !IGNORED_WORDS.has(t));
   const importantStems = importantTokens.map(t => stemmer.stem(t));
-  // Check each Rule
-  for (const rule of scriptData.rules) {
+
+  for (const rule of cachedScript.rules) {
     const matchFound = rule.keywords.some(keyword => {
       const keywordLower = keyword.toLowerCase();
 
-      // If the keyword in JSON has spaces (e.g. "who are you"), check the FULL raw string.
-      if (keywordLower.includes(' ')) {
-        return inputLower.includes(keywordLower);
-      }
-
-      // If the keyword is a stop word (e.g. "you"), IGNORE it
+      // Phrase match
+      if (keywordLower.includes(' ')) return inputLower.includes(keywordLower);
       if (IGNORED_WORDS.has(keywordLower)) return false;
 
+      // Stem match
       const keywordStem = stemmer.stem(keywordLower);
-
-      // Direct Stem Match (e.g. "walking" matches "walk")
       if (importantStems.includes(keywordStem)) return true;
 
       // Fuzzy Match (Handle typos, but only for longer words)
@@ -100,16 +92,14 @@ export function checkScriptedResponse(input) {
 
     // Matches
     if (matchFound) {
-      console.log(`⚡ [Logic Engine] Match found for rule: ${rule.id}`);
+      console.log(`⚡ [Logic Engine] Matched Rule: ${rule.id}`);
       return robustRandomSelect(rule.response_pool);
     }
   }
   return null;
 }
-// Returns fallback if no match
+
 export function getFallback() {
-  if (!scriptData || !scriptData.general_responses) {
-    return "The mind must remain firm.";
-  }
-  return robustRandomSelect(scriptData.general_responses);
+  if (!cachedScript || !cachedScript.general_responses) return "The mind must remain firm.";
+  return robustRandomSelect(cachedScript.general_responses);
 }

@@ -19,6 +19,7 @@ export const ChatPanel = () => {
     getActiveConversation,
     addMessageToConversation,
     createNewConversation,
+    loadConversation,
     isLoading
   } = useChatContext();
 
@@ -37,28 +38,35 @@ export const ChatPanel = () => {
   const textareaRef = useRef(null);
   const messagesEndRef = useRef(null);
 
+  // Flag to prevent fetching history while we are locally creating a chat
+  const isCreatingConversation = useRef(false);
+
   const activeConversation = getActiveConversation();
   const messages = activeConversation?.messages || [];
 
+  // When the ID changes, fetch history UNLESS we are in the middle of creating it
+  useEffect(() => {
+    if (activeConversationId) {
+      // If we are manually creating this chat, skip the fetch.
+      // We do NOT reset the flag here, because Strict Mode would break it.
+      if (isCreatingConversation.current) {
+        return;
+      }
+      loadConversation(activeConversationId);
+    }
+  }, [activeConversationId, loadConversation]);
+
   /**
    * Effect: Auto-scroll to bottom
-   * Triggers when messages change, recording status changes, or loading state changes.
    */
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isRecording, isLoading])
 
-  /**
-   * Handles Recording Completion.
-   * Receives { audioData, text }
-   */
   const handleRecordingComplete = (result) => {
     setIsRecording(false);
     if (result) {
-      // Save the Audio Blob (Base64) for the player
       if (result.audioData) setAudioData(result.audioData);
-
-      // Save the Text for the LLM
       if (result.text && result.text.trim().length > 0) {
         setTranscribedText(result.text);
       } else if (!transcribedText) {
@@ -69,44 +77,45 @@ export const ChatPanel = () => {
 
   const handleSend = async () => {
     const messageText = transcribedText || input.trim();
-
-    // Guard clause
     if (!messageText && !attachedFile && !audioData) return;
 
     let conversationId = activeConversationId;
-    if (!conversationId) {
-      conversationId = await createNewConversation();
-    }
 
-    const userMessage = {
-      text: messageText,
-      isUser: true,
-      timestamp: new Date().toISOString(),
-      attachment: attachedFile,
-      audio: audioData
-    };
-
-    // CLEAR UI
-    setInput('');
-    setAttachedFile(null);
-    setTranscribedText('');
-    setAudioData(null);
-    setIsRecording(false);
-    if (textareaRef.current) textareaRef.current.style.height = 'auto';
-
-    // Send to Context/Backend
     try {
+      // 1. If no conversation exists, flag that we are creating one.
+      // This tells the useEffect to IGNORE the ID change that is about to happen.
+      if (!conversationId) {
+        isCreatingConversation.current = true;
+        conversationId = await createNewConversation();
+      }
+
+      const userMessage = {
+        text: messageText,
+        isUser: true,
+        timestamp: new Date().toISOString(),
+        attachment: attachedFile,
+        audio: audioData
+      };
+
+      // CLEAR UI
+      setInput('');
+      setAttachedFile(null);
+      setTranscribedText('');
+      setAudioData(null);
+      setIsRecording(false);
+      if (textareaRef.current) textareaRef.current.style.height = 'auto';
+
+      // 2. Send the message (Optimistic update happens here)
       await addMessageToConversation(conversationId, userMessage);
+
     } catch (error) {
       console.error("Failed to send message:", error);
+    } finally {
+      // 3. ONLY reset the flag once the entire process is complete.
+      isCreatingConversation.current = false;
     }
   };
 
-  /**
-   * Handles key press events in the textarea.
-   * Submits on Enter (without Shift).
-   * * @param {React.KeyboardEvent} event - The keyboard event.
-   */
   const handleKeyDown = (event) => {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
@@ -114,10 +123,6 @@ export const ChatPanel = () => {
     }
   };
 
-  /**
-   * Manages textarea auto-resize based on content.
-   * * @param {React.ChangeEvent<HTMLTextAreaElement>} event - The change event.
-   */
   const handleInputChange = (event) => {
     setInput(event.target.value);
     if (textareaRef.current) {
@@ -143,8 +148,8 @@ export const ChatPanel = () => {
         <div className="absolute inset-0 bg-contain bg-center bg-no-repeat opacity-15"  style={{ backgroundImage: `url('${BACKGROUND_IMAGE_URL}')` }} />
         { messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-center opacity-60">
-            <div className="w-20 h-20 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center mb-6 shadow-sm border border-[var(--border)]">
-              <span className="text-4xl font-serif">M</span>
+            <div className="w-20 h-20 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center mb-6 shadow-sm border border-[var(--border)] overflow-hidden">
+              <img src="/icons/marcus-aurelius.png" alt="Marcus Aurelius Bust" className="w-full h-full object-cover rounded-full"/>
             </div>
             <h1 className="text-2xl font-serif font-bold text-[var(--text-primary)] mb-2">Marcus Aurelius</h1>
             <p className="text-sm text-[var(--text-secondary)] max-w-sm leading-relaxed">
@@ -155,7 +160,9 @@ export const ChatPanel = () => {
           messages.map((msg, idx) => (
             <div key={ msg.id || idx } className={ `flex ${ msg.isUser ? 'justify-end' : 'justify-start' }` }>
               { !msg.isUser && (
-                <div className="w-8 h-8 mr-3 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center border border-[var(--border)] text-xs font-serif">M</div>
+                <div className="w-10 h-10 mr-3 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center border mb-6  shadow-sm">
+                  <img src="/icons/marcus-aurelius.png" alt="Marcus Aurelius Bust" className="w-full h-full object-cover rounded-full"/>
+                </div>
               )}
               <div className={ `max-w-[85%] md:max-w-[75%] px-5 py-3.5 rounded-2xl text-sm md:text-base leading-relaxed shadow-sm ${
                 msg.isUser
