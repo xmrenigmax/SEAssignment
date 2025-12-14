@@ -1,7 +1,8 @@
-import { useLocalStorage } from './useLocalStorage';
 import { useState, useCallback } from 'react';
+import { useLocalStorage } from './useLocalStorage';
+import { get } from 'lodash';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 /**
  * Main chat logic hook.
@@ -28,7 +29,7 @@ export const useChat = () => {
         headers['Content-Type'] = 'application/json';
       }
 
-      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+      const response = await fetch(`${ API_BASE_URL }${ endpoint }`, {
         ...options,
         headers,
       });
@@ -75,25 +76,32 @@ export const useChat = () => {
    */
   const createNewConversation = async () => {
     setIsLoading(true);
+
+    // Optimistic ID creation
+    const tempId = Date.now().toString();
+    const optimisticConv = {
+      id: tempId,
+      title: 'New Conversation',
+      messages: [],
+      createdAt: new Date().toISOString()
+    };
+
+    setConversations(prev => [optimisticConv, ...prev]);
+    setActiveConversationId(tempId);
+
     try {
       const data = await apiCall('/conversations', { method: 'POST' });
-      setConversations(prev => [data, ...prev]);
+
+      // Update with real server data
+      setConversations(prev => prev.map(c => c.id === tempId ? data : c));
       setActiveConversationId(data.id);
+
       setIsLoading(false);
       return data.id;
     } catch (error) {
-
-      // Offline fallback
-      const newConv = {
-        id: Date.now().toString(),
-        title: 'New Conversation',
-        messages: [],
-        createdAt: new Date().toISOString()
-      };
-      setConversations(prev => [newConv, ...prev]);
-      setActiveConversationId(newConv.id);
+      console.warn("Offline mode: Persisting with local ID.");
       setIsLoading(false);
-      return newConv.id;
+      return tempId;
     }
   };
 
@@ -106,16 +114,13 @@ export const useChat = () => {
     }
 
     setConversations(prev => {
-      // Create a Map of existing IDs to prevent duplicates
-      const existingIds = new Set(prev.map(conversation => conversation.id));
-      const newConversations = fileData.filter(conversation => !existingIds.has(conversation.id));
+      const safePrev = Array.isArray(prev) ? prev : [];
+      const existingIds = new Set(safePrev.map(c => c.id));
+      const newConversations = fileData.filter(c => !existingIds.has(c.id));
 
-      // Combine and sort by newest
-      const combined = [...newConversations, ...prev].sort(
+      return [...newConversations, ...safePrev].sort(
         (a, b) => new Date(b.updatedAt || b.createdAt) - new Date(a.updatedAt || a.createdAt)
       );
-
-      return combined;
     });
   }, [setConversations]);
 
@@ -123,11 +128,10 @@ export const useChat = () => {
    * Sends a message to the backend.
    */
   const addMessageToConversation = async (conversationId, message) => {
-    // Generate a temporary ID for the optimistic message
-    const tempId = `temp-${Date.now()}`;
+    const tempId = `temp-${ Date.now() }`;
     const optimisticMessage = { ...message, id: tempId };
 
-    // Update UI immediately before network request
+    // Update UI immediately
     setConversations(prev => prev.map(conversation => {
       if (conversation.id === conversationId) {
         return {
@@ -143,14 +147,12 @@ export const useChat = () => {
 
     try {
       let body;
-      // Check if we have an attachment to send
       if (message.attachment) {
         const formData = new FormData();
         formData.append('text', message.text || '');
         formData.append('attachment', message.attachment);
         body = formData;
       } else {
-        // Standard JSON for text-only
         body = JSON.stringify({ text: message.text });
       }
 
@@ -159,10 +161,11 @@ export const useChat = () => {
         body: body
       });
 
-      // Confirms the user message was saved and adds the AI's response.
+      // Update with server response
       setConversations(prev => prev.map(conversation => {
         if (conversation.id === conversationId) {
-          return data.conversation;
+          // Avoid crash
+          return get(data, 'conversation', conversation);
         }
         return conversation;
       }));
@@ -171,8 +174,6 @@ export const useChat = () => {
       return data;
     } catch (error) {
       console.warn('Message failed, using offline mode or rolling back');
-
-      // Turn off loading.
       setIsLoading(false);
       throw error;
     }
@@ -182,18 +183,21 @@ export const useChat = () => {
    * Deletes a specific conversation.
    */
   const deleteConversation = async (id) => {
-    // Optimistic delete
-    setConversations(prev => prev.filter(conversation=> conversation.id !== id));
+    setConversations(prev => prev.filter(c => c.id !== id));
     if (activeConversationId === id) setActiveConversationId(null);
 
-    try { await apiCall(`/conversations/${ id }`, { method: 'DELETE' }); } catch (error) { console.warn(error) }
+    try {
+      await apiCall(`/conversations/${ id }`, { method: 'DELETE' });
+    } catch (error) {
+      console.warn(error);
+    }
   };
 
   /**
    * Deletes ALL conversations history.
    */
   const clearAllConversations = async () => {
-    if (!window.confirm("Are you sure you want to delete the entire history? This cannot be undone.")) return;
+    if (!window.confirm("Are you sure you want to delete the entire history?")) return;
 
     setConversations([]);
     setActiveConversationId(null);
@@ -211,18 +215,17 @@ export const useChat = () => {
   const loadConversation = useCallback(async (id) => {
     if (!id) return;
     try {
-      const data = await apiCall( `/conversations/${ id }` );
+      const data = await apiCall(`/conversations/${ id }`);
       setConversations(prev => {
-        const index = prev.findIndex(conversation => conversation.id === id);
+        const index = prev.findIndex(c => c.id === id);
         if (index === -1) return [data, ...prev];
-
         const newList = [...prev];
         newList[index] = data;
         return newList;
       });
     } catch (error) {
       if (error.message === 'NOT_FOUND') {
-        setConversations(prev => prev.filter(conversation => conversation.id !== id));
+        setConversations(prev => prev.filter(c => c.id !== id));
         if (activeConversationId === id) setActiveConversationId(null);
       }
     }
@@ -231,6 +234,7 @@ export const useChat = () => {
   const startConversationWithPrompt = async (promptText) => {
     try {
       const newId = await createNewConversation();
+      // Ensure state is updated before adding message
       setActiveConversationId(newId);
       await addMessageToConversation(newId, {
         text: promptText,
@@ -256,7 +260,7 @@ export const useChat = () => {
     syncConversations,
     importConversations,
     startConversationWithPrompt,
-    getActiveConversation: () => conversations.find(conversation => conversation.id === activeConversationId),
+    getActiveConversation: () => conversations.find(c => c.id === activeConversationId),
     startNewChat: () => setActiveConversationId(null),
     isLoading
   };

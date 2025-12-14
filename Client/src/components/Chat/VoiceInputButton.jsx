@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
+import clsx from 'clsx';
+import { get } from 'lodash';
 
 /**
  * Voice Input Component.
@@ -14,7 +16,7 @@ export const VoiceInputButton = ({ isRecording, onRecordingStart, onRecordingSto
   const recognitionRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
-  const transcriptRef = useRef(''); // NEW: Ref to store the text as it comes in
+  const transcriptRef = useRef('');
 
   // Initialize Web Speech API (for Text)
   useEffect(() => {
@@ -26,9 +28,10 @@ export const VoiceInputButton = ({ isRecording, onRecordingStart, onRecordingSto
 
       // Capture the text result
       recognitionRef.current.onresult = (event) => {
+
+        // Lodash get protects against deep access crashes in the results array
         const currentTranscript = Array.from(event.results)
-          .map(result => result[0])
-          .map(result => result.transcript)
+          .map(result => get(result, '0.transcript', ''))
           .join('');
 
         transcriptRef.current = currentTranscript;
@@ -113,18 +116,17 @@ export const VoiceInputButton = ({ isRecording, onRecordingStart, onRecordingSto
   return (
     <div className="relative">
       <button
-        onClick={ toggleRecording}
+        onClick={ toggleRecording }
         onMouseEnter={ () => setIsMenuOpen(true) }
         onMouseLeave={ () => setIsMenuOpen(false) }
         disabled={ disabled }
-        className={`
-          p-2 rounded-xl transition-all duration-300 relative
-          ${ isRecording
+        className={ clsx(
+          'p-2 rounded-xl transition-all duration-300 relative',
+          isRecording
             ? 'bg-red-500 text-white shadow-lg shadow-red-500/30'
-            : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--accent)]'
-          }
-          ${ disabled ? 'opacity-50 cursor-not-allowed' : '' }
-        `}
+            : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--accent)]',
+          disabled && 'opacity-50 cursor-not-allowed'
+        )}
       >
         { isRecording && (
           <span className="absolute -top-1 -right-1 flex h-3 w-3">
