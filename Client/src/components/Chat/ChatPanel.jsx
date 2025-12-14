@@ -14,6 +14,7 @@ export const ChatPanel = () => {
     getActiveConversation,
     addMessageToConversation,
     createNewConversation,
+    loadConversation,
     isLoading
   } = useChatContext();
 
@@ -34,6 +35,13 @@ export const ChatPanel = () => {
 
   const activeConversation = getActiveConversation();
   const messages = activeConversation?.messages || [];
+
+  // When the ID changes, fetch the full message history for that chat
+  useEffect(() => {
+    if (activeConversationId) {
+      loadConversation(activeConversationId);
+    }
+  }, [activeConversationId, loadConversation]);
 
   /**
    * Effect: Auto-scroll to bottom
