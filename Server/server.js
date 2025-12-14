@@ -33,9 +33,9 @@ const app = express();
 // Secure HTTP Headers
 app.use(helmet());
 
-// --- MOVED CORS TO TOP ---
+// Cors
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:5173'],
+  origin: ['http://localhost:3000', 'http://localhost:5173', 'https://marcusaurelius-client.vercel.app/'],
   credentials: true
 }));
 
