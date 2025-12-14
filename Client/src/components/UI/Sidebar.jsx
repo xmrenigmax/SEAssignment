@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { ThemeToggle } from './ThemeToggle';
 import { SettingsButton } from './SettingsButton';
 import { SidebarSearch } from './SidebarSearch';
 import { MuseumGuideModal } from '../History/MuseumGuideModal';
+import { DeleteConfirmationModal } from './DeleteConfirmationModal';
 import { useChatContext } from '../../context/ChatContext';
 import { useDebounce } from '../../hooks/useDebounce';
+import clsx from 'clsx';
+import { get } from 'lodash';
 
 /**
  * Navigation Sidebar.
@@ -14,6 +17,7 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
 
   const [searchTerm, setSearchTerm] = useState('');
   const [showMuseumModal, setShowMuseumModal] = useState(false);
+  const [deleteModalState, setDeleteModalState] = useState({ isOpen: false, conversationId: null, conversationTitle: '' });
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
   // Effects
@@ -28,10 +32,20 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
   }, [activeConversationId, loadConversation]);
 
   // Filtering
-  const filteredConversations = conversations.filter(conversation =>
-    conversation.title?.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
-    (conversation.messages?.[0]?.text || '').toLowerCase().includes(debouncedSearchTerm.toLowerCase())
-  );
+  const filteredConversations = useMemo(() => {
+    if (!debouncedSearchTerm) return conversations;
+
+    const term = debouncedSearchTerm.toLowerCase();
+
+    return conversations.filter(conversation => {
+      const title = get(conversation, 'title', '').toLowerCase();
+
+      // Access the first message text, default to empty string
+      const firstMessage = get(conversation, 'messages[0].text', '').toLowerCase();
+
+      return title.includes(term) || firstMessage.includes(term);
+    });
+  }, [conversations, debouncedSearchTerm]);
 
   // Handlers
   const handleNewChat = () => {
@@ -41,9 +55,31 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
     if (window.innerWidth < 768) toggleMobile();
   };
 
+  const handleDeleteClick = (event, conversationId, conversationTitle) => {
+    event.stopPropagation();
+    setDeleteModalState({ isOpen: true, conversationId, conversationTitle });
+  };
+
+  const handleDeleteConfirm = () => {
+    if (deleteModalState.conversationId) {
+      deleteConversation(deleteModalState.conversationId);
+    }
+    setDeleteModalState({ isOpen: false, conversationId: null, conversationTitle: '' });
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteModalState({ isOpen: false, conversationId: null, conversationTitle: '' });
+  };
+
   return (
     <>
       <MuseumGuideModal isOpen={ showMuseumModal } onClose={ () => setShowMuseumModal(false) } />
+      <DeleteConfirmationModal
+        isOpen={ deleteModalState.isOpen }
+        onClose={ handleDeleteCancel }
+        onConfirm={ handleDeleteConfirm }
+        conversationTitle={ deleteModalState.conversationTitle }
+      />
       { isMobileOpen && (
         <div
           className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300"
@@ -53,22 +89,19 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
       )}
       <aside
         ref={ sidebarRef }
-        className={` fixed inset-y-0 left-0 z-50 bg-[var(--bg-secondary)] border-r border-[var(--border)] flex flex-col ${ isMobileOpen ? 'translate-x-0 w-[85vw] max-w-xs shadow-2xl' : '-translate-x-full md:translate-x-0' } ${ isCollapsed ? 'md:w-20' : '' } `}
+        className={ clsx("fixed inset-y-0 left-0 z-50 bg-[var(--bg-secondary)] border-r border-[var(--border)] flex flex-col", isMobileOpen ? "translate-x-0 w-[85vw] max-w-xs shadow-2xl" : "-translate-x-full md:translate-x-0", isCollapsed && "md:w-20") }
         style={{ width: !isCollapsed && !isMobileOpen ? sidebarWidth : undefined, transition: isResizing ? 'none' : 'width 300ms cubic-bezier(0.4, 0, 0.2, 1), transform 300ms ease-in-out' }}
         aria-label="Sidebar Navigation"
       >
         { !isCollapsed && !isMobileOpen && (
           <div
             onMouseDown={ startResizing }
-            className={`
-              absolute top-0 right-[-4px] w-2 h-full cursor-col-resize z-50 transition-colors
-              ${ isResizing ? 'bg-[var(--accent)]' : 'hover:bg-[var(--accent)]/50' }
-            `}
+            className={ clsx("absolute top-0 right-[-4px] w-2 h-full cursor-col-resize z-50 transition-colors", isResizing ? "bg-[var(--accent)]" : "hover:bg-[var(--accent)]/50") }
             title="Drag to resize"
           />
         )}
         <div className="p-4 flex flex-col gap-6 flex-shrink-0">
-          <div className={ `flex items-center ${ isCollapsed ? 'justify-center' : 'justify-between' }` }>
+          <div className={ clsx("flex items-center", isCollapsed ? "justify-center" : "justify-between") }>
             { !isCollapsed && (
               <div className="flex items-center gap-3 pl-1 animate-in fade-in duration-200 overflow-hidden">
                 <div className="w-19 h-19 mr-1 rounded-full object-cover border border-white/20">
@@ -108,13 +141,12 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
           </div>
           <button
             onClick={ handleNewChat }
-            className={`
-              flex items-center gap-3 transition-all duration-200 group
-              ${ isCollapsed
-                ? 'w-10 h-10 justify-center rounded-full bg-[var(--bg-primary)] hover:text-[var(--accent)] mx-auto'
-                : 'px-4 py-3 rounded-xl bg-[var(--bg-primary)] hover:shadow-md text-[var(--text-secondary)] hover:text-[var(--accent)]'
-              }
-            `}
+            className={ clsx(
+              "flex items-center gap-3 transition-all duration-200 group",
+              isCollapsed
+                ? "w-10 h-10 justify-center rounded-full bg-[var(--bg-primary)] hover:text-[var(--accent)] mx-auto"
+                : "px-4 py-3 rounded-xl bg-[var(--bg-primary)] hover:shadow-md text-[var(--text-secondary)] hover:text-[var(--accent)]"
+            )}
             title="New Chat"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -145,20 +177,19 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
                 <div
                   key={ conversation.id }
                   onClick={ () => setActiveConversationId(conversation.id) }
-                  className={`
-                    group relative flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-all duration-200 border border-transparent
-                    ${ activeConversationId === conversation.id
-                      ? 'bg-[var(--accent)]/10 text-[var(--accent)] font-medium'
-                      : 'text-[var(--text-primary)] hover:bg-[var(--bg-primary)] hover:border-[var(--border)]'
-                    }
-                  `}
+                  className={ clsx(
+                    "group relative flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-all duration-200 border border-transparent",
+                    activeConversationId === conversation.id
+                      ? "bg-[var(--accent)]/10 text-[var(--accent)] font-medium"
+                      : "text-[var(--text-primary)] hover:bg-[var(--bg-primary)] hover:border-[var(--border)]"
+                  )}
                 >
                   <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                   </svg>
                   <span className="truncate flex-1 text-sm">{ conversation.title || 'New Chat' }</span>
                   <button
-                    onClick={ (event) => { event.stopPropagation(); if(window.confirm('Delete this conversation?')) deleteConversation(conversation.id); }}
+                    onClick={ (event) => handleDeleteClick(event, conversation.id, conversation.title) }
                     className="opacity-0 group-hover:opacity-100 p-1.5 text-[var(--text-secondary)] hover:text-red-500 rounded-md transition-all"
                     title="Delete Conversation"
                   >
@@ -178,10 +209,7 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
         <div className="p-4 border-t border-[var(--border)] flex flex-col gap-3">
           <button
             onClick={ () => setShowMuseumModal(true) }
-            className={`
-              flex items-center gap-3 px-3 py-2 rounded-lg text-[var(--text-secondary)] hover:text-[var(--accent)] hover:bg-[var(--bg-primary)] transition-all
-              ${ isCollapsed ? 'justify-center w-full' : 'w-full' }
-            `}
+            className={ clsx("flex items-center gap-3 px-3 py-2 rounded-lg transition-all", "text-[var(--text-secondary)] hover:text-[var(--accent)] hover:bg-[var(--bg-primary)]", isCollapsed ? "justify-center w-full" : "w-full") }
             title="About Marcus Aurelius"
           >
             <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -189,7 +217,7 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
             </svg>
             { !isCollapsed && <span className="text-sm font-medium">Exhibit Guide</span> }
           </button>
-          <div className={ `flex items-center ${ isCollapsed ? 'flex-col gap-4' : 'justify-between border-t border-[var(--border)] pt-3' }` }>
+          <div className={ clsx("flex items-center", isCollapsed ? "flex-col gap-4" : "justify-between border-t border-[var(--border)] pt-3") }>
             <ThemeToggle isCollapsed={ isCollapsed } />
             { !isCollapsed && <div className="h-4 w-px bg-[var(--border)]" role="presentation" /> }
             <SettingsButton activeView={ activeView } setActiveView={ setActiveView } isCollapsed={ isCollapsed } />
