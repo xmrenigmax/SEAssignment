@@ -1,4 +1,4 @@
-import React from 'react';
+import clsx from 'clsx';
 
 /**
  * Settings Toggle Button.
@@ -14,15 +14,13 @@ export const SettingsButton = ({ activeView, setActiveView, isCollapsed }) => {
   return (
     <button
       onClick={ () => setActiveView(activeView === 'settings' ? 'chat' : 'settings') }
-      className={`
-        flex items-center gap-2 p-2.5 rounded-lg transition-all duration-200
-        ${ activeView === 'settings'
-          ? 'bg-[var(--accent)] text-white shadow-md'
-          : 'bg-[var(--bg-primary)] border border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--accent)] hover:text-[var(--accent)]'
-        }
-        /* Layout Logic: Square/Center if collapsed, Flex/Wide if expanded */
-        ${ isCollapsed ? 'justify-center w-10 h-10' : 'flex-1 justify-center' }
-      `}
+      className={ clsx(
+        "flex items-center gap-2 p-2.5 rounded-lg transition-all duration-200",
+        activeView === 'settings'
+          ? "bg-[var(--accent)] text-white shadow-md"
+          : "bg-[var(--bg-primary)] border border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--accent)] hover:text-[var(--accent)]",
+        isCollapsed ? "justify-center w-10 h-10" : "flex-1 justify-center"
+      )}
       title="Settings"
       aria-label="Open Settings"
     >

@@ -600,5 +600,94 @@
     ],
     "createdAt": "2025-12-13T20:40:45.259Z",
     "updatedAt": "2025-12-13T20:40:48.601Z"
+  },
+  "c8f8c7c1-c52f-49a4-8390-512e58518e8e": {
+    "id": "c8f8c7c1-c52f-49a4-8390-512e58518e8e",
+    "title": "Calmness in the Face of Greetings",
+    "messages": [
+      {
+        "id": "6b6f681a-54eb-49f0-8c21-47359aa4192e",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-14T10:10:33.956Z",
+        "attachment": null
+      },
+      {
+        "id": "6a93badd-575a-42c9-bc11-1514151e39ef",
+        "text": "Greetings. I hope your mind is calm and your spirit ready to learn.",
+        "isUser": false,
+        "timestamp": "2025-12-14T10:10:33.962Z"
+      }
+    ],
+    "createdAt": "2025-12-14T10:10:32.884Z",
+    "updatedAt": "2025-12-14T10:10:33.962Z"
+  },
+  "b52eff90-39d5-48c8-b72c-60bd28febc20": {
+    "id": "b52eff90-39d5-48c8-b72c-60bd28febc20",
+    "title": "Calmly Accepting the Inevitable Human Flaws",
+    "messages": [
+      {
+        "id": "4c2ceae3-dd6c-42f9-9fed-813b81c52a3e",
+        "text": "I am angry at a colleague's incompetence. How should I react?",
+        "isUser": true,
+        "timestamp": "2025-12-14T10:26:49.667Z",
+        "attachment": null
+      },
+      {
+        "id": "67fcf8ed-6b91-4792-9b7e-ed4cc0429220",
+        "text": "My young friend, recognize the impermanence of events and the fleeting nature of emotions. Anger is a storm that will pass, leaving behind clarity and wisdom. Do not let it consume you. Instead, observe your colleague's actions with detachment, for they are as fleeting as the blowing wind.\n\nReflect on the nature of imperfection and the inevitability of mistakes. We are all mere mortals, prone to errors and limitations. Each person's incompetence is but a reflection of their own struggles, and not a personal affront to you.\n\nWhen dealing with your colleague, approach the situation with compassion and understanding. Speak to them with kindness and clarity, guiding them towards improvement without judgment. Remember, true wisdom lies not in reprimanding the ignorant, but in nurturing the growth of others.\n\nLet your reactions be guided by reason, not passion. For in the words of Epictetus, \"It's not what happens to you, but how you react to it that matters.",
+        "isUser": false,
+        "timestamp": "2025-12-14T10:26:52.743Z"
+      }
+    ],
+    "createdAt": "2025-12-14T10:26:48.527Z",
+    "updatedAt": "2025-12-14T10:26:52.743Z"
+  },
+  "d547b3b3-48ed-40fd-859c-0479ef8c6501": {
+    "id": "d547b3b3-48ed-40fd-859c-0479ef8c6501",
+    "title": "Calmness in the Face of Chaos",
+    "messages": [
+      {
+        "id": "899773c2-ab6b-4f1d-a015-555ec8afb956",
+        "text": "helloo",
+        "isUser": true,
+        "timestamp": "2025-12-14T10:44:53.337Z",
+        "attachment": null
+      },
+      {
+        "id": "d7d84adc-903b-4094-bf31-76582f593d45",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-14T10:44:53.339Z"
+      },
+      {
+        "id": "779f46f9-e623-4f3d-a77a-56e030e9df69",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-14T10:49:11.060Z",
+        "attachment": null
+      },
+      {
+        "id": "81a17dd5-dda6-4a0a-b741-00b0c2163d60",
+        "text": "Ave. You stand before the past. What do you seek to learn from me?",
+        "isUser": false,
+        "timestamp": "2025-12-14T10:49:11.062Z"
+      },
+      {
+        "id": "e16551fc-461a-4832-aba7-2f11697005d9",
+        "text": "hi",
+        "isUser": true,
+        "timestamp": "2025-12-14T10:49:12.402Z",
+        "attachment": null
+      },
+      {
+        "id": "d1ee32ea-1c8c-45a8-a25a-eef5edb9f393",
+        "text": "Hail, traveler. Welcome to this place of memory and learning.",
+        "isUser": false,
+        "timestamp": "2025-12-14T10:49:12.404Z"
+      }
+    ],
+    "createdAt": "2025-12-14T10:44:52.500Z",
+    "updatedAt": "2025-12-14T10:49:12.404Z"
   }
 }

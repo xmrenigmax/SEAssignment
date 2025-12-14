@@ -1,5 +1,5 @@
-import React from 'react';
 import { useTheme } from '../../context/ThemeContext';
+import clsx from 'clsx';
 
 /**
  * Theme Toggle Component.
@@ -14,12 +14,7 @@ export const ThemeToggle = ({ isCollapsed }) => {
   const { isDark, toggleTheme } = useTheme();
 
   return (
-    <button
-      onClick={toggleTheme}
-      className={
-        `flex items-center gap-2 p-2.5 rounded-lg transition-all duration-200 bg-[var(--bg-primary)] border border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--accent)] hover:text-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]
-        ${ isCollapsed ? 'justify-center w-10 h-10' : 'flex-1 justify-center' } `
-      }
+    <button onClick={ toggleTheme } className={ clsx("flex items-center gap-2 p-2.5 rounded-lg transition-all duration-200", "bg-[var(--bg-primary)] border border-[var(--border)] text-[var(--text-secondary)]", "hover:border-[var(--accent)] hover:text-[var(--accent)]", "focus:outline-none focus:ring-2 focus:ring-[var(--accent)]", isCollapsed ? 'justify-center w-10 h-10' : 'flex-1 justify-center') }
       title={ isDark ? "Switch to Light Mode" : "Switch to Dark Mode" }
       aria-label={ isDark ? "Switch to Light Mode" : "Switch to Dark Mode" }
     >
