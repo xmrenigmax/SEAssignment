@@ -71,16 +71,21 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
           <div className={ `flex items-center ${ isCollapsed ? 'justify-center' : 'justify-between' }` }>
             { !isCollapsed && (
               <div className="flex items-center gap-3 pl-1 animate-in fade-in duration-200 overflow-hidden">
-                <div className="w-10 h-10 mr-3 rounded-full object-cover border border-white/20">
+                <div className="w-19 h-19 mr-1 rounded-full object-cover border border-white/20">
                   <img 
-                    src="/icons/Marcus_Aurelius.png"
+                    src="/icons/Marcus_Aurelius_Dark.png"
                     alt="Marcus Aurelius"
-                    className="w-10 h-10 mr-3 rounded-full object-cover border border-white/20"
+                    className="w-19 h-20 mr-1 rounded-full object-cover border border-white/20"
                   />
                 </div>
-                <h1 className="text-lg font-serif font-bold text-[var(--text-primary)] tracking-tight whitespace-nowrap">
-                  Marcus Aurelius
-                </h1>
+                <div className="flex flex-col justify-center">
+                  <h1 className="font-serif font-bold text-white tracking-tight leading-none text-[22px] whitespace-nowrap">
+                    Marcus Aurelius
+                  </h1>
+                  <span className="text-gray-400 font-sans mt-1 text-[17px] whitespace-nowrap">
+                    Stoic AI Companion
+                  </span>
+                </div>
               </div>
             )}
             <div className="flex items-center">

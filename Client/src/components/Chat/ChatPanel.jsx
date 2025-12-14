@@ -137,8 +137,12 @@ export const ChatPanel = () => {
       <div className="flex-1 overflow-y-auto p-4 md:p-8 space-y-6 scroll-smooth">
         { messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-center opacity-60">
-            <div className="w-20 h-20 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center mb-6 shadow-sm border border-[var(--border)]">
-              <span className="text-4xl font-serif">M</span>
+            <div className="w-30 h-30 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center mb-6 shadow-sm border border-[var(--border)]">
+            <img 
+              src="/icons/Marcus_Aurelius2_Dark.png" 
+              alt="Marcus Aurelius" 
+              className="w-22 h-20 rounded-full scale-[1.75]"
+            />
             </div>
             <h1 className="text-2xl font-serif font-bold text-[var(--text-primary)] mb-2">Marcus Aurelius</h1>
             <p className="text-sm text-[var(--text-secondary)] max-w-sm leading-relaxed">
@@ -150,8 +154,10 @@ export const ChatPanel = () => {
           messages.map((msg, idx) => (
             <div key={ msg.id || idx } className={ `flex ${ msg.isUser ? 'justify-end' : 'justify-start' }` }>
               { !msg.isUser && (
-                <div className="relative w-8 h-8 mr-3 rounded-full overflow-hidden border border-[var(--border)] bg-[var(--bg-secondary)] flex items-center justify-center text-xs font-serif">
-                  <img src="/icons/Marcus_Aurelius.png" alt="Marcus Aurelius" className="w-full h-full object-cover"/>
+                <div className="relative w-10 h-15 mr-1 rounded-full overflow-hidden border border-[var(--border)] bg-[var(--bg-secondary)] flex items-center justify-center text-xs font-serif">
+                  <img src="/icons/Marcus_Aurelius2_Dark.png" 
+                  alt="Marcus Aurelius" 
+                  className="w-full h-full object-cover scale-[1.25]"/>
                 </div>
               )}
               <div className={ `max-w-[85%] md:max-w-[75%] px-5 py-3.5 rounded-2xl text-sm md:text-base leading-relaxed shadow-sm ${
