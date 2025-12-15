@@ -8,6 +8,7 @@ import clsx from 'clsx';
 
 /**
  * Main Settings Modal Component.
+ * Acts as the container for specific setting tabs.
  */
 export const SettingsPanel = ({ onClose, onStartTour }) => {
   const [activeTab, setActiveTab] = useState('accessibility');
@@ -30,7 +31,7 @@ export const SettingsPanel = ({ onClose, onStartTour }) => {
     onClose();
     // Slight delay to allow modal animation to finish before tour starts
     setTimeout(() => {
-        if (onStartTour) onStartTour();
+      if (onStartTour) onStartTour();
     }, 300);
   };
 
@@ -40,7 +41,7 @@ export const SettingsPanel = ({ onClose, onStartTour }) => {
       onClick={ onClose }
       role="dialog"
       aria-modal="true"
-      aria-label="Settings"
+      aria-labelledby="settings-title"
     >
       <div
         className={ clsx("w-full max-w-4xl max-h-[85vh] min-h-[600px] rounded-2xl shadow-2xl overflow-hidden", "flex flex-col md:flex-row border border-[var(--border)]", "bg-[var(--bg-secondary)] animate-in zoom-in-95 duration-200") }
@@ -48,10 +49,10 @@ export const SettingsPanel = ({ onClose, onStartTour }) => {
       >
         <div className="md:hidden p-4 border-b border-[var(--border)] flex justify-between items-center">
           <h2 className="font-bold text-lg text-[var(--text-primary)]">Settings</h2>
-          <button onClick={ onClose } className="p-2 hover:bg-[var(--bg-primary)] rounded-full text-[var(--text-primary)]">✕</button>
+          <button onClick={ onClose } className="p-2 hover:bg-[var(--bg-primary)] rounded-full text-[var(--text-primary)]" aria-label="Close">✕</button>
         </div>
         <div className="w-full md:w-64 bg-[var(--bg-primary)] p-4 border-r border-[var(--border)] flex flex-col">
-          <h2 className="hidden md:block text-2xl font-bold mb-6 px-2 text-[var(--text-primary)]">Settings</h2>
+          <h2 id="settings-title" className="hidden md:block text-2xl font-bold mb-6 px-2 text-[var(--text-primary)]">Settings</h2>
           <SettingsTabs activeTab={ activeTab } setActiveTab={ setActiveTab } onStartTour={ handleTourStart }/>
           <div className="mt-auto hidden md:block pt-6 border-t border-[var(--border)]">
             <button

@@ -1,6 +1,7 @@
 /**
  * @file utils/logicEngine.js
- * @description Hybrid logic engine combining keyword matching, semantic similarity, and LLM fallback
+ * @description Logic engine that fetches rules from MongoDB instead of a local JSON file.
+ * @author Group 1
  */
 
 import natural from 'natural';
@@ -18,7 +19,8 @@ const FUZZY_THRESHOLD = 0.85;
 let cachedScript = null;
 
 /**
- * Loads the script from MongoDB into memory.
+ * @function loadScript
+ * @description Loads the script from MongoDB into memory.
  */
 export async function loadScript() {
   try {
@@ -45,12 +47,14 @@ export async function loadScript() {
 }
 
 /**
- * Normalizes probabilities and picks a response.
- * @param {Array} pool - Array of response objects
+ * @function robustRandomSelect
+ * @description Normalizes probabilities and picks a response.
+ * @param {Array} pool - Array of response objects.
+ * @returns {string} The selected response text.
  */
 function robustRandomSelect(pool) {
   if (!pool || pool.length === 0) return null;
-  const totalWeight = pool.reduce((sum, item) => sum + (item.probability*4 || 0), 0);
+  const totalWeight = pool.reduce((sum, item) => sum + (item.probability * 4 || 0), 0);
   let randomPoint = Math.random() * totalWeight;
 
   for (const option of pool) {
@@ -62,8 +66,10 @@ function robustRandomSelect(pool) {
 }
 
 /**
- * Checks text against loaded rules using keyword matching.
- * @param {string} input - User message
+ * @function checkScriptedResponse
+ * @description Checks text against loaded rules.
+ * @param {string} input - User message.
+ * @returns {string|null} The scripted response or null if no match.
  */
 export function checkScriptedResponse(input) {
   if (!cachedScript || !cachedScript.rules) return null;
@@ -108,9 +114,6 @@ export function checkScriptedResponse(input) {
 
 /**
  * HYBRID APPROACH: Try multiple methods to find best response
- * 1. Fast keyword matching (1-5ms)
- * 2. Semantic similarity (60-210ms)
- * 3. Return null to trigger LLM fallback
  * @param {string} input - User message
  * @returns {Promise<string|null>} - Response or null if no match
  */
@@ -121,7 +124,7 @@ export async function getHybridResponse(input) {
     return keywordMatch;
   }
 
-  // STEP 2: Try semantic similarity (slower but smarter)
+  // Try semantic similarity (slower but smarter)
   try {
     const semanticMatch = await findSemanticMatch(input, 0.65); // 65% similarity threshold
     if (semanticMatch) {
@@ -134,7 +137,7 @@ export async function getHybridResponse(input) {
     console.error('[Logic Engine] Semantic matching failed:', error);
   }
 
-  // STEP 3: No match found, return null (will trigger LLM in server.js)
+  // No match found, return null (will trigger LLM in server.js)
   return null;
 }
 

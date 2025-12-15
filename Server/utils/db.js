@@ -1,7 +1,8 @@
 /**
  * @file utils/db.js
  * @description Robust MongoDB connection handler.
- * Updated to respect existing connections (for Testing).
+ * Updated to respect existing connections (for Testing and Serverless).
+ * @author Group 1
  */
 
 import mongoose from 'mongoose';
@@ -15,8 +16,14 @@ if (!MONGODB_URI) {
   throw new Error('MONGODB_URI missing in .env file');
 }
 
+// Global cache to prevent multiple connections in Serverless (Vercel)
 let cached = global.mongoose || { conn: null, promise: null };
 
+/**
+ * @function connectToDatabase
+ * @description Connects to MongoDB, reusing the existing connection if available.
+ * @returns {Promise<mongoose.Connection>} The database connection.
+ */
 async function connectToDatabase() {
   // ReadyState 1 means "Connected"
   if (mongoose.connection.readyState >= 1) {
