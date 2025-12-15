@@ -1,10 +1,11 @@
 /**
  * @file utils/logicEngine.js
- * @description Logic engine that fetches rules from MongoDB instead of a local JSON file.
+ * @description Hybrid logic engine combining keyword matching, semantic similarity, and LLM fallback
  */
 
 import natural from 'natural';
 import { Script } from '../models/Conversations.js';
+import { findSemanticMatch, precomputeKeywordEmbeddings } from './semanticEngine.js';
 
 // NLP Tools
 const tokenizer = new natural.WordTokenizer();
@@ -27,6 +28,12 @@ export async function loadScript() {
     if (scriptDoc) {
       cachedScript = scriptDoc;
       console.log('[Logic Engine] Rules loaded from MongoDB.');
+      
+      try {
+        await precomputeKeywordEmbeddings(scriptDoc.rules || []);
+      } catch (error) {
+        console.warn('[Logic Engine] Semantic precomputation failed, keyword matching only:', error.message);
+      }
     } else {
       console.warn('[Logic Engine] No script found in DB. Using defaults.');
       cachedScript = { rules: [], general_responses: [] };
@@ -55,7 +62,7 @@ function robustRandomSelect(pool) {
 }
 
 /**
- * Checks text against loaded rules.
+ * Checks text against loaded rules using keyword matching.
  * @param {string} input - User message
  */
 export function checkScriptedResponse(input) {
@@ -92,10 +99,42 @@ export function checkScriptedResponse(input) {
 
     // Matches
     if (matchFound) {
-      console.log(`⚡ [Logic Engine] Matched Rule: ${rule.id}`);
+      console.log(`⚡ [Logic Engine] Keyword Match: ${rule.id}`);
       return robustRandomSelect(rule.response_pool);
     }
   }
+  return null;
+}
+
+/**
+ * HYBRID APPROACH: Try multiple methods to find best response
+ * 1. Fast keyword matching (1-5ms)
+ * 2. Semantic similarity (60-210ms)
+ * 3. Return null to trigger LLM fallback
+ * @param {string} input - User message
+ * @returns {Promise<string|null>} - Response or null if no match
+ */
+export async function getHybridResponse(input) {
+  // STEP 1: Try exact keyword matching (fastest)
+  const keywordMatch = checkScriptedResponse(input);
+  if (keywordMatch) {
+    return keywordMatch;
+  }
+
+  // STEP 2: Try semantic similarity (slower but smarter)
+  try {
+    const semanticMatch = await findSemanticMatch(input, 0.65); // 65% similarity threshold
+    if (semanticMatch) {
+      const rule = cachedScript.rules.find(r => r.id === semanticMatch.ruleId);
+      if (rule && rule.response_pool) {
+        return robustRandomSelect(rule.response_pool);
+      }
+    }
+  } catch (error) {
+    console.error('[Logic Engine] Semantic matching failed:', error);
+  }
+
+  // STEP 3: No match found, return null (will trigger LLM in server.js)
   return null;
 }
 

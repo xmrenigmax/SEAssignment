@@ -16,7 +16,8 @@ import { v4 as uuidv4 } from 'uuid';
 // Logic & DB
 import connectToDatabase from './utils/db.js';
 import { Conversation } from './models/Conversations.js';
-import { loadScript, checkScriptedResponse, getFallback } from './utils/logicEngine.js';
+import { loadScript, getHybridResponse, getFallback } from './utils/logicEngine.js';
+import { initializeSemanticEngine } from './utils/semanticEngine.js';
 
 // CONFIGURATION
 dotenv.config();
@@ -203,10 +204,11 @@ app.post('/api/conversations/:id/messages', upload.single('attachment'), async (
 
     // Logic Engine / AI Response
     const fullPrompt = attachmentContext ? `${attachmentContext}\n\n${text}` : text;
-    let aiText = checkScriptedResponse(text) || getFallback();
 
-    // Only call API if no script match found
-    if (!checkScriptedResponse(text) && HF_API_KEY) {
+    let aiText = await getHybridResponse(text);
+
+    // Only call LLM API if no scripted match found
+    if (!aiText && HF_API_KEY) {
       try {
         const aiRes = await fetchWithTimeout(HF_ROUTER_URL, {
           method: 'POST',
@@ -227,6 +229,11 @@ app.post('/api/conversations/:id/messages', upload.single('attachment'), async (
       } catch (err) {
         console.error("AI Error, using fallback");
       }
+    }
+    
+    // Last resort fallback
+    if (!aiText) {
+      aiText = getFallback();
     }
 
     // Prepare AI Message
@@ -260,9 +267,21 @@ app.post('/api/conversations/:id/messages', upload.single('attachment'), async (
 if (process.argv[1].endsWith('server.js')) {
   app.listen(PORT, async () => {
     await connectToDatabase();
+    
+    // Initialize semantic engine (loads ML model)
+    try {
+      console.log('🧠 Initializing NLP Semantic Engine...');
+      await initializeSemanticEngine();
+      console.log('✓ Semantic Engine Ready');
+    } catch (error) {
+      console.warn('⚠ Semantic Engine failed to load. Using keyword-only matching:', error.message);
+    }
+    
     await loadScript();
-    console.log(`\n Marcus Aurelius Server running on port ${PORT}`);
-    console.log(`Connected to MongoDB Atlas`);
+    
+    console.log(`\n🏛️  Marcus Aurelius Server running on port ${PORT}`);
+    console.log(`✓ Connected to MongoDB Atlas`);
+    console.log(`✓ Hybrid NLP system active (keyword + semantic + LLM)`);
   });
 }
 
