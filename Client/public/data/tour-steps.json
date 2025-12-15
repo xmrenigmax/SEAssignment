@@ -11,10 +11,10 @@
     "placement": "right"
   },
   {
-    "target": ".flex-1.overflow-y-auto",
+    "target": "aside .flex-1.overflow-y-auto",
     "title": "The Historic Chats",
-    "description": "This is where discourse happens. Your conversations with Marcus Aurelius will appear here in real-time.",
-    "placement": "center"
+    "description": "All your past conversations are stored here. Click any conversation to continue where you left off.",
+    "placement": "right"
   },
   {
     "target": "textarea",
@@ -23,7 +23,7 @@
     "placement": "top"
   },
   {
-    "target": "button[title=\"Settings\"]",
+    "target": "aside button[title=\"Settings\"]",
     "title": "Configurations",
     "description": "Adjust themes, manage data, and configure accessibility options to suit your needs.",
     "placement": "right"

@@ -45,7 +45,7 @@
   "rules": [
     {
       "id": "museum_logistics_restroom",
-      "keywords": [ "toilet", "bathroom", "restroom", "latrine", "washroom", "pee", "urinate", "relieve", "nature calls", "where can i go", "need the bathroom", "need to pee", "need to go" ],
+      "keywords": [ "toilet", "bathroom", "restroom", "latrine", "washroom", "pee", "urinate", "relieve", "nature calls", "need the bathroom", "need to pee", "need to go" ],
       "response_pool": [
         {
           "probability": 0.08,
@@ -131,7 +131,7 @@
     },
     {
       "id": "museum_silence_noise",
-      "keywords": [ "loud", "noise", "noisy", "quiet", "shh", "silence", "too loud", "stop talking", "whisper", "volume", "talking", "yelling" ],
+      "keywords": [ "noisy", "quiet", "shh", "silence", "too loud", "stop talking", "whisper", "volume", "talking", "yelling" ],
       "response_pool": [
         {
           "probability": 0.08,
@@ -217,7 +217,7 @@
     },
     {
       "id": "touching_exhibits",
-      "keywords": [ "touch", "touching", "hold", "hands", "pick up", "handle", "can i touch", "may i touch", "reach", "fingers" ],
+      "keywords": [ "touch the", "touching the", "pick up", "handle the", "can i touch", "may i touch", "touch exhibit", "touch artifact" ],
       "response_pool": [
         {
           "probability": 0.08,
@@ -303,7 +303,7 @@
     },
     {
       "id": "being_lost",
-      "keywords": [ "lost", "confused", "where am i", "where am i going", "direction", "directions", "help", "which way", "wrong way", "can't find", "looking for" ],
+      "keywords": [ "i'm lost", "am lost", "where am i", "where am i going", "need directions", "which way", "wrong way", "can't find the" ],
       "response_pool": [
         {
           "probability": 0.08,
@@ -389,7 +389,7 @@
     },
     {
       "id": "fatigue_and_rest",
-      "keywords": [ "tired",  "sit", "rest", "feet hurt", "sore", "need a break", "fatigue", "standing too long" ],
+      "keywords": [ "i'm tired", "so tired", "feet hurt", "legs hurt", "need a break", "need to rest", "need to sit", "standing too long" ],
       "response_pool": [
         {
           "probability": 0.08,
@@ -474,8 +474,124 @@
       ]
     },
     {
+      "id": "modern_tech_filter",
+      "keywords": [
+        "phone",
+        "smartphone",
+        "iphone",
+        "android",
+        "mobile",
+        "tablet",
+        "ipad",
+        "internet",
+        "wifi",
+        "web",
+        "website",
+        "browser",
+        "online",
+        "email",
+        "app",
+        "application",
+        "download",
+        "upload",
+        "computer",
+        "laptop",
+        "desktop",
+        "pc",
+        "mac",
+        "windows",
+        "linux",
+        "software",
+        "hardware",
+        "coding",
+        "programming",
+        "server",
+        "cloud",
+        "database",
+        "digital",
+        "pixel",
+        "screen",
+        "monitor",
+        "keyboard",
+        "mouse",
+        "tiktok",
+        "facebook",
+        "twitter",
+        "instagram",
+        "snapchat",
+        "youtube",
+        "reddit",
+        "linkedin",
+        "social media",
+        "selfie",
+        "photo",
+        "camera",
+        "video",
+        "streaming",
+        "netflix",
+        "spotify",
+        "podcast",
+        "text message",
+        "texting",
+        "dm",
+        "chat app",
+        "zoom",
+        "teams",
+        "skype",
+        "whatsapp",
+        "telegram",
+        "hashtag",
+        "emoji",
+        "meme",
+        "gif",
+        "viral",
+        "trending",
+        "ai",
+        "robot",
+        "drone",
+        "video game",
+        "gaming",
+        "console",
+        "television",
+        "tv",
+        "radio",
+        "microwave",
+        "refrigerator",
+        "fridge",
+        "electricity",
+        "electric",
+        "car",
+        "automobile",
+        "plane",
+        "airplane",
+        "train",
+        "rocket",
+        "spaceship",
+        "satellite",
+        "gps",
+        "bluetooth",
+        "usb",
+        "charger",
+        "battery",
+        "touchscreen",
+        "virtual",
+        "cryptocurrency",
+        "bitcoin"
+      ],
+      "response_pool": [
+        {
+          "probability": 0.5,
+          "response": "You consult a small object as if it contained wisdom. Wisdom lives only in disciplined thought."
+        },
+        {
+          "probability": 0.5,
+          "response": "This device neither improves nor degrades you. Your use of it does."
+        }
+      ]
+    },
+    {
       "id": "children_and_crowds",
-      "keywords": [ "kids", "children", "child", "crowd", "crowded", "busy", "people", "lots of people", "too many people", "noisy crowd", "families" ],
+      "keywords": [ "noisy kids", "loud children", "crowd", "crowded", "too crowded", "lots of people", "too many people", "noisy crowd" ],
       "response_pool": [
         {
           "probability": 0.08,
@@ -560,8 +676,53 @@
       ]
     },
     {
+      "id": "inappropriate_filter",
+      "keywords": [
+        "fuck",
+        "fucking",
+        "fucked",
+        "shit",
+        "shitty",
+        "damn",
+        "bitch",
+        "bastard",
+        "asshole",
+        "ass",
+        "cunt",
+        "dick",
+        "cock",
+        "pussy",
+        "piss",
+        "pissed",
+        "crap",
+        "bullshit",
+        "sex",
+        "sexual",
+        "porn",
+        "nude",
+        "naked",
+        "kill",
+        "murder",
+        "die",
+        "death",
+        "suicide",
+        "stupid",
+        "idiot",
+        "dumb",
+        "moron",
+        "retard",
+        "hate"
+      ],
+      "response_pool": [
+        {
+          "probability": 1.0,
+          "response": "Be careful with your words. Speak with the dignity befitting a rational creature."
+        }
+      ]
+    },
+    {
       "id": "art_interpretation",
-      "keywords": [ "meaning", "why", "symbol", "symbolism", "represents", "interpret", "interpretation", "what does it mean", "message", "idea"],
+      "keywords": [ "what does this mean", "what's the meaning", "symbolism", "represent", "interpretation", "what does this represent", "symbolic" ],
       "response_pool": [
         {
           "probability": 0.08,
@@ -646,8 +807,33 @@
       ]
     },
     {
+      "id": "anxiety_and_fear",
+      "keywords": [
+        "fear",
+        "afraid",
+        "scared",
+        "anxious",
+        "worry",
+        "panic"
+      ],
+      "response_pool": [
+        {
+          "probability": 0.4,
+          "response": "Remember, you have power over your mind - not outside events. Realize this, and you will find strength."
+        },
+        {
+          "probability": 0.3,
+          "response": "Do not let your imagination be crushed by life's hardships. You are stronger than any obstacle."
+        },
+        {
+          "probability": 0.3,
+          "response": "What troubles you now will soon seem small, if it is remembered at all."
+        }
+      ]
+    },
+    {
       "id": "death_and_mortality",
-      "keywords": [ "death", "die", "dead", "grave", "mortality", "dying", "funeral", "end", "afterlife", "life is short" ],
+      "keywords": [ "death", "die", "dead", "grave", "mortality", "dying", "funeral", "afterlife", "life is short" ],
       "response_pool": [
         {
           "probability": 0.08,
@@ -733,7 +919,7 @@
     },
     {
       "id": "fame_and_legacy",
-      "keywords": [ "famous", "fame", "remembered", "legacy", "important", "known", "recognition", "history", "greatness" ],
+      "keywords": [ "famous", "fame", "be remembered", "legacy", "recognition", "greatness", "immortality" ],
       "response_pool": [
         {
           "probability": 0.08,
@@ -819,7 +1005,7 @@
     },
     {
       "id": "modern_objects_reinterpreted",
-      "keywords": [ "phone", "camera", "selfie", "internet", "wifi", "screen", "device", "picture", "photo", "record", "scroll", "watching" ],
+      "keywords": [ "take a selfie", "taking selfie", "take picture", "taking photo", "my phone", "on my phone", "check my phone" ],
       "response_pool": [
         {
           "probability": 0.08,
@@ -991,7 +1177,7 @@
     },
     {
       "id": "small_talk_general",
-      "keywords": [ "what's up", "how's it going", "how are you", "nice day", "good day", "day", "how do you do", "weather", "sunny", "rainy", "morning", "afternoon", "evening" ],
+      "keywords": [ "what's up", "how's it going", "how are you", "nice day", "good day", "how do you do", "nice weather", "beautiful day" ],
       "response_pool": [
         {
           "probability": 0.07,
@@ -1077,7 +1263,7 @@
     },
     {
       "id": "boredom",
-      "keywords": [ "bored", "boring", "nothing to do", "restless", "idle", "unoccupied", "tedious", "dull", "quiet", "slow", "waiting" ],
+      "keywords": [ "i'm bored", "so bored", "this is boring", "nothing to do", "so dull", "tedious" ],
       "response_pool": [
         {
           "probability": 0.07,
@@ -1163,7 +1349,7 @@
     },
     {
       "id": "waiting_time",
-      "keywords": [ "waiting", "line", "queue", "slow", "long time", "delay", "pause", "stand", "slowly", "hold", "linger" ],
+      "keywords": [ "waiting in line", "long line", "queue", "long wait", "taking forever", "so slow" ],
       "response_pool": [
         {
           "probability": 0.06,
@@ -1597,6 +1783,34 @@
           "probability": 0.05,
           "response": "I have sat in palaces and on battlefields. Yet the true emperor is he who governs himself."
         },
+				{
+					"probability": 0.4,
+					"response": "Remember, you have power over your mind - not outside events. Realize this, and you will find strength."
+				},
+				{
+					"probability": 0.1,
+					"response": "Do not let your imagination be crushed by life’s hardships. You are stronger than any obstacle."
+				}
+      ]
+    },
+    {
+      "id": "greetings",
+      "keywords": [
+        "hello",
+        "hi",
+        "greetings",
+        "hail",
+        "good morning",
+        "good afternoon",
+        "good evening",
+        "good day",
+        "hey",
+        "howdy",
+        "yo",
+        "sup",
+        "what's up"
+      ],
+      "response_pool": [
         {
           "probability": 0.05,
           "response": "I am remembered as philosopher and emperor, but I sought only to live rightly and to die without regret."

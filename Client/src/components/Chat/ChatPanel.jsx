@@ -17,7 +17,9 @@ export const ChatPanel = () => {
     addMessageToConversation,
     createNewConversation,
     loadConversation,
-    isLoading
+    isLoading,
+    startNewChat,
+    newChatTrigger
   } = useChatContext();
 
   const { isConnected } = useBackendHealth();
@@ -57,6 +59,28 @@ export const ChatPanel = () => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isRecording, isLoading])
+
+  /**
+   * Effect: Auto-focus textarea when conversation changes or becomes null
+   */
+  useEffect(() => {
+    // Small delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      if (textareaRef.current) {
+        textareaRef.current.focus();
+      }
+    }, 0);
+    return () => clearTimeout(timer);
+  }, [activeConversationId, newChatTrigger]);
+
+  /**
+   * Effect: Focus on mount
+   */
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, []);
 
   const handleRecordingComplete = (result) => {
     setIsRecording(false);

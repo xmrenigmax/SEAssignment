@@ -6,6 +6,7 @@
 
 import natural from 'natural';
 import { Script } from '../models/Conversations.js';
+import { findSemanticMatch, precomputeKeywordEmbeddings } from './semanticEngine.js';
 
 // NLP Tools
 const tokenizer = new natural.WordTokenizer();
@@ -29,6 +30,12 @@ export async function loadScript() {
     if (scriptDoc) {
       cachedScript = scriptDoc;
       console.log('[Logic Engine] Rules loaded from MongoDB.');
+      
+      try {
+        await precomputeKeywordEmbeddings(scriptDoc.rules || []);
+      } catch (error) {
+        console.warn('[Logic Engine] Semantic precomputation failed, keyword matching only:', error.message);
+      }
     } else {
       console.warn('[Logic Engine] No script found in DB. Using defaults.');
       cachedScript = { rules: [], general_responses: [] };
@@ -98,7 +105,7 @@ export function checkScriptedResponse(input) {
 
     // Matches
     if (matchFound) {
-      console.log(`⚡ [Logic Engine] Matched Rule: ${rule.id}`);
+      console.log(`⚡ [Logic Engine] Keyword Match: ${rule.id}`);
       return robustRandomSelect(rule.response_pool);
     }
   }
@@ -106,10 +113,34 @@ export function checkScriptedResponse(input) {
 }
 
 /**
- * @function getFallback
- * @description Gets a general fallback response if no specific rule matched.
- * @returns {string} A fallback response.
+ * HYBRID APPROACH: Try multiple methods to find best response
+ * @param {string} input - User message
+ * @returns {Promise<string|null>} - Response or null if no match
  */
+export async function getHybridResponse(input) {
+  // STEP 1: Try exact keyword matching (fastest)
+  const keywordMatch = checkScriptedResponse(input);
+  if (keywordMatch) {
+    return keywordMatch;
+  }
+
+  // Try semantic similarity (slower but smarter)
+  try {
+    const semanticMatch = await findSemanticMatch(input, 0.65); // 65% similarity threshold
+    if (semanticMatch) {
+      const rule = cachedScript.rules.find(r => r.id === semanticMatch.ruleId);
+      if (rule && rule.response_pool) {
+        return robustRandomSelect(rule.response_pool);
+      }
+    }
+  } catch (error) {
+    console.error('[Logic Engine] Semantic matching failed:', error);
+  }
+
+  // No match found, return null (will trigger LLM in server.js)
+  return null;
+}
+
 export function getFallback() {
   if (!cachedScript || !cachedScript.general_responses) return "The mind must remain firm.";
   return robustRandomSelect(cachedScript.general_responses);

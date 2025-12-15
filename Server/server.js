@@ -48,6 +48,16 @@ app.use('/api', conversationRoutes);
 if (process.argv[1].endsWith('server.js')) {
   app.listen(PORT, async () => {
     await connectToDatabase();
+    
+    // Initialize semantic engine (loads ML model)
+    try {
+      console.log('🧠 Initializing NLP Semantic Engine...');
+      await initializeSemanticEngine();
+      console.log('✓ Semantic Engine Ready');
+    } catch (error) {
+      console.warn('⚠ Semantic Engine failed to load. Using keyword-only matching:', error.message);
+    }
+    
     await loadScript();
     console.log(`\n Marcus Aurelius Server running on port ${ PORT }`);
     console.log(`Connected to MongoDB Atlas`);

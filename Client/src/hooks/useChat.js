@@ -12,6 +12,7 @@ export const useChat = () => {
   const [conversations, setConversations] = useLocalStorage('chat-conversations', []);
   const [activeConversationId, setActiveConversationId] = useLocalStorage('active-conversation', null);
   const [isLoading, setIsLoading] = useState(false);
+  const [newChatTrigger, setNewChatTrigger] = useState(0);
 
   /**
    * Helper for API calls with standardized error handling.
@@ -257,7 +258,8 @@ export const useChat = () => {
     importConversations,
     startConversationWithPrompt,
     getActiveConversation: () => conversations.find(conversation => conversation.id === activeConversationId),
-    startNewChat: () => setActiveConversationId(null),
+    startNewChat: () => { setActiveConversationId(null); setNewChatTrigger(prev => prev + 1); },
+    newChatTrigger,
     isLoading
   };
 };
