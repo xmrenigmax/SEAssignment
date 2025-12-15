@@ -1,8 +1,3 @@
-/**
- * @file rateLimitMiddleware.js
- * @description Middleware configuration for rate limiting to prevent API abuse.
- * @author Group 1
- */
 
 import rateLimit from 'express-rate-limit';
 

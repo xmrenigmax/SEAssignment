@@ -17,7 +17,7 @@ import { loadScript } from './utils/logicEngine.js';
 
 // Routes & Middleware
 import conversationRoutes from './routes/conversationRoutes.js';
-import { limiter } from './middleware/ratelimitMiddleware.js';
+import { limiter } from './middleware/rateLimitMiddleware.js';
 
 // CONFIGURATION
 dotenv.config();
