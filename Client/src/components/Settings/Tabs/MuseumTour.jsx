@@ -60,6 +60,9 @@ export const MuseumTour = ({ isOpen, onClose, isMobileOpen, setIsMobileOpen }) =
     const targetSelector = get(currentStepData, 'target');
     const element = targetSelector ? document.querySelector(targetSelector) : null;
 
+    // Dynamic positioning: Calculate spotlight position around the target element
+    // This must recalculate on: resize, scroll, sidebar animation, or window changes
+    // getBoundingClientRect gives us viewport-relative coordinates in real-time
     if (element) {
       const rect = element.getBoundingClientRect();
       const padding = 8;
@@ -118,6 +121,9 @@ export const MuseumTour = ({ isOpen, onClose, isMobileOpen, setIsMobileOpen }) =
 
     if (isOpen) {
       updatePosition();
+      // ResizeObserver fires when ANY element changes size (including CSS transitions)
+      // requestAnimationFrame ensures we update on the next paint cycle (60fps smooth)
+      // This catches sidebar animations, font loading, and even browser zoom changes
       observerRef.current = new ResizeObserver(() => requestAnimationFrame(updatePosition));
       observerRef.current.observe(document.body);
       observerRef.current.observe(document.documentElement);
@@ -191,7 +197,6 @@ export const MuseumTour = ({ isOpen, onClose, isMobileOpen, setIsMobileOpen }) =
   }
   return (
     <div className="fixed inset-0 z-[100] overflow-hidden pointer-events-auto">
-      {/* Box-shadow trick to darken everything except the highlighted element */}
       <div className="absolute transition-all duration-300 ease-out rounded-xl border-2 border-[var(--accent)] shadow-[0_0_0_9999px_rgba(0,0,0,0.75)]" style={{ top: position.top, left: position.left, width: position.width, height: position.height, opacity: isVisible ? 1 : 0 }}/>
       <div
         className="absolute transition-all duration-300 ease-out z-[101]"

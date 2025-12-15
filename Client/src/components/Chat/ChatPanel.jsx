@@ -8,10 +8,12 @@ import { VoiceInputButton } from './VoiceInputButton';
 const BackgroundImage = '/icons/BackgroundImage/roman-pillars.png';
 
 const Message = ({ msg, idx }) => {
+  // Only apply typewriter effect to the most recent bot message for better UX
+  // Previous messages appear instantly to avoid re-animation on scroll
   const isLastBotMessage = !msg.isUser && idx === msg.isLastBotIndex;
   const { displayedText } = useTypewriter(
     msg.text || '',
-    8,
+    8,  // 8ms delay per character = ~125 chars/second (natural reading pace)
     isLastBotMessage
   );
 
@@ -77,12 +79,14 @@ export const ChatPanel = () => {
   const messagesEndRef = useRef(null);
 
   // Flag to prevent fetching history while we are locally creating a chat
+  // Without this, we'd have a race condition where the fetch would overwrite the new empty conversation
   const isCreatingConversation = useRef(false);
 
   const activeConversation = getActiveConversation();
   const messages = activeConversation?.messages || [];
 
   // When the ID changes, fetch history UNLESS we are in the middle of creating it
+  // This prevents the sequence: create → fetch(404) → delete conversation from state
   useEffect(() => {
     if (activeConversationId) {
       if (isCreatingConversation.current) {

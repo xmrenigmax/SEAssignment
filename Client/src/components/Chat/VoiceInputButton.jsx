@@ -46,6 +46,7 @@ export const VoiceInputButton = ({ isRecording, onRecordingStart, onRecordingSto
 
     try {
       // Start Audio Recording (For Storage/Playback)
+      // MediaRecorder captures raw audio for the server to store and play back
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       mediaRecorderRef.current = new MediaRecorder(stream);
 
@@ -56,6 +57,8 @@ export const VoiceInputButton = ({ isRecording, onRecordingStart, onRecordingSto
       mediaRecorderRef.current.start();
 
       // Start Speech Recognition (For Text)
+      // Web Speech API transcribes speech to text in real-time (no server needed)
+      // We run BOTH simultaneously: audio for playback, text for searchability
       if (recognitionRef.current) {
         recognitionRef.current.start();
       }
@@ -75,7 +78,9 @@ export const VoiceInputButton = ({ isRecording, onRecordingStart, onRecordingSto
       mediaRecorderRef.current.onstop = () => {
         const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
 
-        // Convert Blob to Base64 String
+        // Convert Blob to Base64 String for transmission/storage
+        // Base64 allows us to embed binary audio data in JSON without corruption
+        // Alternative would be multipart/form-data, but this is simpler for the API
         const reader = new FileReader();
         reader.readAsDataURL(audioBlob);
         reader.onloadend = () => {

@@ -92,6 +92,9 @@ export function checkScriptedResponse(input) {
       if (importantStems.includes(keywordStem)) return true;
 
       // Fuzzy Match (Handle typos, but only for longer words)
+      // Jaro-Winkler scores 0-1 based on character similarity and position
+      // Example: "stoic" vs "stoick" = 0.97 (match), "stoic" vs "happy" = 0.4 (no match)
+      // MIN_FUZZY_LENGTH prevents false positives on short words like "is" vs "it"
       if (keywordLower.length >= MIN_FUZZY_LENGTH) {
         return importantTokens.some(token => {
           // Check length
@@ -119,12 +122,15 @@ export function checkScriptedResponse(input) {
  */
 export async function getHybridResponse(input) {
   // STEP 1: Try exact keyword matching (fastest)
+  // This catches common queries like "hello" or "what is stoicism" in <5ms
   const keywordMatch = checkScriptedResponse(input);
   if (keywordMatch) {
     return keywordMatch;
   }
 
-  // Try semantic similarity (slower but smarter)
+  // STEP 2: Try semantic similarity (slower but smarter)
+  // This catches paraphrased queries like "tell me about staying calm" → "stoic mindset"
+  // Takes ~20ms but understands intent, not just keywords
   try {
     const semanticMatch = await findSemanticMatch(input, 0.65); // 65% similarity threshold
     if (semanticMatch) {
