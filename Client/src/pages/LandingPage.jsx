@@ -24,7 +24,8 @@ const [isTourOpen, setIsTourOpen] = useState(false);
 // Initialize the Resizer Hook here
 const { sidebarWidth, startResizing, isResizing, sidebarRef } = useSidebarResizer(288);
 
-
+  // Show welcome tour on first visit (localStorage persistence)
+  // Tour explains Stoic philosophy and UI features to new users
 useEffect(() => {
   if (!hasCompletedTour) {
     setIsTourOpen(true);

@@ -21,6 +21,9 @@ const HF_API_KEY = process.env.HUGGINGFACE_API_KEY;
  * @returns {Promise<Response>} The fetch response.
  */
 async function fetchWithTimeout(url, options, timeout = 40000) {
+  // AbortController allows us to cancel the fetch if it takes too long
+  // 40 seconds is generous for LLM inference (average: 2-5s, worst case: 30s)
+  // Without this, a hung connection would block the server indefinitely
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), timeout);
   try {

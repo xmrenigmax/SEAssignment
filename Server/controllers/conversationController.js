@@ -152,7 +152,9 @@ export const sendMessage = async (req, res) => {
     let attachmentContext = '';
 
     if (file) {
-      // Convert buffer to Base64 string for storage
+      // Convert buffer to Base64 string for storage in MongoDB
+      // Base64 increases size by ~33% but allows storing binary data in JSON documents
+      // For production with many files, consider switching to GridFS or S3
       const base64String = file.buffer.toString('base64');
       const mimeType = file.mimetype;
 
@@ -183,7 +185,7 @@ export const sendMessage = async (req, res) => {
     const fullPrompt = attachmentContext ? `${attachmentContext}\n\n${text}` : text;
     let aiText = checkScriptedResponse(text) || getFallback();
 
-    // Only call API if no script match found
+    // Only call expensive API if no script match found
     if (!checkScriptedResponse(text)) {
       const generatedText = await generateAIResponse(fullPrompt);
       if (generatedText) {

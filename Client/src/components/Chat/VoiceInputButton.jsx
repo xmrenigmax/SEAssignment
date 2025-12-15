@@ -56,6 +56,8 @@ export const VoiceInputButton = ({ isRecording, onRecordingStart, onRecordingSto
       mediaRecorderRef.current.start();
 
       // Start Speech Recognition (For Text)
+      // Web Speech API transcribes speech to text in real-time (no server needed)
+      // We run BOTH simultaneously: audio for playback, text for searchability
       if (recognitionRef.current) {
         recognitionRef.current.start();
       }
@@ -75,7 +77,9 @@ export const VoiceInputButton = ({ isRecording, onRecordingStart, onRecordingSto
       mediaRecorderRef.current.onstop = () => {
         const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
 
-        // Convert Blob to Base64 String
+        // Convert Blob to Base64 String for transmission/storage
+        // Base64 allows us to embed binary audio data in JSON without corruption
+        // Alternative would be multipart/form-data, but this is simpler for the API
         const reader = new FileReader();
         reader.readAsDataURL(audioBlob);
         reader.onloadend = () => {
@@ -127,25 +131,31 @@ export const VoiceInputButton = ({ isRecording, onRecordingStart, onRecordingSto
             : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--accent)]',
           disabled && 'opacity-50 cursor-not-allowed'
         )}
+        aria-label={ isRecording ? "Stop voice recording" : "Start voice recording" }
+        aria-pressed={ isRecording }
+        type="button"
       >
         { isRecording && (
-          <span className="absolute -top-1 -right-1 flex h-3 w-3">
+          <span className="absolute -top-1 -right-1 flex h-3 w-3" aria-hidden="true">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
           </span>
         )}
         { isRecording ? (
-          <svg className="w-5 h-5 animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 animate-pulse" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <rect x="7" y="7" width="10" height="10" rx="2" />
           </svg>
         ) : (
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 016 0v6a3 3 0 01-3 3z" />
           </svg>
         )}
+        { isRecording && (
+          <span className="sr-only" role="status" aria-live="polite">Recording in progress</span>
+        )}
       </button>
       { isMenuOpen && !isRecording && (
-        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-[var(--text-primary)] text-[var(--bg-primary)] text-xs rounded whitespace-nowrap shadow-lg z-10">
+        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-[var(--text-primary)] text-[var(--bg-primary)] text-xs rounded whitespace-nowrap shadow-lg z-10" role="tooltip" aria-hidden="true">
           Voice Input
         </div>
       )}

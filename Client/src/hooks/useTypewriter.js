@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 /**
  * Custom hook for typewriter text effect.
  * Gradually reveals text character by character.
- * 
+ *
  * @param {string} text - The full text to display
  * @param {number} speed - Delay between characters in milliseconds (default: 8)
  * @param {boolean} startTyping - Whether to start the typing animation

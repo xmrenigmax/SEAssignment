@@ -49,6 +49,7 @@ export const useChat = () => {
       const serverConversations = await apiCall('/conversations');
 
       // Normalize response (handle Map vs Array)
+      // Backend might send different formats depending on MongoDB query result
       const validList = Array.isArray(serverConversations)
         ? serverConversations
         : Object.values(serverConversations);

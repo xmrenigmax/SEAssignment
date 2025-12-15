@@ -8,13 +8,15 @@ import { VoiceInputButton } from './VoiceInputButton';
 const BackgroundImage = '/icons/BackgroundImage/roman-pillars.png';
 
 const Message = ({ msg, idx }) => {
+  // Only apply typewriter effect to the most recent bot message for better UX
+  // Previous messages appear instantly to avoid re-animation on scroll
   const isLastBotMessage = !msg.isUser && idx === msg.isLastBotIndex;
   const { displayedText } = useTypewriter(
-    msg.text || '', 
-    8, 
+    msg.text || '',
+    8,  // 8ms delay per character = ~125 chars/second (natural reading pace)
     isLastBotMessage
   );
-  
+
   const displayText = isLastBotMessage ? displayedText : msg.text;
 
   return (
@@ -24,7 +26,7 @@ const Message = ({ msg, idx }) => {
           <img src="/icons/marcus-aurelius.png" alt="" className="w-full h-full object-cover rounded-full" aria-hidden="true"/>
         </div>
       )}
-      <div 
+      <div
         className={ `max-w-[85%] md:max-w-[75%] px-5 py-3.5 rounded-2xl text-sm md:text-base leading-relaxed shadow-sm ${ msg.isUser ? 'bg-[var(--accent)] text-white rounded-br-sm' : 'bg-[var(--bg-secondary)] text-[var(--text-primary)] border border-[var(--border)] rounded-bl-sm' }` }
         role="article"
         aria-label={ msg.isUser ? "You said" : "Marcus Aurelius said" }
@@ -204,7 +206,7 @@ export const ChatPanel = () => {
           { messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center opacity-60">
               <div className="w-20 h-20 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center mb-6 shadow-sm border border-[var(--border)] overflow-hidden">
-                <img src="/icons/marcus-aurelius.png" alt="Marcus Aurelius Bust" className="w-full h-full object-cover rounded-full"/>
+                <img src="/icons/marcus-aurelius.png" alt="Portrait bust of Marcus Aurelius, Roman Emperor and Stoic philosopher" className="w-full h-full object-cover rounded-full"/>
               </div>
               <h1 className="text-2xl font-serif font-bold text-[var(--text-primary)] mb-2">Marcus Aurelius</h1>
               <p className="text-sm text-[var(--text-secondary)] max-w-sm leading-relaxed">
@@ -212,6 +214,7 @@ export const ChatPanel = () => {
               </p>
             </div>
           ) : (
+            // IIFE to find last bot message for typewriter effect
             (() => {
               let lastBotIndex = -1;
               for (let i = messages.length - 1; i >= 0; i--) {
@@ -220,22 +223,23 @@ export const ChatPanel = () => {
                   break;
                 }
               }
-              
+
               return messages.map((msg, idx) => (
-                <Message 
-                  key={ msg.id || idx } 
-                  msg={{ ...msg, isLastBotIndex: idx === lastBotIndex ? idx : -1 }} 
-                  idx={ idx } 
+                <Message
+                  key={ msg.id || idx }
+                  msg={{ ...msg, isLastBotIndex: idx === lastBotIndex ? idx : -1 }}
+                  idx={ idx }
                 />
               ));
             })()
           )}
           { isLoading && (
-            <div className="flex justify-start ml-11" aria-label="Marcus is typing">
+            <div className="flex justify-start ml-11" role="status" aria-live="polite" aria-label="Marcus Aurelius is thinking">
               <div className="bg-[var(--bg-secondary)] px-4 py-3 rounded-2xl border border-[var(--border)] flex gap-1.5">
-                <div className="w-2 h-2 bg-[var(--text-secondary)] rounded-full animate-bounce" />
-                <div className="w-2 h-2 bg-[var(--text-secondary)] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                <div className="w-2 h-2 bg-[var(--text-secondary)] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                {/* Three dots with staggered animation delays */}
+                <div className="w-2 h-2 bg-[var(--text-secondary)] rounded-full animate-bounce" aria-hidden="true" />
+                <div className="w-2 h-2 bg-[var(--text-secondary)] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} aria-hidden="true" />
+                <div className="w-2 h-2 bg-[var(--text-secondary)] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} aria-hidden="true" />
               </div>
             </div>
           )}
@@ -250,9 +254,16 @@ export const ChatPanel = () => {
           </div>
           <div className="flex-1 min-w-0 py-1.5">
             { (attachedFile || audioData) && (
-              <div className="flex items-center gap-2 mb-2 text-xs text-[var(--accent)] bg-[var(--bg-primary)] w-fit px-2 py-1 rounded">
+              <div className="flex items-center gap-2 mb-2 text-xs text-[var(--accent)] bg-[var(--bg-primary)] w-fit px-2 py-1 rounded" role="status">
                 <span>{ attachedFile ? attachedFile.name : 'Voice Message Ready' }</span>
-                <button onClick={ () => { setAttachedFile(null); setAudioData(null); }} className="hover:text-red-500" aria-label="Remove attachment">×</button>
+                <button 
+                  onClick={ () => { setAttachedFile(null); setAudioData(null); }} 
+                  className="hover:text-red-500" 
+                  aria-label={`Remove ${attachedFile ? 'file attachment' : 'voice message'}`}
+                  type="button"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
               </div>
             )}
             <textarea
@@ -264,15 +275,23 @@ export const ChatPanel = () => {
               className="w-full bg-transparent border-none outline-none text-[var(--text-primary)] placeholder-[var(--text-secondary)] resize-none max-h-[150px]"
               rows={ 1 }
               style={{ minHeight: '24px' }}
-              aria-label="Message Input"
+              aria-label="Type your message to Marcus Aurelius"
+              aria-describedby="message-help"
               tabIndex={1}
             />
           </div>
           <div tabIndex={1}>
             <VoiceInputButton isRecording={ isRecording } onRecordingStart={ () => { setIsRecording(true); setTranscribedText(''); }} onRecordingStop={ handleRecordingComplete } disabled={ isLoading }/>
           </div>
-          <button onClick={ handleSend } disabled={( !input.trim() && !transcribedText && !attachedFile && !audioData) || isLoading } className="p-2 rounded-xl bg-[var(--accent)] text-white hover:opacity-90 shadow-sm disabled:opacity-50" aria-label="Send Message" tabIndex={1}>
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <button 
+            onClick={ handleSend } 
+            disabled={( !input.trim() && !transcribedText && !attachedFile && !audioData) || isLoading } 
+            className="p-2 rounded-xl bg-[var(--accent)] text-white hover:opacity-90 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed" 
+            aria-label={isLoading ? "Sending message, please wait" : "Send message to Marcus Aurelius"}
+            type="button"
+            tabIndex={1}
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </button>

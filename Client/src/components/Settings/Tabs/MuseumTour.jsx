@@ -60,6 +60,9 @@ export const MuseumTour = ({ isOpen, onClose, isMobileOpen, setIsMobileOpen }) =
     const targetSelector = get(currentStepData, 'target');
     const element = targetSelector ? document.querySelector(targetSelector) : null;
 
+    // Dynamic positioning: Calculate spotlight position around the target element
+    // This must recalculate on: resize, scroll, sidebar animation, or window changes
+    // getBoundingClientRect gives us viewport-relative coordinates in real-time
     if (element) {
       const rect = element.getBoundingClientRect();
       const padding = 8;
@@ -76,7 +79,7 @@ export const MuseumTour = ({ isOpen, onClose, isMobileOpen, setIsMobileOpen }) =
       const placement = get(currentStepData, 'placement', 'bottom');
 
       const isMobile = window.innerWidth < 768;
-      
+
       if (placement === 'right') {
         tooltipLeft = highlight.left + highlight.width + 20;
         tooltipTop = highlight.top + 20;
@@ -90,7 +93,7 @@ export const MuseumTour = ({ isOpen, onClose, isMobileOpen, setIsMobileOpen }) =
         }
       } else {
         tooltipLeft = highlight.left;
-        tooltipTop = highlight.top + highlight.height + 180; 
+        tooltipTop = highlight.top + highlight.height + 180;
       }
 
       if (tooltipTop < 20) tooltipTop = 20;
@@ -118,6 +121,9 @@ export const MuseumTour = ({ isOpen, onClose, isMobileOpen, setIsMobileOpen }) =
 
     if (isOpen) {
       updatePosition();
+      // ResizeObserver fires when ANY element changes size (including CSS transitions)
+      // requestAnimationFrame ensures we update on the next paint cycle (60fps smooth)
+      // This catches sidebar animations, font loading, and even browser zoom changes
       observerRef.current = new ResizeObserver(() => requestAnimationFrame(updatePosition));
       observerRef.current.observe(document.body);
       observerRef.current.observe(document.documentElement);
@@ -139,14 +145,14 @@ export const MuseumTour = ({ isOpen, onClose, isMobileOpen, setIsMobileOpen }) =
     if (!isMobile) return;
 
     const targetSelector = get(currentStepData, 'target');
-    
+
     if (targetSelector && (targetSelector === 'aside' || targetSelector.startsWith('aside '))) {
       setIsSidebarAnimating(true);
       setIsMobileOpen(true);
       setTimeout(() => {
         setIsSidebarAnimating(false);
         updatePosition();
-      }, 350); 
+      }, 350);
     } else if (!isWelcomeStep && targetSelector) {
       setIsSidebarAnimating(true);
       setIsMobileOpen(false);
