@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useChatContext } from '../../../context/ChatContext';
+import { DeleteConfirmationModal } from '../../UI/DeleteConfirmationModal';
 import clsx from 'clsx';
 import { get } from 'lodash';
 
@@ -26,6 +27,12 @@ export const DataManagement = () => {
    * @type {[string, function(string): void]}
    */
   const [importStatus, setImportStatus] = useState('');
+
+  /**
+   * State for managing the delete all confirmation modal.
+   * @type {[boolean, function(boolean): void]}
+   */
+  const [showDeleteAllModal, setShowDeleteAllModal] = useState(false);
 
   /**
    * Serializes current conversations to JSON and triggers browser download.
@@ -87,9 +94,25 @@ export const DataManagement = () => {
     reader.readAsText(file);
   };
 
+  const handleDeleteAllClick = () => {
+    setShowDeleteAllModal(true);
+  };
+
+  const handleDeleteAllConfirm = () => {
+    clearAllConversations();
+    setShowDeleteAllModal(false);
+  };
+
   return (
-    <div className="space-y-6 animate-in fade-in duration-300">
-      <div>
+    <>
+      <DeleteConfirmationModal
+        isOpen={showDeleteAllModal}
+        onClose={() => setShowDeleteAllModal(false)}
+        onConfirm={handleDeleteAllConfirm}
+        conversationTitle="All Conversations"
+      />
+      <div className="space-y-6 animate-in fade-in duration-300">
+        <div>
         <h2 className="text-2xl font-bold mb-2 text-[var(--text-primary)]">Data & Privacy</h2>
         <p className="text-[var(--text-secondary)]">Control your conversation data.</p>
       </div>
@@ -128,11 +151,12 @@ export const DataManagement = () => {
             <h3 className="font-semibold text-lg text-red-600 dark:text-red-400">Clear Data </h3>
             <p className="text-sm text-red-600/70 dark:text-red-400/70 mt-1">Permanently delete all chats from server & local.</p>
           </div>
-          <button onClick={ clearAllConversations } className={ clsx("px-4 py-2 border rounded-lg transition-colors", "bg-white dark:bg-red-950/30 border-red-200 dark:border-red-800", "text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20") }>
+          <button onClick={ handleDeleteAllClick } className={ clsx("px-4 py-2 border rounded-lg transition-colors", "bg-white dark:bg-red-950/30 border-red-200 dark:border-red-800", "text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20") }>
             Delete All
           </button>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
