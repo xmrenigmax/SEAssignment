@@ -195,14 +195,10 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
             </svg>
             { !isCollapsed && <span className="text-sm font-medium">Exhibit Guide</span> }
           </button>
-          <div className={ clsx("flex items-center", isCollapsed ? "flex-col gap-4" : "justify-between border-t border-[var(--border)] pt-3 gap-1") }>
-            <div tabIndex={2}>
-                <ThemeToggle isCollapsed={ isCollapsed } />
-            </div>
+          <div className={ clsx("flex items-center", isCollapsed ? "flex-col gap-4" : "justify-between border-t border-[var(--border)] pt-3 gap-2") }>
+            <ThemeToggle isCollapsed={ isCollapsed } />
             { !isCollapsed && <div className="h-4 w-px bg-[var(--border)]" role="presentation" /> }
-            <div tabIndex={2}>
-                <SettingsButton activeView={ activeView } setActiveView={ setActiveView } isCollapsed={ isCollapsed } />
-            </div>
+            <SettingsButton activeView={ activeView } setActiveView={ setActiveView } isCollapsed={ isCollapsed } />
           </div>
         </div>
       </aside>

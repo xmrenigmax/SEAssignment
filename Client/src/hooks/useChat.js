@@ -199,8 +199,6 @@ export const useChat = () => {
    * Deletes ALL conversations history.
    */
   const clearAllConversations = async () => {
-    if (!window.confirm("Are you sure you want to delete the entire history? This cannot be undone.")) return;
-
     setConversations([]);
     setActiveConversationId(null);
     try { await apiCall('/conversations', { method: 'DELETE' }); } catch (error) { console.warn("Failed to clear on server"); }
