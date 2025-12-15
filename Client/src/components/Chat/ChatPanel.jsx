@@ -1,10 +1,49 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useChatContext } from '../../context/ChatContext';
 import { useBackendHealth } from '../../hooks/useBackendHealth';
+import { useTypewriter } from '../../hooks/useTypewriter';
 import { AttachmentButton } from './AttachmentButton';
 import { VoiceInputButton } from './VoiceInputButton';
 
 const BackgroundImage = '/icons/BackgroundImage/roman-pillars.png';
+
+const Message = ({ msg, idx }) => {
+  const isLastBotMessage = !msg.isUser && idx === msg.isLastBotIndex;
+  const { displayedText } = useTypewriter(
+    msg.text || '', 
+    20, 
+    isLastBotMessage
+  );
+  
+  const displayText = isLastBotMessage ? displayedText : msg.text;
+
+  return (
+    <div className={ `flex ${ msg.isUser ? 'justify-end' : 'justify-start' }` }>
+      { !msg.isUser && (
+        <div className="w-10 h-10 mr-3 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center border mb-6 shadow-sm">
+          <img src="/icons/marcus-aurelius.png" alt="" className="w-full h-full object-cover rounded-full" aria-hidden="true"/>
+        </div>
+      )}
+      <div 
+        className={ `max-w-[85%] md:max-w-[75%] px-5 py-3.5 rounded-2xl text-sm md:text-base leading-relaxed shadow-sm ${ msg.isUser ? 'bg-[var(--accent)] text-white rounded-br-sm' : 'bg-[var(--bg-secondary)] text-[var(--text-primary)] border border-[var(--border)] rounded-bl-sm' }` }
+        role="article"
+        aria-label={ msg.isUser ? "You said" : "Marcus Aurelius said" }
+      >
+        { msg.attachment && (
+          <div className="mb-3 p-2 bg-black/10 rounded-lg flex gap-2 text-xs">
+            <span className="truncate">{ msg.attachment.name }</span>
+          </div>
+        )}
+        { msg.audio && (
+          <div className="mb-2">
+            <audio controls src={ msg.audio } className="h-8 w-full max-w-[200px]" aria-label="Audio message" />
+          </div>
+        )}
+        <div className="whitespace-pre-wrap">{ displayText }</div>
+      </div>
+    </div>
+  );
+};
 
 /**
  * ChatPanel Component
@@ -173,31 +212,23 @@ export const ChatPanel = () => {
               </p>
             </div>
           ) : (
-            messages.map((msg, idx) => (
-              <div key={ msg.id || idx } className={ `flex ${ msg.isUser ? 'justify-end' : 'justify-start' }` }>
-                { !msg.isUser && (
-                  <div className="w-10 h-10 mr-3 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center border mb-6 shadow-sm">
-                    <img src="/icons/marcus-aurelius.png" alt="" className="w-full h-full object-cover rounded-full" aria-hidden="true"/>
-                  </div>
-                )}
-                <div className={ `max-w-[85%] md:max-w-[75%] px-5 py-3.5 rounded-2xl text-sm md:text-base leading-relaxed shadow-sm ${ msg.isUser ? 'bg-[var(--accent)] text-white rounded-br-sm' : 'bg-[var(--bg-secondary)] text-[var(--text-primary)] border border-[var(--border)] rounded-bl-sm' }` }
-                role="article"
-                aria-label={ msg.isUser ? "You said" : "Marcus Aurelius said" }
-                >
-                  { msg.attachment && (
-                    <div className="mb-3 p-2 bg-black/10 rounded-lg flex gap-2 text-xs">
-                      <span className="truncate">{ msg.attachment.name }</span>
-                    </div>
-                  )}
-                  { msg.audio && (
-                    <div className="mb-2">
-                      <audio controls src={ msg.audio } className="h-8 w-full max-w-[200px]" aria-label="Audio message" />
-                    </div>
-                  )}
-                  <div className="whitespace-pre-wrap">{ msg.text }</div>
-                </div>
-              </div>
-            ))
+            (() => {
+              let lastBotIndex = -1;
+              for (let i = messages.length - 1; i >= 0; i--) {
+                if (!messages[i].isUser) {
+                  lastBotIndex = i;
+                  break;
+                }
+              }
+              
+              return messages.map((msg, idx) => (
+                <Message 
+                  key={ msg.id || idx } 
+                  msg={{ ...msg, isLastBotIndex: idx === lastBotIndex ? idx : -1 }} 
+                  idx={ idx } 
+                />
+              ));
+            })()
           )}
           { isLoading && (
             <div className="flex justify-start ml-11" aria-label="Marcus is typing">
