@@ -272,7 +272,7 @@ export const ChatPanel = () => {
               onChange={ handleInputChange }
               onKeyDown={ handleKeyDown }
               placeholder={ isRecording ? "Listening..." : "Ask the Emperor..." }
-              className="w-full bg-transparent border-none outline-none text-[var(--text-primary)] placeholder-[var(--text-secondary)] resize-none max-h-[150px]"
+              className="w-full bg-transparent border-none outline-none focus-visible:outline-none text-[var(--text-primary)] placeholder-[var(--text-secondary)] resize-none max-h-[150px]"
               rows={ 1 }
               style={{ minHeight: '24px' }}
               aria-label="Type your message to Marcus Aurelius"
