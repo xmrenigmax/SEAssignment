@@ -15,6 +15,10 @@ yarn-error.log*
 data/*.json
 !data/.gitkeep
 
+# Server data files
+**/script.json
+**/conversations.json
+
 # Logs
 logs
 *.log
