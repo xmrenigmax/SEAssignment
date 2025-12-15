@@ -16,8 +16,8 @@ data/*.json
 !data/.gitkeep
 
 # Server data files
-**/script.json
-**/conversations.json
+conversations.json
+script.json
 
 # Logs
 logs
