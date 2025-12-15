@@ -181,10 +181,7 @@ export const sendMessage = async (req, res) => {
       attachment: fileData
     };
 
-    // Logic Engine / AI Response - Three-tier fallback strategy:
-    // 1. Scripted responses (instant, deterministic, 90% of queries)
-    // 2. LLM generation (2-5s, creative, for complex questions)
-    // 3. Generic fallback (if API fails or times out)
+    // Logic Engine / AI Response
     const fullPrompt = attachmentContext ? `${attachmentContext}\n\n${text}` : text;
     let aiText = checkScriptedResponse(text) || getFallback();
 

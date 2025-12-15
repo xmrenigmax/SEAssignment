@@ -79,14 +79,12 @@ export const ChatPanel = () => {
   const messagesEndRef = useRef(null);
 
   // Flag to prevent fetching history while we are locally creating a chat
-  // Without this, we'd have a race condition where the fetch would overwrite the new empty conversation
   const isCreatingConversation = useRef(false);
 
   const activeConversation = getActiveConversation();
   const messages = activeConversation?.messages || [];
 
   // When the ID changes, fetch history UNLESS we are in the middle of creating it
-  // This prevents the sequence: create → fetch(404) → delete conversation from state
   useEffect(() => {
     if (activeConversationId) {
       if (isCreatingConversation.current) {
@@ -216,7 +214,7 @@ export const ChatPanel = () => {
               </p>
             </div>
           ) : (
-            /* IIFE to find last bot message for typewriter effect */
+            // IIFE to find last bot message for typewriter effect
             (() => {
               let lastBotIndex = -1;
               for (let i = messages.length - 1; i >= 0; i--) {

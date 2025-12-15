@@ -21,9 +21,8 @@ const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 const [isTourOpen, setIsTourOpen] = useState(false);
 
 
-// Initialize the Resizer Hook with 288px default (18rem)
-  // This hook manages drag-to-resize functionality on desktop
-  const { sidebarWidth, startResizing, isResizing, sidebarRef } = useSidebarResizer(288);
+// Initialize the Resizer Hook here
+const { sidebarWidth, startResizing, isResizing, sidebarRef } = useSidebarResizer(288);
 
   // Show welcome tour on first visit (localStorage persistence)
   // Tour explains Stoic philosophy and UI features to new users
@@ -46,8 +45,8 @@ const handleViewChange = (view) => {
 };
 
 
- // Calculates dynamic width for the CSS variable  // CSS variables allow real-time width updates without re-rendering child components
-  // This approach is more performant than passing width as props to every childconst currentSidebarWidth = isCollapsed ? '5rem' : `${ sidebarWidth }px`;
+ // Calculates dynamic width for the CSS variable
+const currentSidebarWidth = isCollapsed ? '5rem' : `${ sidebarWidth }px`;
 
 
 return (

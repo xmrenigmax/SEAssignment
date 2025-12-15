@@ -54,7 +54,7 @@ export const useChat = () => {
         ? serverConversations
         : Object.values(serverConversations);
 
-      // Sort by newest first - ensures recent conversations appear at the top
+      // Sort by newest first
       validList.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
 
       setConversations(validList);
@@ -136,10 +136,7 @@ export const useChat = () => {
     const tempId = `temp-${Date.now()}`;
     const optimisticMessage = { ...message, id: tempId };
 
-    // Optimistic UI Update: Show the message immediately BEFORE the server responds
-    // This creates the illusion of instant response (~0ms perceived latency)
-    // If the server fails, we rely on error handling to remove it
-    // This pattern is crucial for good UX in chat applications
+    // Optimistic UI Update
     setConversations(prev => prev.map(conversation => {
       if (conversation.id === conversationId) {
         return {

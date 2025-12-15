@@ -46,7 +46,6 @@ export const VoiceInputButton = ({ isRecording, onRecordingStart, onRecordingSto
 
     try {
       // Start Audio Recording (For Storage/Playback)
-      // MediaRecorder captures raw audio for the server to store and play back
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       mediaRecorderRef.current = new MediaRecorder(stream);
 
