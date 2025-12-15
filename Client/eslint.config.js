@@ -15,17 +15,17 @@ import { defineConfig, globalIgnores } from 'eslint/config';
 export default defineConfig([
   // Ignore build artifacts
   globalIgnores(['dist']),
-  
+
   {
     files: ['**/*.{js,jsx}'],
-    
+
     // Base configurations
     extends: [
       js.configs.recommended,
       reactHooks.configs['recommended-latest'],
       reactRefresh.configs.vite,
     ],
-    
+
     // Browser environment globals
     languageOptions: {
       ecmaVersion: 2020,
@@ -36,7 +36,7 @@ export default defineConfig([
         sourceType: 'module',
       },
     },
-    
+
     // Custom Rules
     rules: {
       // Allow unused vars if they start with Uppercase (often imports) or Underscore

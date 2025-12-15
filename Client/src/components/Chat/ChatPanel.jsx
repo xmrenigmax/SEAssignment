@@ -10,11 +10,11 @@ const BackgroundImage = '/icons/BackgroundImage/roman-pillars.png';
 const Message = ({ msg, idx }) => {
   const isLastBotMessage = !msg.isUser && idx === msg.isLastBotIndex;
   const { displayedText } = useTypewriter(
-    msg.text || '', 
-    8, 
+    msg.text || '',
+    8,
     isLastBotMessage
   );
-  
+
   const displayText = isLastBotMessage ? displayedText : msg.text;
 
   return (
@@ -24,7 +24,7 @@ const Message = ({ msg, idx }) => {
           <img src="/icons/marcus-aurelius.png" alt="" className="w-full h-full object-cover rounded-full" aria-hidden="true"/>
         </div>
       )}
-      <div 
+      <div
         className={ `max-w-[85%] md:max-w-[75%] px-5 py-3.5 rounded-2xl text-sm md:text-base leading-relaxed shadow-sm ${ msg.isUser ? 'bg-[var(--accent)] text-white rounded-br-sm' : 'bg-[var(--bg-secondary)] text-[var(--text-primary)] border border-[var(--border)] rounded-bl-sm' }` }
         role="article"
         aria-label={ msg.isUser ? "You said" : "Marcus Aurelius said" }
@@ -220,12 +220,12 @@ export const ChatPanel = () => {
                   break;
                 }
               }
-              
+
               return messages.map((msg, idx) => (
-                <Message 
-                  key={ msg.id || idx } 
-                  msg={{ ...msg, isLastBotIndex: idx === lastBotIndex ? idx : -1 }} 
-                  idx={ idx } 
+                <Message
+                  key={ msg.id || idx }
+                  msg={{ ...msg, isLastBotIndex: idx === lastBotIndex ? idx : -1 }}
+                  idx={ idx }
                 />
               ));
             })()

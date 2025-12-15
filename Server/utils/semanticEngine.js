@@ -119,7 +119,7 @@ export async function findSemanticMatch(input, threshold = 0.65) {
 
     let bestMatch = null;
     let bestScore = threshold;
-    
+
     for (const [keyword, cached] of embeddingCache.entries()) {
       const similarity = cosineSimilarity(inputEmbedding, cached.vector);
 

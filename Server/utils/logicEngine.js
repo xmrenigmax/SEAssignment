@@ -30,7 +30,7 @@ export async function loadScript() {
     if (scriptDoc) {
       cachedScript = scriptDoc;
       console.log('[Logic Engine] Rules loaded from MongoDB.');
-      
+
       try {
         await precomputeKeywordEmbeddings(scriptDoc.rules || []);
       } catch (error) {

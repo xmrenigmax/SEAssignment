@@ -19,7 +19,7 @@ export const DeleteConfirmationModal = ({ isOpen, onClose, onConfirm, conversati
   };
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-200"
       onClick={handleBackdropClick}
     >
