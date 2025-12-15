@@ -11,7 +11,7 @@ const Message = ({ msg, idx }) => {
   const isLastBotMessage = !msg.isUser && idx === msg.isLastBotIndex;
   const { displayedText } = useTypewriter(
     msg.text || '', 
-    20, 
+    8, 
     isLastBotMessage
   );
   
