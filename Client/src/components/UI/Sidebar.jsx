@@ -102,7 +102,7 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
           <div className={ clsx("flex items-center", isCollapsed ? "justify-center" : "justify-between") }>
             { !isCollapsed && (
               <div className="flex items-center gap-3 pl-1 animate-in fade-in duration-200 overflow-hidden">
-                <div className="w-12 h-12 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center border shadow-sm flex-shrink-0">
+                <div className="w-12 h-12 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center border shadow-sm flex-shrink-0" aria-hidden="true">
                   <img src="/icons/marcus-aurelius.png" alt="" className="w-full h-full object-cover rounded-full" aria-hidden="true"/>
                 </div>
                 <h1 className="text-lg font-serif font-bold text-[var(--text-primary)] tracking-tight whitespace-nowrap overflow-hidden text-ellipsis">
@@ -117,13 +117,19 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
                 title={ isCollapsed ? "Expand menu" : "Collapse menu" }
                 aria-label={ isCollapsed ? "Expand sidebar" : "Collapse sidebar" }
                 tabIndex={2}
+                type="button"
               >
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </button>
-              <button onClick={ toggleMobile } className="lg:hidden p-2 text-[var(--text-secondary)] hover:bg-[var(--bg-primary)] rounded-full" aria-label="Close menu">
-                ✕
+              <button 
+                onClick={ toggleMobile } 
+                className="lg:hidden p-2 text-[var(--text-secondary)] hover:bg-[var(--bg-primary)] rounded-full" 
+                aria-label="Close sidebar menu"
+                type="button"
+              >
+                <span aria-hidden="true">✕</span>
               </button>
             </div>
           </div>
@@ -137,10 +143,11 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
                 : "px-4 py-3 rounded-xl bg-[var(--bg-primary)] hover:shadow-md text-[var(--text-secondary)] hover:text-[var(--accent)]"
             )}
             title="New Chat"
-            aria-label="Start a new chat"
+            aria-label="Start a new chat conversation"
             tabIndex={2}
+            type="button"
           >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M12 4v16m8-8H4" />
             </svg>
             { !isCollapsed && <span className="font-medium text-sm whitespace-nowrap">New Chat</span> }
@@ -176,16 +183,23 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
                     onClick={ () => setActiveConversationId(conversation.id) }
                     tabIndex={2}
                     className={ clsx( "group relative flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-all duration-200 border border-transparent", activeConversationId === conversation.id ? "bg-[var(--accent)]/10 text-[var(--accent)] font-medium" : "text-[var(--text-primary)] hover:bg-[var(--bg-primary)] hover:border-[var(--border)]" )}
-                    onKeyDown={(e) => { if(e.key === 'Enter') setActiveConversationId(conversation.id) }}
-                    aria-label={`Conversation: ${conversation.title || 'New Chat'}`}
+                    onKeyDown={(e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveConversationId(conversation.id); } }}
+                    aria-label={`${activeConversationId === conversation.id ? 'Current conversation: ' : 'Select conversation: '}${conversation.title || 'New Chat'}`}
+                    aria-current={activeConversationId === conversation.id ? 'true' : 'false'}
                   >
-                    <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                     </svg>
                     <span className="truncate flex-1 text-sm">{ conversation.title || 'New Chat' }</span>
                     <button
-                      onClick={ (event) => handleDeleteClick(event, conversation.id, conversation.title) } className="opacity-0 group-hover:opacity-100 focus:opacity-100 p-1.5 text-[var(--text-secondary)] hover:text-red-500 rounded-md transition-all" title="Delete Conversation" aria-label="Delete this conversation" tabIndex={2}>
-                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      onClick={ (event) => handleDeleteClick(event, conversation.id, conversation.title) } 
+                      className="opacity-0 group-hover:opacity-100 focus:opacity-100 p-1.5 text-[var(--text-secondary)] hover:text-red-500 rounded-md transition-all" 
+                      title="Delete Conversation" 
+                      aria-label={`Delete conversation: ${conversation.title || 'New Chat'}`}
+                      tabIndex={2}
+                      type="button"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M6 18L18 6M6 6l12 12" />
                       </svg>
                     </button>
@@ -202,8 +216,15 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
         </div>
         {/* Footer: Museum Guide, theme toggle, and settings buttons */}
         <div className="p-4 border-t border-[var(--border)] flex flex-col gap-3">
-          <button onClick={ () => setShowMuseumModal(true) } className={ clsx("flex items-center gap-3 px-3 py-2 rounded-lg transition-all", "text-[var(--text-secondary)] hover:text-[var(--accent)] hover:bg-[var(--bg-primary)]", isCollapsed ? "justify-center w-full" : "w-full") } title="About Marcus Aurelius" aria-label="Open Exhibit Guide" tabIndex={2}>
-            <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <button 
+            onClick={ () => setShowMuseumModal(true) } 
+            className={ clsx("flex items-center gap-3 px-3 py-2 rounded-lg transition-all", "text-[var(--text-secondary)] hover:text-[var(--accent)] hover:bg-[var(--bg-primary)]", isCollapsed ? "justify-center w-full" : "w-full") } 
+            title="About Marcus Aurelius" 
+            aria-label="Open Exhibit Guide to learn about Marcus Aurelius" 
+            tabIndex={2}
+            type="button"
+          >
+            <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
             </svg>
             { !isCollapsed && <span className="text-sm font-medium">Exhibit Guide</span> }
