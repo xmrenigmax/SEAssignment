@@ -47,7 +47,7 @@ export const MuseumGuideModal = ({ isOpen, onClose, onStartTour }) => {
 
   if (!isOpen) return null;
 
-  /* Dual-mode: regular modal or tour welcome screen based on onStartTour prop */
+  // Dual-mode: regular modal or tour welcome screen based on onStartTour prop 
   const isTourMode = typeof onStartTour === 'function';
   const handleAction = isTourMode ? onStartTour : onClose;
   const buttonText = isTourMode ? "Start Tour" : "Enter Discussion";

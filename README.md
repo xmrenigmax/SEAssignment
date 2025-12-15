@@ -93,7 +93,7 @@ npm install
 npm run dev
 
 ```
-frontend available on http://localhost:5173/ for now
+frontend available on https://marcusaurelius-client.vercel.app/ for now
 
 #### Purpose of Frontend
 - **Separation** → a clear separation of data, api and website development
@@ -118,7 +118,7 @@ npm run dev
 
 ```
 
-Backend runs on http://localhost:3000/ for now
+Backend runs on https://marcusaurelius-server.vercel.app/ for now
 
 #### Purpose of Backend
 - **API** → provides API endpoints
