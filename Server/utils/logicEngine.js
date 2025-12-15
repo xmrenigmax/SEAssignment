@@ -1,6 +1,7 @@
 /**
  * @file utils/logicEngine.js
  * @description Logic engine that fetches rules from MongoDB instead of a local JSON file.
+ * @author Group 1
  */
 
 import natural from 'natural';
@@ -17,7 +18,8 @@ const FUZZY_THRESHOLD = 0.85;
 let cachedScript = null;
 
 /**
- * Loads the script from MongoDB into memory.
+ * @function loadScript
+ * @description Loads the script from MongoDB into memory.
  */
 export async function loadScript() {
   try {
@@ -38,12 +40,14 @@ export async function loadScript() {
 }
 
 /**
- * Normalizes probabilities and picks a response.
- * @param {Array} pool - Array of response objects
+ * @function robustRandomSelect
+ * @description Normalizes probabilities and picks a response.
+ * @param {Array} pool - Array of response objects.
+ * @returns {string} The selected response text.
  */
 function robustRandomSelect(pool) {
   if (!pool || pool.length === 0) return null;
-  const totalWeight = pool.reduce((sum, item) => sum + (item.probability*4 || 0), 0);
+  const totalWeight = pool.reduce((sum, item) => sum + (item.probability * 4 || 0), 0);
   let randomPoint = Math.random() * totalWeight;
 
   for (const option of pool) {
@@ -55,8 +59,10 @@ function robustRandomSelect(pool) {
 }
 
 /**
- * Checks text against loaded rules.
- * @param {string} input - User message
+ * @function checkScriptedResponse
+ * @description Checks text against loaded rules.
+ * @param {string} input - User message.
+ * @returns {string|null} The scripted response or null if no match.
  */
 export function checkScriptedResponse(input) {
   if (!cachedScript || !cachedScript.rules) return null;
@@ -99,6 +105,11 @@ export function checkScriptedResponse(input) {
   return null;
 }
 
+/**
+ * @function getFallback
+ * @description Gets a general fallback response if no specific rule matched.
+ * @returns {string} A fallback response.
+ */
 export function getFallback() {
   if (!cachedScript || !cachedScript.general_responses) return "The mind must remain firm.";
   return robustRandomSelect(cachedScript.general_responses);
