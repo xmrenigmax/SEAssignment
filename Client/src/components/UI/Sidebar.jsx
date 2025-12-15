@@ -83,13 +83,16 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
         onConfirm={ handleDeleteConfirm }
         conversationTitle={ deleteModalState.conversationTitle }
       />
+      {/* Backdrop overlay - closes sidebar when clicked */}
       { isMobileOpen && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden transition-opacity duration-300" onClick={ toggleMobile } aria-hidden="true"/>
       )}
+      {/* Main sidebar: slides in on mobile, resizable on desktop, collapsible to icon-only */}
       <aside ref={ sidebarRef } className={ clsx("fixed inset-y-0 left-0 z-50 bg-[var(--bg-secondary)] border-r border-[var(--border)] flex flex-col", isMobileOpen ? "translate-x-0 w-[85vw] max-w-xs shadow-2xl" : "-translate-x-full lg:translate-x-0", isCollapsed && "lg:w-20") } style={{ width: !isCollapsed && !isMobileOpen ? sidebarWidth : undefined, transition: isResizing ? 'none' : 'width 300ms cubic-bezier(0.4, 0, 0.2, 1), transform 300ms ease-in-out' }} aria-label="Sidebar Navigation" >
         { !isCollapsed && !isMobileOpen && (
           <div onMouseDown={ startResizing } className={ clsx("absolute top-0 right-[-4px] w-2 h-full cursor-col-resize z-50 transition-colors", isResizing ? "bg-[var(--accent)]" : "hover:bg-[var(--accent)]/50") } title="Drag to resize" aria-hidden="true"/>
         )}
+        {/* Header: logo, title, and collapse/close buttons */}
         <div className="p-4 flex flex-col gap-6 flex-shrink-0">
           <div className={ clsx("flex items-center", isCollapsed ? "justify-center" : "justify-between") }>
             { !isCollapsed && (
@@ -119,6 +122,7 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
               </button>
             </div>
           </div>
+          {/* New Chat button: switches between icon-only and full button based on collapse state */}
           <button
             onClick={ handleNewChat }
             className={ clsx(
@@ -137,6 +141,7 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
             { !isCollapsed && <span className="font-medium text-sm whitespace-nowrap">New Chat</span> }
           </button>
         </div>
+        {/* Scrollable conversation history list with search */}
         <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar px-3 py-2">
           { !isCollapsed && (
             <div className="mb-4 animate-in fade-in duration-200">
@@ -156,6 +161,7 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
                   { filteredConversations.length }
                 </span>
               </div>
+              {/* Conversation list items with hover-reveal delete buttons */}
               <div role="list" aria-labelledby="history-heading">
                 { filteredConversations.length === 0 && (<p className="px-3 text-xs text-[var(--text-secondary)] opacity-60">No history found.</p>) }
                 { filteredConversations.map(conversation => (
@@ -183,11 +189,13 @@ export const Sidebar = ({ activeView, setActiveView, isCollapsed, toggleCollapse
               </div>
             </div>
           ) : (
+            /* Collapsed state: show three decorative dots */
             <div className="flex flex-col items-center gap-4 mt-2 opacity-30" aria-hidden="true">
               { [1, 2, 3].map(i => (<div key={ i } className="w-1.5 h-1.5 bg-[var(--text-secondary)] rounded-full" />)) }
             </div>
           )}
         </div>
+        {/* Footer: Museum Guide, theme toggle, and settings buttons */}
         <div className="p-4 border-t border-[var(--border)] flex flex-col gap-3">
           <button onClick={ () => setShowMuseumModal(true) } className={ clsx("flex items-center gap-3 px-3 py-2 rounded-lg transition-all", "text-[var(--text-secondary)] hover:text-[var(--accent)] hover:bg-[var(--bg-primary)]", isCollapsed ? "justify-center w-full" : "w-full") } title="About Marcus Aurelius" aria-label="Open Exhibit Guide" tabIndex={2}>
             <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">

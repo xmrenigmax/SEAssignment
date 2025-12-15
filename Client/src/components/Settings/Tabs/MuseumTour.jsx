@@ -191,6 +191,7 @@ export const MuseumTour = ({ isOpen, onClose, isMobileOpen, setIsMobileOpen }) =
   }
   return (
     <div className="fixed inset-0 z-[100] overflow-hidden pointer-events-auto">
+      {/* Box-shadow trick to darken everything except the highlighted element */}
       <div className="absolute transition-all duration-300 ease-out rounded-xl border-2 border-[var(--accent)] shadow-[0_0_0_9999px_rgba(0,0,0,0.75)]" style={{ top: position.top, left: position.left, width: position.width, height: position.height, opacity: isVisible ? 1 : 0 }}/>
       <div
         className="absolute transition-all duration-300 ease-out z-[101]"

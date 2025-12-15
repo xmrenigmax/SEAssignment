@@ -36,6 +36,7 @@ const router = createBrowserRouter([
     ]
   }
 ], {
+  /* React Router v7 compatibility flags */
   future: {
     v7_startTransition: true,
     v7_relativeSplatPath: true

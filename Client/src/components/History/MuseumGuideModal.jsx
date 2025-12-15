@@ -47,7 +47,7 @@ export const MuseumGuideModal = ({ isOpen, onClose, onStartTour }) => {
 
   if (!isOpen) return null;
 
-  // Determine button behavior based on context
+  /* Dual-mode: regular modal or tour welcome screen based on onStartTour prop */
   const isTourMode = typeof onStartTour === 'function';
   const handleAction = isTourMode ? onStartTour : onClose;
   const buttonText = isTourMode ? "Start Tour" : "Enter Discussion";
@@ -100,6 +100,7 @@ export const MuseumGuideModal = ({ isOpen, onClose, onStartTour }) => {
             </p>
             <div className="space-y-2">
               <p className="text-xs font-bold text-[var(--text-secondary)] uppercase">Suggested Inquiries</p>
+              {/* Generate clickable prompt buttons that start conversations when clicked */}
               { suggestedPrompts.map((prompt, index) => (
                 <button key={ index } onClick={ () => handlePromptClick(prompt) } className="w-full text-left p-2 rounded hover:bg-[var(--bg-primary)] text-sm text-[var(--accent)] transition-colors border border-transparent hover:border-[var(--border)]">
                   "{ prompt }"

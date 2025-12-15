@@ -212,6 +212,7 @@ export const ChatPanel = () => {
               </p>
             </div>
           ) : (
+            /* IIFE to find last bot message for typewriter effect */
             (() => {
               let lastBotIndex = -1;
               for (let i = messages.length - 1; i >= 0; i--) {
@@ -233,6 +234,7 @@ export const ChatPanel = () => {
           { isLoading && (
             <div className="flex justify-start ml-11" aria-label="Marcus is typing">
               <div className="bg-[var(--bg-secondary)] px-4 py-3 rounded-2xl border border-[var(--border)] flex gap-1.5">
+                {/* Three dots with staggered animation delays */}
                 <div className="w-2 h-2 bg-[var(--text-secondary)] rounded-full animate-bounce" />
                 <div className="w-2 h-2 bg-[var(--text-secondary)] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
                 <div className="w-2 h-2 bg-[var(--text-secondary)] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
