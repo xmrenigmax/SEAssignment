@@ -189,7 +189,7 @@ export const ChatPanel = () => {
 
   return (
     <div className="flex flex-col h-full w-full bg-[var(--bg-primary)] relative" role="region" aria-label="Chat Interface">
-      <div className="flex-none h-16 border-b border-[var(--border)] bg-[var(--bg-secondary)]/80 backdrop-blur-md flex items-center px-6 justify-between z-10">
+      <div className="hide-at-high-zoom flex-none h-16 border-b border-[var(--border)] bg-[var(--bg-secondary)]/80 backdrop-blur-md flex items-center px-6 justify-between z-10">
         <div className="flex flex-col">
           <h2 className="font-semibold text-[var(--text-primary)]" aria-live="polite">
             { activeConversation?.title || 'New Conversation' }
