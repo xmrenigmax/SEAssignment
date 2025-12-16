@@ -1,135 +1,118 @@
-# Software Engineering Assignment
-### Historical AI Chatbot – Group Project (70%) | Exam (30%)
+### **Software Engineering Assignment**
 
----
+### **Historical AI Chatbot – Group Project**
 
-## Project Overview
-Our group project is to **design and develop a web-based conversational AI chatbot**.
-The chatbot will simulate conversations with a **historical figure** of our choice, providing an engaging and educational interaction experience.
+-----
 
----
+## **Project Overview**
 
-## Team Members & Roles
+Our group project is to design and develop a web-based conversational AI chatbot. The chatbot simulates conversations with **Marcus Aurelius**, the Stoic philosopher-emperor. It utilizes a **hybrid architecture** combining rule-based NLP, semantic vector search, and Generative AI (LLM) to provide an engaging and educational experience.
+
+-----
+
+## **Team Members & Roles**
 
 | Name   | Role             |
 |--------|------------------|
-| Riley    | **Group Leader** |
+| Riley  | **Group Leader** |
 | Rohail | Engineer         |
 | Daut   | Engineer         |
-| Ryan | Engineer         |
+| Ryan   | Engineer         |
 
----
+-----
 
-## Deliverables
-- **Peer Review Form** (individual submission)
-- **.zip File** containing:
-  - React Frontend
-  - Express Backend
-- **Short Video Demo** (6 minutes, `.mp4`)
-- **Group Project Report** (max 12 pages, excluding references & appendices)
+## **Technical Architecture (MVC-S)**
 
----
+The system is refactored into a **Model-View-Controller-Service (MVC-S)** architecture to ensure scalability and maintainability.
 
-## Marking Scheme
-### 🔹 Code & Technical Implementation (20 marks)
-- Professional **React + Express** codebase
-- Proper **component design**, **application structure**, and **JsDOC documentation**
-- Extensions beyond class content (e.g., LLM integration, advanced state handling, external APIs)
+  * **Model:** MongoDB Schemas (Mongoose) for Conversations and Logic Scripts.
+  * **View:** React Frontend (Client).
+  * **Controller:** Handles API requests, CRUD operations, and message routing.
+  * **Service:** External integrations (Hugging Face AI) and complex logic (Semantic Engine).
 
-### 🔹 Demo Interaction & Chatbot Behaviour (30 marks)
-- Usability and accessibility of chatbot interface
-- Creative & engaging interaction design (aligned with chosen historical figure)
-- Clear demonstration of features in the **video demo**
+-----
 
-### 🔹 Report & Design Process (50 marks)
-- Clear and appropriate **requirements**
-- Logical **architecture & design decisions** with rationale
-- Reflections on design & development challenges
-- Well-structured, complete **report** (following template)
+## **Tech Stack**
 
----
+### **Frontend**
 
-## Tech Stack
-- **Frontend:** React (components, state management, UI/UX design)
-- **Backend:** Express.js (API, chatbot logic, server-side integration)
-- **Extensions:**
-  - integrate **LLM** or external APIs
-  - Advanced state handling for chatbot dialogue
+  * **Framework:** React (Vite)
+  * **Hosting:** Vercel
+  * **Styling:** CSS Modules / Styled Components
+  * **State Management:** React Hooks
 
----
+### **Backend**
 
-## Project Workflow
-1. **Planning & Research** – Define requirements, select historical figure
-2. **Design Phase** – Architecture diagrams, component structure
-3. **Implementation** – Develop frontend + backend, integrate chatbot logic
-4. **Testing & Refinement** – Ensure usability, accessibility, and behaviour
-5. **Submission Package** – Code, report, peer review, and demo video
+  * **Runtime:** Node.js (Express)
+  * **Database:** MongoDB Atlas (Mongoose ODM)
+  * **Architecture:** Serverless-compatible (Vercel)
 
----
+### **AI & Logic Engines**
 
-✅ **SCRUM:** Use Teams (Scrum board) to track tasks & deadlines.
-✅ **Documentation:** Write clean commits & document code (JsDOC).
-✅ **Team Tip:** Meet biweekly to align progress and keep work consistent.
+  * **Primary Logic:** Custom `Logic Engine` with **Lazy Loading** script rules.
+  * **NLP Tools:** `natural` (Tokenization, Stemming, Jaro-Winkler distance).
+  * **Semantic Search:** `@xenova/transformers` (all-MiniLM-L6-v2) for vector embeddings and cosine similarity.
+  * **Generative AI:** **Hugging Face Inference API** (Llama-3.1-8B-Instruct) for fallback responses.
+  * **File Handling:** `multer` (RAM storage) for processing image/text attachments.
 
----
+-----
 
+## **Project Setup**
 
-## Project Setup
+### **🔹 Client (Frontend)**
 
-### 🔹 Client (Frontend)
+#### **Purpose**
 
-#### Installed Packages
-- **react** & **react-dom** → Core React library & DOM rendering
-- **vite** → Fast dev server & build tool
-- **@vitejs/plugin-react** → React + Vite integration
-- **eslint**, **eslint-plugin-react-hooks**, **eslint-plugin-react-refresh** → Code linting & standards
-- **prettier** (optional) → Code formatting
-- **@types/react**, **@types/react-dom** → Type definitions (future-proofing for TypeScript)
+  * **Separation:** Decoupled UI that consumes the REST API.
+  * **UI/UX:** Responsive chat interface supporting text and file uploads.
+  * **Deployment:** Live on [https://marcusaurelius-client.vercel.app/](https://marcusaurelius-client.vercel.app/)
 
-#### How to Run
+#### **Installation**
+
 ```bash
 cd Client
 npm install
 npm run dev
-
 ```
-frontend available on https://marcusaurelius-client.vercel.app/ for now
 
-#### Purpose of Frontend
-- **Separation** → a clear separation of data, api and website development
-- **UI** → responsive chatbot UI
-- **integration** → integrates backend API for the chatbot to respond visually
-- **interaction** → allows interaction of design (should be user friendly and accessible)
+-----
 
+### **🔹 Server (Backend)**
 
-### 🔹 Server (Backend)
+#### **Key Packages & Features**
 
-#### Installed Packages
-- **Express** → Rest API framework
-- **CORS** → enable connection between frontend and backend
-- **nodemon** → auto reload server when updated
+  * **express:** REST API Framework.
+  * **mongoose:** Database interaction (CRUD & Schema validation).
+  * **cors / helmet:** Security headers and Cross-Origin resource sharing.
+  * **express-rate-limit:** Prevents API abuse (Window: 15m, Max: 3000 req).
+  * **multer:** Handles file uploads (converted to Base64 for DB storage).
+  * **uuid:** Generates unique IDs for sessions and messages.
+  * **dotenv:** Environment variable management.
 
-#### How to Run
+#### **Logic Workflow (The "Brain")**
+
+The backend uses a 3-tier **Hybrid Response System**:
+
+1.  **Keyword Match (Fastest):** Checks input against MongoDB-stored rules using stemming and fuzzy matching.
+2.  **Semantic Match (Smart):** Uses Transformer embeddings to find meaning similarity (e.g., "stay calm" ≈ "stoic mindset").
+3.  **Generative AI (Fallback):** If no rules match, the context is sent to **Llama-3** via Hugging Face to generate a persona-accurate response.
+
+#### **Installation & Run**
 
 ```bash
 cd Server
 npm install
 npm run dev
-
 ```
 
-Backend runs on https://marcusaurelius-server.vercel.app/ for now
+  * **Local Mode:** Connects to MongoDB and loads the script engine.
+  * **Serverless Mode:** Optimized for Vercel cold starts.
+  * **Deployment:** Live on [https://marcusaurelius-server.vercel.app/](https://marcusaurelius-server.vercel.app/)
 
-#### Purpose of Backend
-- **API** → provides API endpoints
-- **Communication** → separates UI/UX with communication of API and JSON-based scripts
-- **Manages middleware** → handles CORS
-- **handles chatbot** → handles the chatbots communication flow and logic to separate from web UI/UX
+-----
 
-### 🔹 Tests
+### **🔹 Tests & Quality Assurance**
 
-#### Purpose
-- validates chatbot response logic
-- ensures react components render correctly
-- confirm backend API endpoint return expected results
-- can be used to implement alternative methods for quality testing
+  * **Unit Testing:** Validates the `Logic Engine` probability selection and keyword matching.
+  * **Integration Testing:** Ensures `conversationController` correctly routes files, text, and database saves.
+  * **Health Checks:** Endpoint `/api/health` monitors Database connection status.

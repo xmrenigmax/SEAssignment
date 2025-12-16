@@ -47,13 +47,13 @@ export const MuseumGuideModal = ({ isOpen, onClose, onStartTour }) => {
 
   if (!isOpen) return null;
 
-  // Dual-mode: regular modal or tour welcome screen based on onStartTour prop 
+  // Dual-mode: regular modal or tour welcome screen based on onStartTour prop
   const isTourMode = typeof onStartTour === 'function';
   const handleAction = isTourMode ? onStartTour : onClose;
   const buttonText = isTourMode ? "Start Tour" : "Enter Discussion";
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-200"
       role="dialog"
       aria-modal="true"
@@ -64,9 +64,9 @@ export const MuseumGuideModal = ({ isOpen, onClose, onStartTour }) => {
         <div className="bg-[var(--bg-primary)] p-6 border-b border-[var(--border)] relative flex-shrink-0">
           <div className="absolute top-0 left-0 w-full h-1 bg-[var(--accent)] opacity-50"></div>
           { !isTourMode && (
-            <button 
-              onClick={ onClose } 
-              className="absolute top-4 right-4 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors" 
+            <button
+              onClick={ onClose }
+              className="absolute top-4 right-4 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
               aria-label="Close Marcus Aurelius information modal"
               type="button"
             >
@@ -114,9 +114,9 @@ export const MuseumGuideModal = ({ isOpen, onClose, onStartTour }) => {
               {/* Generate clickable prompt buttons that start conversations when clicked */}
               <div role="list" aria-labelledby="suggested-prompts-label">
                 { suggestedPrompts.map((prompt, index) => (
-                  <button 
-                    key={ index } 
-                    onClick={ () => handlePromptClick(prompt) } 
+                  <button
+                    key={ index }
+                    onClick={ () => handlePromptClick(prompt) }
                     className="w-full text-left p-2 rounded hover:bg-[var(--bg-primary)] text-sm text-[var(--accent)] transition-colors border border-transparent hover:border-[var(--border)]"
                     type="button"
                     aria-label={`Start conversation with prompt: ${prompt}`}
@@ -130,8 +130,8 @@ export const MuseumGuideModal = ({ isOpen, onClose, onStartTour }) => {
           </section>
         </div>
         <div className="p-4 bg-[var(--bg-primary)] border-t border-[var(--border)] flex justify-end flex-shrink-0">
-          <button 
-            onClick={ handleAction } 
+          <button
+            onClick={ handleAction }
             className="px-6 py-2 bg-[var(--accent)] text-white rounded-lg hover:shadow-lg hover:opacity-90 transition-all text-sm font-medium flex items-center gap-2"
             type="button"
             aria-label={ isTourMode ? "Start guided tour of the application" : "Close modal and enter discussion with Marcus Aurelius" }
