@@ -130,13 +130,15 @@ export const useChat = () => {
 
   /**
    * Sends a message to the backend.
+   * ✅ FIX: Prevents "Derendering" by merging specific server messages 
+   * instead of overwriting with potentially stale conversation objects.
    */
   const addMessageToConversation = async (conversationId, message) => {
     // Generate a temporary ID for the optimistic message
     const tempId = `temp-${Date.now()}`;
     const optimisticMessage = { ...message, id: tempId };
 
-    // Optimistic UI Update
+    // 1. Optimistic UI Update (Renders immediately)
     setConversations(prev => prev.map(conversation => {
       if (conversation.id === conversationId) {
         return {
@@ -163,15 +165,34 @@ export const useChat = () => {
         body = JSON.stringify({ text: message.text });
       }
 
+      // API Call
       const data = await apiCall(`/conversations/${ conversationId }/messages`, {
         method: 'POST',
         body: body
       });
 
-      // Update with real server response
+      // 2. Safe State Update
       setConversations(prev => prev.map(conversation => {
         if (conversation.id === conversationId) {
-          return data.conversation;
+          
+          const localMessages = conversation.messages || [];
+          
+          // Remove the temporary optimistic message we added earlier
+          const filteredMessages = localMessages.filter(m => m.id !== tempId);
+          
+          // Retrieve the guaranteed messages from the server response
+          const newMessages = [];
+          if (data.userMessage) newMessages.push(data.userMessage);
+          if (data.marcusMessage) newMessages.push(data.marcusMessage);
+
+          return {
+            ...conversation,
+            // Merge metadata (like updated title) from server, but safeguard the messages
+            ...(data.conversation || {}), 
+            // Forcefully append the new messages to our filtered list
+            messages: [...filteredMessages, ...newMessages], 
+            updatedAt: new Date().toISOString()
+          };
         }
         return conversation;
       }));
@@ -179,7 +200,18 @@ export const useChat = () => {
       setIsLoading(false);
       return data;
     } catch (error) {
-      console.warn('Message failed, using offline mode or rolling back');
+      console.warn('Message failed, rolling back optimistic update');
+
+      // Rollback: Remove the temp message if API failed
+      setConversations(prev => prev.map(conversation => {
+        if (conversation.id === conversationId) {
+          return {
+            ...conversation,
+            messages: (conversation.messages || []).filter(m => m.id !== tempId)
+          };
+        }
+        return conversation;
+      }));
 
       // Turn off loading.
       setIsLoading(false);
@@ -215,6 +247,9 @@ export const useChat = () => {
       setConversations(prev => {
         const index = prev.findIndex(conversation => conversation.id === id);
         if (index === -1) return [data, ...prev];
+
+        // Deep check to prevent re-renders if data hasn't changed
+        if (JSON.stringify(prev[index]) === JSON.stringify(data)) return prev;
 
         const newList = [...prev];
         newList[index] = data;

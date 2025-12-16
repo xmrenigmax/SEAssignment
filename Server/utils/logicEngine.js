@@ -71,7 +71,7 @@ function robustRandomSelect(pool) {
  * @param {string} input - User message.
  * @returns {string|null} The scripted response or null if no match.
  */
-export function checkScriptedResponse(input) {
+export async function checkScriptedResponse(input) {
   if (!cachedScript || !cachedScript.rules) return null;
 
   const inputLower = input.toLowerCase().trim();

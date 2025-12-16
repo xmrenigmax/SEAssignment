@@ -183,10 +183,11 @@ export const sendMessage = async (req, res) => {
 
     // Logic Engine / AI Response
     const fullPrompt = attachmentContext ? `${attachmentContext}\n\n${text}` : text;
+    const scriptResponse = await checkScriptedResponse(text);
     let aiText = checkScriptedResponse(text) || getFallback();
 
     // Only call expensive API if no script match found
-    if (!checkScriptedResponse(text)) {
+    if (!scriptResponse) {
       const generatedText = await generateAIResponse(fullPrompt);
       if (generatedText) {
         aiText = generatedText;
