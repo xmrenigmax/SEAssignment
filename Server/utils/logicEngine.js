@@ -72,6 +72,10 @@ function robustRandomSelect(pool) {
  * @returns {string|null} The scripted response or null if no match.
  */
 export async function checkScriptedResponse(input) {
+  if (!cachedScript) {
+    console.log('[Logic Engine] Script missing from cache. Loading now...');
+    await loadScript();
+  }
   if (!cachedScript || !cachedScript.rules) return null;
 
   const inputLower = input.toLowerCase().trim();
