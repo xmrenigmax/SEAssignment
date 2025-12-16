@@ -14,6 +14,7 @@ import helmet from 'helmet';
 // Logic & DB
 import connectToDatabase from './utils/db.js';
 import { loadScript } from './utils/logicEngine.js';
+import { initializeSemanticEngine } from './utils/semanticEngine.js';
 
 // Routes & Middleware
 import conversationRoutes from './routes/conversationRoutes.js';
