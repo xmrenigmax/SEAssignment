@@ -54,7 +54,7 @@ export async function loadScript() {
  */
 function robustRandomSelect(pool) {
   if (!pool || pool.length === 0) return null;
-  const totalWeight = pool.reduce((sum, item) => sum + (item.probability * 4 || 0), 0);
+  const totalWeight = pool.reduce((sum, item) => sum + (item.probability || 0), 0);
   let randomPoint = Math.random() * totalWeight;
 
   for (const option of pool) {
