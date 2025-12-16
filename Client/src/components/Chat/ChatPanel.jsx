@@ -51,7 +51,7 @@ const Message = ({ msg, idx }) => {
  * ChatPanel Component
  * Updated Tab Order: Input & Send = 1
  */
-export const ChatPanel = () => {
+export const ChatPanel = ({ toggleMobile }) => {
   const {
     activeConversationId,
     getActiveConversation,
@@ -248,8 +248,21 @@ export const ChatPanel = () => {
       </div>
 
       <div className="flex-none p-4 bg-[var(--bg-primary)]">
-        <div className="max-w-3xl mx-auto bg-[var(--bg-secondary)] border border-[var(--border)] rounded-2xl shadow-sm p-2 flex items-end gap-2 focus-within:ring-2 focus-within:ring-[var(--accent)] transition-all">
-          <div tabIndex={1}>
+        <div className="max-w-3xl mx-auto flex items-end gap-3">
+          {toggleMobile && (
+            <button 
+              onClick={toggleMobile} 
+              className="lg:hidden p-3 bg-[var(--accent)] text-white hover:opacity-90 rounded-xl shadow-lg transition-all flex-shrink-0"
+              aria-label="Open Sidebar Menu"
+              type="button"
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          )}
+          <div className="flex-1 bg-[var(--bg-secondary)] border border-[var(--border)] rounded-2xl shadow-sm p-2 flex items-end gap-2 focus-within:ring-2 focus-within:ring-[var(--accent)] transition-all">
+            <div tabIndex={1}>
             <AttachmentButton onFileAttach={ setAttachedFile } />
           </div>
           <div className="flex-1 min-w-0 py-1.5">
@@ -295,6 +308,7 @@ export const ChatPanel = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={ 2 } d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </button>
+        </div>
         </div>
       </div>
     </div>
