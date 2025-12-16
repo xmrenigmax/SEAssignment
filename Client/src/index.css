@@ -108,3 +108,19 @@ body {
 .skip-to-main:focus {
   top: 0;
 }
+
+/* Center zoom origin for better zoom experience */
+html {
+  transform-origin: center center;
+}
+
+body {
+  transform-origin: center center;
+}
+
+/* Hide title bar at 200% zoom and above to save space */
+@media (min-resolution: 2dppx) {
+  .hide-at-high-zoom {
+    display: none !important;
+  }
+}

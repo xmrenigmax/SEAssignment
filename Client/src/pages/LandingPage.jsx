@@ -54,7 +54,7 @@ return (
     <MuseumTour isOpen={isTourOpen} onClose={handleTourClose} />
     <Sidebar activeView={ activeView } setActiveView={ handleViewChange } isCollapsed={ isCollapsed} toggleCollapse={ () => setIsCollapsed(!isCollapsed) } isMobileOpen={ isMobileOpen} toggleMobile={ () => setIsMobileOpen(!isMobileOpen) } sidebarWidth={ sidebarWidth } startResizing={ startResizing } isResizing={ isResizing } sidebarRef={ sidebarRef }/>
     <main className={ clsx( "flex-1 flex flex-col min-w-0 h-screen transition-all duration-300 ease-in-out", "lg:ml-[var(--sidebar-width)]") } style={{ transition: isResizing ? 'none' : 'margin-left 300ms cubic-bezier(0.4, 0, 0.2, 1)' }}>
-      <div className="lg:hidden p-4 border-b border-[var(--border)] bg-[var(--bg-primary)] flex items-center justify-between">
+      <div className="lg:hidden hide-at-high-zoom p-4 border-b border-[var(--border)] bg-[var(--bg-primary)] flex items-center justify-between">
         <div className="flex items-center">
             <button onClick={ () => setIsMobileOpen(true) } className="p-2 mr-3 bg-[var(--bg-secondary)] rounded-lg border border-[var(--border)]" aria-label="Open Sidebar Menu">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -65,7 +65,7 @@ return (
         </div>
       </div>
       <div className="flex-1 flex flex-col h-full overflow-hidden">
-        <ChatPanel />
+        <ChatPanel toggleMobile={() => setIsMobileOpen(true)} />
       </div>
       { isSettingsOpen && ( <SettingsPanel onClose={ () => { setIsSettingsOpen(false); setActiveView('chat'); }} onStartTour={ () => setIsTourOpen(true) }/> )}
       </main>
