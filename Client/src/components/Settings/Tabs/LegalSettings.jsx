@@ -25,7 +25,10 @@ export const LegalSettings = () => {
         </div>
         <div className="flex justify-between items-center pb-4 border-b border-[var(--border)]">
           <span className="font-semibold text-[var(--text-primary)]">AI Model</span>
-          <span className="text-sm text-[var(--accent)] font-medium">Gemini-Gemma</span>
+          <span className="text-sm text-[var(--accent)] font-medium">Llama </span>
+        </div>
+        <div className="flex justify-between items-center pb-4 border-b border-[var(--border)]">
+          <span className="font-semibold text-[var(--text-primary)]">Compliance with GDPR</span>
         </div>
         <div className="text-sm text-[var(--text-secondary)] leading-relaxed pt-2">
           This application connects to the Hugging Face Inference API.
